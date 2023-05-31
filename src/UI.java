@@ -141,6 +141,10 @@ public class UI {
         String account = textField3.getText();
         String password = textField4.getText();
         String identity = comboBox2.getSelectedItem().toString();
+        String company = textField2.getText();
+        if(company == ""){
+            company=null;
+        }
 
         // 数据库连接信息
         String url = "jdbc:mysql://localhost:3306/高校学生就业管理系统";  // 数据库连接URL
@@ -150,13 +154,14 @@ public class UI {
         // 建立数据库连接
         try (Connection connection = DriverManager.getConnection(url, username, password1)) {
             // 创建插入数据的 SQL 语句
-            String sql = "INSERT INTO 高校学生就业管理系统.账号信息表 (账号, 密码, 身份) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO 高校学生就业管理系统.账号信息表 (账号, 密码, 身份 , 公司) VALUES (?, ?, ?, ?)";
 
             // 创建 PreparedStatement 对象并设置参数
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, account);
                 statement.setString(2, password);
                 statement.setString(3, identity);
+                statement.setString(4, company);
 
                 // 执行插入操作
                 int rowsAffected = statement.executeUpdate();
@@ -213,11 +218,47 @@ public class UI {
         table1.setModel(tableModel);
 
         // 获取职业信息并填充到表格模型中
-        fillTableData(tableModel);
+        fillTableData(tableModel,getCompanyByAccount(textField1.getText()));
     }
 
+    private static String getCompanyByAccount(String account) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String URL = "jdbc:mysql://localhost:3306";  // 数据库连接URL
+        String USERNAME = "root";  // 数据库用户名
+        String PASSWORD = "Lzy-200387";  // 数据库密码
+        String company = "";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 创建 PreparedStatement 对象
+            String query = "SELECT 公司 FROM 高校学生就业管理系统.账号信息表 WHERE 账号 = ?";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, account);
+
+            // 执行查询语句
+            resultSet = statement.executeQuery();
+
+            // 获取查询结果
+            if (resultSet.next()) {
+                company = resultSet.getString("公司");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, resultSet);
+        }
+
+        return company;
+    }
+
+
     // 从数据库中获取职业信息并填充到表格模型中
-    private static void fillTableData(DefaultTableModel tableModel) {
+    private static void fillTableData(DefaultTableModel tableModel,String currentCompany) {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -232,7 +273,7 @@ public class UI {
             statement = connection.createStatement();
 
             // 执行查询语句
-            String query = "SELECT * FROM 高校学生就业管理系统.职业信息表";
+            String query = "SELECT * FROM 高校学生就业管理系统.职业信息表 WHERE 用人单位 = '" + currentCompany + "'";
             resultSet = statement.executeQuery(query);
             // 获取职业类型映射关系
             Map<Integer, String> typeMap = getTypeMap(connection);
@@ -253,26 +294,30 @@ public class UI {
             e.printStackTrace();
         } finally {
             // 关闭连接和资源
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            closeConnection(connection, statement, resultSet);
+        }
+    }
+
+    private static void closeConnection(Connection connection, Statement statement, ResultSet resultSet) {
+        if (resultSet != null) {
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+        }
+        if (statement != null) {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+        }
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }
