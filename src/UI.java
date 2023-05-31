@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.*;
 import javax.swing.GroupLayout;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 /*
  * Created by JFormDesigner on Tue May 23 19:25:37 CST 2023
@@ -74,6 +76,7 @@ public class UI {
 
     }
 
+    //登陆时在数据库中查询是否有对应账号、密码是否正确
     private void button1MousePressed(MouseEvent e) {
         String url = "jdbc:mysql://localhost:3306";  // 数据库连接URL
         String username = "root";  // 数据库用户名
@@ -136,6 +139,7 @@ public class UI {
         dialog2.setVisible(false);
     }
 
+    //获取用户的注册信息并写入到数据库中
     private void button12MousePressed(MouseEvent e) {
         // 提供账号、密码、身份信息
         String account = textField3.getText();
@@ -209,7 +213,7 @@ public class UI {
 
     private void button15MousePressed(MouseEvent e) {
         // 创建表格模型
-        DefaultTableModel tableModel = new DefaultTableModel();
+        CustomTableModel tableModel = new CustomTableModel();
 
         // 设置表格模型的列名
         tableModel.setColumnIdentifiers(new Object[]{"职业编号", "职业名称", "职业类型名称", "需求数量", "已聘用数量",  "发布日期", "截止日期"});
@@ -219,8 +223,114 @@ public class UI {
 
         // 获取职业信息并填充到表格模型中
         fillTableData(tableModel,getCompanyByAccount(textField1.getText()));
-    }
 
+        //下面添加数据的修改部分
+        tableModel.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if (e.getType() == TableModelEvent.UPDATE) {
+                    int row = e.getFirstRow();
+                    int column = e.getColumn();
+
+                    // 获取修改后的数据
+                    Object newValue = tableModel.getValueAt(row, column);
+
+                    // 获取唯一标识符的值
+                    Object primaryKey = tableModel.getValueAt(row, 0);
+
+                    // 更新数据库中的对应记录
+                    updateDatabaseRecord(primaryKey, column, newValue);
+                }
+            }
+        });
+    }
+    // 更新数据库记录的方法
+    //通过重写 isCellEditable 方法来实现某列不可修改
+    //首先，创建一个自定义的 TableModel 类，继承自 DefaultTableModel，并重写 isCellEditable 方法。
+    // 在 isCellEditable 方法中，根据需要设置特定单元格的可编辑性。
+    public class CustomTableModel extends DefaultTableModel {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            // 设置特定单元格的可编辑性
+            if (column == 0 || column == 2 || column == 4) {
+                // 第一列职业编号、第三列职业类型名称、第五列已聘用数量不可编辑
+                return false;
+            }
+            // 其他单元格可编辑
+            return true;
+        }
+    }
+    private static void updateDatabaseRecord(Object primaryKey, int column, Object newValue) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";  // 数据库连接URL
+        String USERNAME = "root";  // 数据库用户名
+        String PASSWORD = "Lzy-200387";  // 数据库密码
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 构建更新语句
+            String updateQuery = "UPDATE 高校学生就业管理系统.职业信息表 SET ";
+            String columnToUpdate;
+
+            // 根据列索引选择要更新的列
+            switch (column) {
+                case 0:
+                    return;
+                case 1:
+                    columnToUpdate = "职业名称";
+                    break;
+                case 2:
+                    return;
+                case 3:
+                    columnToUpdate = "需求数量";
+                    break;
+                case 4:
+                    return;
+                case 5:
+                    columnToUpdate = "发布日期";
+                    break;
+                case 6:
+                    columnToUpdate = "截止日期";
+                    break;
+                default:
+                    // 如果列索引无效，则不执行更新操作
+                    return;
+            }
+
+            // 构建完整的更新语句
+            updateQuery += columnToUpdate + " = ? WHERE 职业编号 = ?";
+
+            // 创建预编译语句对象
+            statement = connection.prepareStatement(updateQuery);
+
+            // 设置参数
+            statement.setObject(1, newValue);
+            statement.setObject(2, primaryKey);
+
+            // 执行更新操作
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
     private static String getCompanyByAccount(String account) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -258,7 +368,7 @@ public class UI {
 
 
     // 从数据库中获取职业信息并填充到表格模型中
-    private static void fillTableData(DefaultTableModel tableModel,String currentCompany) {
+    private static void fillTableData(CustomTableModel tableModel,String currentCompany) {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -332,6 +442,19 @@ public class UI {
         }
     }
 
+
+    private void button22MousePressed(MouseEvent e) {
+        dialog3.setVisible(false);
+    }
+
+    private void dialog3WindowClosing(WindowEvent e) {
+        dialog3.setVisible(false);
+    }
+
+    private void button16MousePressed(MouseEvent e) {
+        dialog3.setVisible(true);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         // Generated using JFormDesigner Evaluation license - 林正阳
@@ -388,6 +511,10 @@ public class UI {
         button14 = new JButton();
         Admin2 = new JFrame();
         button21 = new JButton();
+        dialog3 = new JDialog();
+        label10 = new JLabel();
+        button22 = new JButton();
+        label11 = new JLabel();
 
         //======== Login ========
         {
@@ -667,6 +794,12 @@ public class UI {
 
             //---- button16 ----
             button16.setText("\u4fee\u6539\u6570\u636e");
+            button16.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button16MousePressed(e);
+                }
+            });
 
             GroupLayout EmployersContentPaneLayout = new GroupLayout(EmployersContentPane);
             EmployersContentPane.setLayout(EmployersContentPaneLayout);
@@ -769,7 +902,7 @@ public class UI {
                                 .addComponent(label9)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(textField2, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(70, Short.MAX_VALUE))
+                        .addContainerGap(72, Short.MAX_VALUE))
             );
             RegisterContentPaneLayout.setVerticalGroup(
                 RegisterContentPaneLayout.createParallelGroup()
@@ -788,7 +921,7 @@ public class UI {
                         .addGroup(RegisterContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(label6)
                             .addComponent(comboBox2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                         .addGroup(RegisterContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(label9)
                             .addComponent(textField2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -1140,8 +1273,67 @@ public class UI {
             Admin2.pack();
             Admin2.setLocationRelativeTo(Admin2.getOwner());
         }
+
+        //======== dialog3 ========
+        {
+            dialog3.setTitle("\u901a\u77e5");
+            dialog3.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    dialog3WindowClosing(e);
+                }
+            });
+            var dialog3ContentPane = dialog3.getContentPane();
+
+            //---- label10 ----
+            label10.setText("\u76f4\u63a5\u5728\u8868\u683c\u4e0a\u8fdb\u884c\u4fee\u6539\u5373\u53ef");
+
+            //---- button22 ----
+            button22.setText("\u786e\u5b9a");
+            button22.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button22MousePressed(e);
+                }
+            });
+
+            //---- label11 ----
+            label11.setText("\u4e0d\u53ef\u9009\u4e2d\u7684\u90e8\u5206\u65e0\u6743\u9650\u4fee\u6539");
+
+            GroupLayout dialog3ContentPaneLayout = new GroupLayout(dialog3ContentPane);
+            dialog3ContentPane.setLayout(dialog3ContentPaneLayout);
+            dialog3ContentPaneLayout.setHorizontalGroup(
+                dialog3ContentPaneLayout.createParallelGroup()
+                    .addGroup(dialog3ContentPaneLayout.createSequentialGroup()
+                        .addGroup(dialog3ContentPaneLayout.createParallelGroup()
+                            .addGroup(dialog3ContentPaneLayout.createSequentialGroup()
+                                .addGap(76, 76, 76)
+                                .addGroup(dialog3ContentPaneLayout.createParallelGroup()
+                                    .addComponent(label11)
+                                    .addComponent(label10)))
+                            .addGroup(dialog3ContentPaneLayout.createSequentialGroup()
+                                .addGap(117, 117, 117)
+                                .addComponent(button22)))
+                        .addContainerGap(77, Short.MAX_VALUE))
+            );
+            dialog3ContentPaneLayout.setVerticalGroup(
+                dialog3ContentPaneLayout.createParallelGroup()
+                    .addGroup(dialog3ContentPaneLayout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(label10)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label11)
+                        .addGap(18, 18, 18)
+                        .addComponent(button22)
+                        .addContainerGap(42, Short.MAX_VALUE))
+            );
+            dialog3.pack();
+            dialog3.setLocationRelativeTo(dialog3.getOwner());
+        }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
+
+    //根据职业编号类型获取对应职业的名称
     private static Map<Integer, String> getTypeMap(Connection connection) throws SQLException {
         Map<Integer, String> typeMap = new HashMap<>();
 
@@ -1214,11 +1406,14 @@ public class UI {
     private JButton button14;
     private JFrame Admin2;
     private JButton button21;
+    private JDialog dialog3;
+    private JLabel label10;
+    private JButton button22;
+    private JLabel label11;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
     public static void main(String[] args) throws Exception {
         UI ui = new UI();
         ui.initComponents();
         ui.Login.setVisible(true);
-        //链接数据库
     }
 }
