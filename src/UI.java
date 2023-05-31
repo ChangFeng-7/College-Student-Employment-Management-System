@@ -1,7 +1,10 @@
 import java.awt.event.*;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.*;
 import javax.swing.GroupLayout;
+import javax.swing.table.DefaultTableModel;
 /*
  * Created by JFormDesigner on Tue May 23 19:25:37 CST 2023
  */
@@ -63,6 +66,8 @@ public class UI {
     private void button11MouseClicked(MouseEvent e) {
         Register.setVisible(true);
         Login.setVisible(false);
+        label9.setVisible(false);
+        textField2.setVisible(false);
     }
 
     private void button13MouseClicked(MouseEvent e) {
@@ -167,6 +172,121 @@ public class UI {
         }
     }
 
+    private void button5MousePressed(MouseEvent e) {
+        Admin1.setVisible(true);
+        Admin.setVisible(false);
+    }
+
+    private void button17MousePressed(MouseEvent e) {
+        Admin1.setVisible(false);
+        Admin.setVisible(true);
+    }
+
+    private void button21MousePressed(MouseEvent e) {
+        Admin2.setVisible(false);
+        Admin.setVisible(true);
+    }
+
+    private void button25MousePressed(MouseEvent e) {
+        Admin3.setVisible(false);
+        Admin.setVisible(true);
+    }
+
+    private void button6MousePressed(MouseEvent e) {
+        Admin2.setVisible(true);
+        Admin.setVisible(false);
+    }
+
+    private void button7MousePressed(MouseEvent e) {
+        Admin3.setVisible(true);
+        Admin.setVisible(false);
+    }
+
+    private void button15MousePressed(MouseEvent e) {
+        // 创建表格模型
+        DefaultTableModel tableModel = new DefaultTableModel();
+
+        // 设置表格模型的列名
+        tableModel.setColumnIdentifiers(new Object[]{"职业编号", "职业名称", "职业类型名称", "需求数量", "已聘用数量",  "发布日期", "截止日期"});
+
+        // 将表格模型设置给 JTable
+        table1.setModel(tableModel);
+
+        // 获取职业信息并填充到表格模型中
+        fillTableData(tableModel);
+    }
+
+    // 从数据库中获取职业信息并填充到表格模型中
+    private static void fillTableData(DefaultTableModel tableModel) {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String URL = "jdbc:mysql://localhost:3306";  // 数据库连接URL
+        String USERNAME = "root";  // 数据库用户名
+        String PASSWORD = "Lzy-200387";  // 数据库密码
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 创建 Statement 对象
+            statement = connection.createStatement();
+
+            // 执行查询语句
+            String query = "SELECT * FROM 高校学生就业管理系统.职业信息表";
+            resultSet = statement.executeQuery(query);
+            // 获取职业类型映射关系
+            Map<Integer, String> typeMap = getTypeMap(connection);
+            // 遍历结果集，将数据填充到表格模型中
+            while (resultSet.next()) {
+                Object[] rowData = new Object[]{
+                        resultSet.getInt("职业编号"),
+                        resultSet.getString("职业名称"),
+                        typeMap.get(resultSet.getInt("职业类型")),
+                        resultSet.getInt("需求数量"),
+                        resultSet.getInt("已聘用数量"),
+                        resultSet.getDate("发布日期"),
+                        resultSet.getDate("截止日期"),
+                };
+                tableModel.addRow(rowData);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void comboBox2(ActionEvent e) {
+        if(comboBox2.getSelectedItem().toString()=="用人单位"){
+            label9.setVisible(true);
+            textField2.setVisible(true);
+        }else{
+            label9.setVisible(false);
+            textField2.setVisible(false);
+        }
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         // Generated using JFormDesigner Evaluation license - 林正阳
@@ -191,6 +311,10 @@ public class UI {
         button9 = new JButton();
         Employers = new JFrame();
         button8 = new JButton();
+        scrollPane1 = new JScrollPane();
+        table1 = new JTable();
+        button15 = new JButton();
+        button16 = new JButton();
         Register = new JFrame();
         label4 = new JLabel();
         textField3 = new JTextField();
@@ -199,13 +323,13 @@ public class UI {
         label6 = new JLabel();
         comboBox2 = new JComboBox<>();
         button12 = new JButton();
+        label9 = new JLabel();
+        textField2 = new JTextField();
         dialog1 = new JDialog();
         label7 = new JLabel();
         button13 = new JButton();
         Admin1 = new JFrame();
         button17 = new JButton();
-        Admin2 = new JFrame();
-        button21 = new JButton();
         Admin3 = new JFrame();
         button25 = new JButton();
         Student1 = new JFrame();
@@ -217,6 +341,8 @@ public class UI {
         dialog2 = new JDialog();
         label8 = new JLabel();
         button14 = new JButton();
+        Admin2 = new JFrame();
+        button21 = new JButton();
 
         //======== Login ========
         {
@@ -392,12 +518,30 @@ public class UI {
 
             //---- button5 ----
             button5.setText("\u9662\u7cfb\u4fe1\u606f\u7ba1\u7406");
+            button5.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button5MousePressed(e);
+                }
+            });
 
             //---- button6 ----
             button6.setText("\u6bd5\u4e1a\u751f\u4fe1\u606f\u7ba1\u7406");
+            button6.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button6MousePressed(e);
+                }
+            });
 
             //---- button7 ----
             button7.setText("\u62db\u8058\u4fe1\u606f\u7ba1\u7406");
+            button7.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button7MousePressed(e);
+                }
+            });
 
             //---- button9 ----
             button9.setText("\u9000\u51fa\u7cfb\u7edf");
@@ -462,20 +606,49 @@ public class UI {
                 }
             });
 
+            //======== scrollPane1 ========
+            {
+                scrollPane1.setViewportView(table1);
+            }
+
+            //---- button15 ----
+            button15.setText("\u67e5\u8be2\u6570\u636e");
+            button15.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button15MousePressed(e);
+                }
+            });
+
+            //---- button16 ----
+            button16.setText("\u4fee\u6539\u6570\u636e");
+
             GroupLayout EmployersContentPaneLayout = new GroupLayout(EmployersContentPane);
             EmployersContentPane.setLayout(EmployersContentPaneLayout);
             EmployersContentPaneLayout.setHorizontalGroup(
                 EmployersContentPaneLayout.createParallelGroup()
                     .addGroup(EmployersContentPaneLayout.createSequentialGroup()
                         .addGap(27, 27, 27)
-                        .addComponent(button8)
-                        .addContainerGap(455, Short.MAX_VALUE))
+                        .addGroup(EmployersContentPaneLayout.createParallelGroup()
+                            .addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
+                            .addGroup(EmployersContentPaneLayout.createSequentialGroup()
+                                .addComponent(button8)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
+                                .addComponent(button15)
+                                .addGap(122, 122, 122)
+                                .addComponent(button16)))
+                        .addGap(34, 34, 34))
             );
             EmployersContentPaneLayout.setVerticalGroup(
                 EmployersContentPaneLayout.createParallelGroup()
                     .addGroup(GroupLayout.Alignment.TRAILING, EmployersContentPaneLayout.createSequentialGroup()
-                        .addContainerGap(368, Short.MAX_VALUE)
-                        .addComponent(button8)
+                        .addContainerGap(36, Short.MAX_VALUE)
+                        .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 305, GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addGroup(EmployersContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(button8)
+                            .addComponent(button16)
+                            .addComponent(button15))
                         .addContainerGap())
             );
             Employers.pack();
@@ -502,6 +675,7 @@ public class UI {
                 "\u7ba1\u7406\u5458",
                 "\u7528\u4eba\u5355\u4f4d"
             }));
+            comboBox2.addActionListener(e -> comboBox2(e));
 
             //---- button12 ----
             button12.setText("\u6ce8\u518c");
@@ -516,50 +690,66 @@ public class UI {
                 }
             });
 
+            //---- label9 ----
+            label9.setText("\u516c\u53f8\u540d\u79f0");
+            label9.setVisible(false);
+
+            //---- textField2 ----
+            textField2.setVisible(false);
+
             GroupLayout RegisterContentPaneLayout = new GroupLayout(RegisterContentPane);
             RegisterContentPane.setLayout(RegisterContentPaneLayout);
             RegisterContentPaneLayout.setHorizontalGroup(
                 RegisterContentPaneLayout.createParallelGroup()
                     .addGroup(RegisterContentPaneLayout.createSequentialGroup()
-                        .addGap(64, 64, 64)
                         .addGroup(RegisterContentPaneLayout.createParallelGroup()
-                            .addComponent(button12, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)
                             .addGroup(RegisterContentPaneLayout.createSequentialGroup()
-                                .addComponent(label4)
-                                .addGap(12, 12, 12)
-                                .addComponent(textField3, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))
+                                .addGap(60, 60, 60)
+                                .addGroup(RegisterContentPaneLayout.createParallelGroup()
+                                    .addGroup(RegisterContentPaneLayout.createSequentialGroup()
+                                        .addComponent(label4)
+                                        .addGap(12, 12, 12)
+                                        .addComponent(textField3, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(button12, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(RegisterContentPaneLayout.createSequentialGroup()
+                                        .addComponent(label5)
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(textField4, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(RegisterContentPaneLayout.createSequentialGroup()
+                                        .addComponent(label6)
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(comboBox2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
                             .addGroup(RegisterContentPaneLayout.createSequentialGroup()
-                                .addComponent(label5)
-                                .addGap(12, 12, 12)
-                                .addComponent(textField4, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))
-                            .addGroup(RegisterContentPaneLayout.createSequentialGroup()
-                                .addComponent(label6)
-                                .addGap(18, 18, 18)
-                                .addComponent(comboBox2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(68, Short.MAX_VALUE))
+                                .addGap(36, 36, 36)
+                                .addComponent(label9)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(textField2, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(70, Short.MAX_VALUE))
             );
             RegisterContentPaneLayout.setVerticalGroup(
                 RegisterContentPaneLayout.createParallelGroup()
                     .addGroup(RegisterContentPaneLayout.createSequentialGroup()
-                        .addGap(76, 76, 76)
+                        .addGap(50, 50, 50)
                         .addGroup(RegisterContentPaneLayout.createParallelGroup()
                             .addGroup(RegisterContentPaneLayout.createSequentialGroup()
                                 .addGap(7, 7, 7)
                                 .addComponent(label4))
                             .addComponent(textField3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addGroup(RegisterContentPaneLayout.createParallelGroup()
-                            .addGroup(RegisterContentPaneLayout.createSequentialGroup()
-                                .addGap(7, 7, 7)
-                                .addComponent(label5))
+                        .addGap(33, 33, 33)
+                        .addGroup(RegisterContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label5)
                             .addComponent(textField4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27)
+                        .addGap(29, 29, 29)
                         .addGroup(RegisterContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(label6)
                             .addComponent(comboBox2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                        .addGroup(RegisterContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label9)
+                            .addComponent(textField2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(button12)
-                        .addContainerGap(78, Short.MAX_VALUE))
+                        .addGap(40, 40, 40))
             );
             Register.pack();
             Register.setLocationRelativeTo(Register.getOwner());
@@ -630,8 +820,8 @@ public class UI {
             button17.setText("\u8fd4\u56de");
             button17.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {
-                    button9MouseClicked(e);
+                public void mousePressed(MouseEvent e) {
+                    button17MousePressed(e);
                 }
             });
 
@@ -655,46 +845,6 @@ public class UI {
             Admin1.setLocationRelativeTo(Admin1.getOwner());
         }
 
-        //======== Admin2 ========
-        {
-            Admin2.setTitle("\u6bd5\u4e1a\u751f\u4fe1\u606f\u7ba1\u7406");
-            Admin2.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    AdminWindowClosing(e);
-                }
-            });
-            var Admin2ContentPane = Admin2.getContentPane();
-
-            //---- button21 ----
-            button21.setText("\u8fd4\u56de");
-            button21.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    button9MouseClicked(e);
-                }
-            });
-
-            GroupLayout Admin2ContentPaneLayout = new GroupLayout(Admin2ContentPane);
-            Admin2ContentPane.setLayout(Admin2ContentPaneLayout);
-            Admin2ContentPaneLayout.setHorizontalGroup(
-                Admin2ContentPaneLayout.createParallelGroup()
-                    .addGroup(Admin2ContentPaneLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(button21)
-                        .addContainerGap(462, Short.MAX_VALUE))
-            );
-            Admin2ContentPaneLayout.setVerticalGroup(
-                Admin2ContentPaneLayout.createParallelGroup()
-                    .addGroup(Admin2ContentPaneLayout.createSequentialGroup()
-                        .addContainerGap(368, Short.MAX_VALUE)
-                        .addComponent(button21)
-                        .addContainerGap())
-            );
-            Admin2.pack();
-            Admin2.setLocationRelativeTo(Admin2.getOwner());
-        }
-
         //======== Admin3 ========
         {
             Admin3.setTitle("\u62db\u8058\u4fe1\u606f\u7ba1\u7406");
@@ -710,8 +860,8 @@ public class UI {
             button25.setText("\u8fd4\u56de");
             button25.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {
-                    button9MouseClicked(e);
+                public void mousePressed(MouseEvent e) {
+                    button25MousePressed(e);
                 }
             });
 
@@ -905,7 +1055,63 @@ public class UI {
             dialog2.pack();
             dialog2.setLocationRelativeTo(dialog2.getOwner());
         }
+
+        //======== Admin2 ========
+        {
+            Admin2.setTitle("\u6bd5\u4e1a\u751f\u4fe1\u606f\u7ba1\u7406");
+            Admin2.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    AdminWindowClosing(e);
+                }
+            });
+            var Admin2ContentPane = Admin2.getContentPane();
+
+            //---- button21 ----
+            button21.setText("\u8fd4\u56de");
+            button21.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button21MousePressed(e);
+                }
+            });
+
+            GroupLayout Admin2ContentPaneLayout = new GroupLayout(Admin2ContentPane);
+            Admin2ContentPane.setLayout(Admin2ContentPaneLayout);
+            Admin2ContentPaneLayout.setHorizontalGroup(
+                Admin2ContentPaneLayout.createParallelGroup()
+                    .addGroup(Admin2ContentPaneLayout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(button21)
+                        .addContainerGap(462, Short.MAX_VALUE))
+            );
+            Admin2ContentPaneLayout.setVerticalGroup(
+                Admin2ContentPaneLayout.createParallelGroup()
+                    .addGroup(Admin2ContentPaneLayout.createSequentialGroup()
+                        .addContainerGap(368, Short.MAX_VALUE)
+                        .addComponent(button21)
+                        .addContainerGap())
+            );
+            Admin2.pack();
+            Admin2.setLocationRelativeTo(Admin2.getOwner());
+        }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
+    }
+    private static Map<Integer, String> getTypeMap(Connection connection) throws SQLException {
+        Map<Integer, String> typeMap = new HashMap<>();
+
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT 职业类型编号, 职业类型名称 FROM 高校学生就业管理系统.职业类型表");
+        while (resultSet.next()) {
+            int typeCode = resultSet.getInt("职业类型编号");
+            String typeName = resultSet.getString("职业类型名称");
+            typeMap.put(typeCode, typeName);
+        }
+
+        resultSet.close();
+        statement.close();
+
+        return typeMap;
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
@@ -931,6 +1137,10 @@ public class UI {
     private JButton button9;
     private JFrame Employers;
     private JButton button8;
+    private JScrollPane scrollPane1;
+    private JTable table1;
+    private JButton button15;
+    private JButton button16;
     private JFrame Register;
     private JLabel label4;
     private JTextField textField3;
@@ -939,13 +1149,13 @@ public class UI {
     private JLabel label6;
     private JComboBox<String> comboBox2;
     private JButton button12;
+    private JLabel label9;
+    private JTextField textField2;
     private JDialog dialog1;
     private JLabel label7;
     private JButton button13;
     private JFrame Admin1;
     private JButton button17;
-    private JFrame Admin2;
-    private JButton button21;
     private JFrame Admin3;
     private JButton button25;
     private JFrame Student1;
@@ -957,6 +1167,8 @@ public class UI {
     private JDialog dialog2;
     private JLabel label8;
     private JButton button14;
+    private JFrame Admin2;
+    private JButton button21;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
     public static void main(String[] args) throws Exception {
         UI ui = new UI();
