@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.*;
@@ -219,10 +220,73 @@ public class UI {
     }
 
     private void button5MousePressed(MouseEvent e) {
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 获取数据库连接
+            Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 创建 PreparedStatement 对象
+            String query = "SELECT 院系编号, 院系名称 FROM 院系信息表";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            // 执行查询语句获取院系信息表的数据
+            ResultSet resultSet = statement.executeQuery();
+
+            // 创建表格模型
+            DefaultTableModel tableModel = new DefaultTableModel();
+
+            // 设置列名
+            tableModel.addColumn("院系编号");
+            tableModel.addColumn("院系名称");
+
+            // 清空表格模型
+            tableModel.setRowCount(0);
+
+            // 遍历查询结果，将数据填充到表格模型中
+            while (resultSet.next()) {
+                Object[] rowData = new Object[]{
+                        resultSet.getInt("院系编号"),
+                        resultSet.getString("院系名称")
+                };
+                tableModel.addRow(rowData);
+            }
+
+            // 关闭连接和资源
+            resultSet.close();
+            connection.close();
+
+            // 将表格模型设置给 table2
+            table2.setModel(tableModel);
+            // 将 tableChanged 方法添加为 table2 的 TableModelListener
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        table2.getModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if (e.getType() == TableModelEvent.UPDATE) {
+                    int row = e.getFirstRow();
+                    int column = e.getColumn();
+
+                    // 判断被修改的列是否为院系编号或院系名称列
+                    if (column == 0 || column == 1) {
+                        // 获取对应行的院系编号和院系名称
+                        Object departmentId = table2.getValueAt(row, 0);
+                        Object departmentName = table2.getValueAt(row, 1);
+
+                        // 更新数据库中的对应记录
+                        updateDepartmentRecord(departmentId, departmentName);
+                    }
+                }
+            }
+        });
+
         Admin1.setVisible(true);
         Admin.setVisible(false);
     }
-
     private void button17MousePressed(MouseEvent e) {
         Admin1.setVisible(false);
         Admin.setVisible(true);
@@ -253,196 +317,6 @@ public class UI {
         textField7.setText(null);
         EmployersSearch.setVisible(true);
     }
-
-    // 更新数据库记录的方法
-    //通过重写 isCellEditable 方法来实现某列不可修改
-    //首先，创建一个自定义的 TableModel 类，继承自 DefaultTableModel，并重写 isCellEditable 方法。
-    // 在 isCellEditable 方法中，根据需要设置特定单元格的可编辑性。
-    public class CustomTableModel extends DefaultTableModel {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            // 设置特定单元格的可编辑性
-            if (column == 0 || column == 2 || column == 4 || column == 5) {
-                // 第一列职业编号、第三列职业类型名称、第五列、第六列已聘用数量不可编辑
-                return false;
-            }
-            // 其他单元格可编辑
-            return true;
-        }
-    }
-
-    private static void updateDatabaseRecord(Object primaryKey, int column, Object newValue) {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";  // 数据库连接URL
-        String USERNAME = "root";  // 数据库用户名
-        String PASSWORD = "Lzy-200387";  // 数据库密码
-        try {
-            // 建立数据库连接
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-
-            // 构建更新语句
-            String updateQuery = "UPDATE 高校学生就业管理系统.职业信息表 SET ";
-            String columnToUpdate;
-
-            // 根据列索引选择要更新的列
-            switch (column) {
-                case 0:
-                    return;
-                case 1:
-                    columnToUpdate = "职业名称";
-                    break;
-                case 2:
-                    return;
-                case 3:
-                    columnToUpdate = "需求数量";
-                    break;
-                case 4:
-                    return;
-                case 5:
-                    columnToUpdate = "发布日期";
-                    break;
-                case 6:
-                    columnToUpdate = "截止日期";
-                    break;
-                default:
-                    // 如果列索引无效，则不执行更新操作
-                    return;
-            }
-
-            // 构建完整的更新语句
-            updateQuery += columnToUpdate + " = ? WHERE 职业编号 = ?";
-
-            // 创建预编译语句对象
-            statement = connection.prepareStatement(updateQuery);
-
-            // 设置参数
-            statement.setObject(1, newValue);
-            statement.setObject(2, primaryKey);
-
-            // 执行更新操作
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // 关闭连接和资源
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    private static String getCompanyByAccount(String account) {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        String URL = "jdbc:mysql://localhost:3306";  // 数据库连接URL
-        String USERNAME = "root";  // 数据库用户名
-        String PASSWORD = "Lzy-200387";  // 数据库密码
-        String company = "";
-
-        try {
-            // 建立数据库连接
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-
-            // 创建 PreparedStatement 对象
-            String query = "SELECT 公司 FROM 高校学生就业管理系统.账号信息表 WHERE 账号 = ?";
-            statement = connection.prepareStatement(query);
-            statement.setString(1, account);
-
-            // 执行查询语句
-            resultSet = statement.executeQuery();
-
-            // 获取查询结果
-            if (resultSet.next()) {
-                company = resultSet.getString("公司");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // 关闭连接和资源
-            closeConnection(connection, statement, resultSet);
-        }
-
-        return company;
-    }
-
-
-    // 从数据库中获取职业信息并填充到表格模型中
-    private static void fillTableData(CustomTableModel tableModel, String currentCompany) {
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        String URL = "jdbc:mysql://localhost:3306";  // 数据库连接URL
-        String USERNAME = "root";  // 数据库用户名
-        String PASSWORD = "Lzy-200387";  // 数据库密码
-        try {
-            // 建立数据库连接
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-
-            // 创建 Statement 对象
-            statement = connection.createStatement();
-
-            // 执行查询语句
-            String query = "SELECT * FROM 高校学生就业管理系统.职业信息表 WHERE 用人单位 = '" + currentCompany + "'";
-            resultSet = statement.executeQuery(query);
-            // 获取职业类型映射关系
-            // 遍历结果集，将数据填充到表格模型中
-            while (resultSet.next()) {
-                Object[] rowData = new Object[]{
-                        resultSet.getInt("职业编号"),
-                        resultSet.getString("职业名称"),
-                        resultSet.getString("职业类型名称"),
-                        resultSet.getInt("需求数量"),
-                        resultSet.getInt("已聘用数量"),
-                        resultSet.getDate("发布日期"),
-                        resultSet.getDate("截止日期"),
-                };
-                tableModel.addRow(rowData);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // 关闭连接和资源
-            closeConnection(connection, statement, resultSet);
-        }
-    }
-
-    private static void closeConnection(Connection connection, Statement statement, ResultSet resultSet) {
-        if (resultSet != null) {
-            try {
-                resultSet.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        if (statement != null) {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     private void comboBox2(ActionEvent e) {
         if (comboBox2.getSelectedItem().toString() == "用人单位") {
             label9.setVisible(true);
@@ -469,64 +343,6 @@ public class UI {
     private void button23MousePressed(MouseEvent e) {
             fillTableData((DefaultTableModel) table1.getModel(), textField6.getText(), textField7.getText(),getCompanyByAccount(textField1.getText()));
             EmployersSearch.setVisible(false);
-    }
-
-    public static void fillTableData(DefaultTableModel tableModel, String jobName, String jobTypeName, String company) {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
-        String USERNAME = "root";
-        String PASSWORD = "Lzy-200387";
-
-        try {
-            // 建立数据库连接
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-
-            // 创建 PreparedStatement 对象
-            String query = "SELECT * FROM 职业信息表 WHERE 1=1 AND 用人单位 = '" + company + "'";
-            if (jobName != null && !jobName.isEmpty()) {
-                query += " AND 职业名称 = ?";
-            }
-            if (jobTypeName != null && !jobTypeName.isEmpty()) {
-                query += " AND 职业类型名称 = ?";
-            }
-            statement = connection.prepareStatement(query);
-
-            // 设置查询参数
-            int parameterIndex = 1;
-            if (jobName != null && !jobName.isEmpty()) {
-                statement.setString(parameterIndex, jobName);
-                parameterIndex++;
-            }
-            if (jobTypeName != null && !jobTypeName.isEmpty()) {
-                statement.setString(parameterIndex, jobTypeName);
-            }
-            // 执行查询语句
-            resultSet = statement.executeQuery();
-
-            // 清空表格模型
-            tableModel.setRowCount(0);
-
-            // 遍历结果集，将数据填充到表格模型中
-            while (resultSet.next()) {
-                Object[] rowData = new Object[]{
-                        resultSet.getInt("职业编号"),
-                        resultSet.getString("职业名称"),
-                        resultSet.getString("职业类型名称"),
-                        resultSet.getInt("需求数量"),
-                        resultSet.getInt("已聘用数量"),
-                        resultSet.getDate("发布日期"),
-                        resultSet.getDate("截止日期"),
-                };
-                tableModel.addRow(rowData);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // 关闭连接和资源
-            closeConnection(connection, statement, resultSet);
-        }
     }
 
     private void button24MousePressed(MouseEvent e) {
@@ -574,64 +390,6 @@ public class UI {
     private void button27MousePressed(MouseEvent e) {
         insertJobData(textField8.getText(),textField9.getText(),Integer.parseInt(textField10.getText()),convertStringToDate(textField11.getText()),getCompanyByAccount(textField1.getText()));
     }
-    public static Date convertStringToDate(String dateString) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            java.util.Date utilDate = dateFormat.parse(dateString);
-            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-            return  sqlDate;
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-    public void insertJobData(String jobName, String jobTypeName, int demandQuantity, Date deadline, String currentCompany) {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
-        String USERNAME = "root";
-        String PASSWORD = "Lzy-200387";
-        try {
-            // 建立数据库连接
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-
-            // 查询现有数据的数量
-            String countQuery = "SELECT COUNT(*) FROM 职业信息表";
-            statement = connection.prepareStatement(countQuery);
-            resultSet = statement.executeQuery();
-            resultSet.next();
-            int jobCount = resultSet.getInt(1);
-
-            // 自动生成职业编号
-            int jobNumber = jobCount + 1;
-
-            // 创建插入数据的 PreparedStatement 对象
-            String insertQuery = "INSERT INTO 职业信息表 (职业编号, 职业名称, 职业类型名称, 需求数量, 用人单位,发布日期,截止日期,已聘用数量 ) VALUES (?, ?, ?, ?, ?, ?,?,?)";
-            statement = connection.prepareStatement(insertQuery);
-            statement.setInt(1, jobNumber);
-            statement.setString(2, jobName);
-            statement.setString(3, jobTypeName);
-            statement.setInt(4, demandQuantity);
-            statement.setString(5, currentCompany);
-            java.util.Date date = new java.util.Date();
-            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-            statement.setDate(6, sqlDate);
-            statement.setDate(7, new java.sql.Date(deadline.getTime()));
-            statement.setInt(8, 0);
-
-            // 执行插入语句
-            statement.executeUpdate();
-
-            System.out.println("职业信息已成功插入数据库，职业编号为：" + jobNumber);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // 关闭连接和资源
-            closeConnection(connection, statement, resultSet);
-        }
-    }
-
     private void textField11FocusGained(FocusEvent e) {
         //得到焦点时，当前文本框的提示文字和创建该对象时的提示文字一样，说明用户正要键入内容
         if (textField11.getText().equals("XXXX-XX-XX")){
@@ -647,7 +405,88 @@ public class UI {
         }
     }
 
+    private void button28MousePressed(MouseEvent e) {
+        AdminSearch.setVisible(true);
 
+    }
+
+    private void button29MousePressed(MouseEvent e) {
+        String departmentName = textField12.getText();
+        int departmentId = 0;
+        if (!textField13.getText().isEmpty()) {
+            departmentId = Integer.parseInt(textField13.getText());
+        }
+        searchDepartments(departmentName, departmentId);
+    }
+
+    private void button30MousePressed(MouseEvent e) {
+        String departmentName = textField12.getText();
+        String departmentIdText = textField13.getText();
+
+        // 检查院系名称是否为空
+        if (departmentName.isEmpty()) {
+            // 提示用户输入院系名称
+            JOptionPane.showMessageDialog(Admin1, "请输入院系名称", "错误", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 检查院系编号是否为空
+        int departmentId;
+        if (departmentIdText.isEmpty()) {
+            // 查询数据库中的院系数量，自动生成新的院系编号
+            departmentId = generateNewDepartmentId();
+            if (departmentId == -1) {
+                // 生成新的院系编号失败
+                JOptionPane.showMessageDialog(Admin1, "无法生成新的院系编号", "错误", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } else {
+            // 解析院系编号文本为整数
+            try {
+                departmentId = Integer.parseInt(departmentIdText);
+            } catch (NumberFormatException y) {
+                // 院系编号格式错误
+                JOptionPane.showMessageDialog(Admin1, "院系编号格式错误", "错误", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        // 检查院系编号是否重复
+        if (isDepartmentIdDuplicate(departmentId)) {
+            JOptionPane.showMessageDialog(Admin1, "院系编号已存在", "错误", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 将新数据写入数据库
+        insertDepartmentRecord(departmentId, departmentName);
+
+        // 清空文本框
+        textField12.setText("");
+        textField13.setText("");
+
+        // 刷新表格或执行其他操作
+        // ...
+    }
+
+    private void button31MousePressed(MouseEvent e) {
+        int selectedRow = table2.getSelectedRow();
+        if (selectedRow == -1) {
+            // 没有选择任何行
+            JOptionPane.showMessageDialog(Admin1, "请选择要删除的行", "提示", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        int departmentId = (int) table2.getValueAt(selectedRow, 0);
+        String departmentName = (String) table2.getValueAt(selectedRow, 1);
+
+        // 确认删除操作
+        int option = JOptionPane.showConfirmDialog(Admin1, "确定删除院系 " + departmentName + " 吗？", "确认删除", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            // 执行删除操作
+            deleteDepartmentRecord(departmentId);
+
+        }
+    }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
@@ -694,6 +533,10 @@ public class UI {
         button13 = new JButton();
         Admin1 = new JFrame();
         button17 = new JButton();
+        button28 = new JButton();
+        scrollPane2 = new JScrollPane();
+        table2 = new JTable();
+        button31 = new JButton();
         Admin3 = new JFrame();
         button25 = new JButton();
         Student1 = new JFrame();
@@ -727,6 +570,13 @@ public class UI {
         textField10 = new JTextField();
         textField11 = new JTextField();
         button27 = new JButton();
+        AdminSearch = new JFrame();
+        label19 = new JLabel();
+        textField12 = new JTextField();
+        button29 = new JButton();
+        label20 = new JLabel();
+        textField13 = new JTextField();
+        button30 = new JButton();
 
         //======== Login ========
         {
@@ -860,28 +710,27 @@ public class UI {
             StudentContentPaneLayout.setHorizontalGroup(
                 StudentContentPaneLayout.createParallelGroup()
                     .addGroup(StudentContentPaneLayout.createSequentialGroup()
-                        .addGroup(StudentContentPaneLayout.createParallelGroup()
-                            .addGroup(StudentContentPaneLayout.createSequentialGroup()
-                                .addGap(228, 228, 228)
-                                .addGroup(StudentContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(button3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(button4)
-                                    .addComponent(button2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(StudentContentPaneLayout.createSequentialGroup()
-                                .addGap(31, 31, 31)
-                                .addComponent(button10)))
-                        .addContainerGap(228, Short.MAX_VALUE))
+                        .addGap(31, 31, 31)
+                        .addComponent(button10)
+                        .addContainerGap(451, Short.MAX_VALUE))
+                    .addGroup(StudentContentPaneLayout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addComponent(button4)
+                        .addGap(64, 64, 64)
+                        .addComponent(button3, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                        .addComponent(button2, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46))
             );
             StudentContentPaneLayout.setVerticalGroup(
                 StudentContentPaneLayout.createParallelGroup()
                     .addGroup(StudentContentPaneLayout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(button4)
-                        .addGap(18, 18, 18)
-                        .addComponent(button3)
-                        .addGap(18, 18, 18)
-                        .addComponent(button2)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
+                        .addContainerGap(138, Short.MAX_VALUE)
+                        .addGroup(StudentContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(button4, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button3, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button2, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE))
+                        .addGap(120, 120, 120)
                         .addComponent(button10)
                         .addContainerGap())
             );
@@ -941,28 +790,27 @@ public class UI {
             AdminContentPaneLayout.setHorizontalGroup(
                 AdminContentPaneLayout.createParallelGroup()
                     .addGroup(AdminContentPaneLayout.createSequentialGroup()
-                        .addGroup(AdminContentPaneLayout.createParallelGroup()
-                            .addGroup(AdminContentPaneLayout.createSequentialGroup()
-                                .addGap(222, 222, 222)
-                                .addGroup(AdminContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(button6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(button5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(button7, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(AdminContentPaneLayout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(button9)))
-                        .addContainerGap(221, Short.MAX_VALUE))
+                        .addGap(48, 48, 48)
+                        .addComponent(button5, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                        .addComponent(button6)
+                        .addGap(49, 49, 49)
+                        .addComponent(button7, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44))
+                    .addGroup(AdminContentPaneLayout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(button9)
+                        .addContainerGap(454, Short.MAX_VALUE))
             );
             AdminContentPaneLayout.setVerticalGroup(
                 AdminContentPaneLayout.createParallelGroup()
                     .addGroup(AdminContentPaneLayout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addComponent(button5)
-                        .addGap(18, 18, 18)
-                        .addComponent(button6)
-                        .addGap(18, 18, 18)
-                        .addComponent(button7)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
+                        .addGap(131, 131, 131)
+                        .addGroup(AdminContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(button5, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button6, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button7, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
                         .addComponent(button9)
                         .addContainerGap())
             );
@@ -1037,27 +885,27 @@ public class UI {
                 EmployersContentPaneLayout.createParallelGroup()
                     .addGroup(EmployersContentPaneLayout.createSequentialGroup()
                         .addGap(27, 27, 27)
-                        .addGroup(EmployersContentPaneLayout.createParallelGroup()
-                            .addComponent(scrollPane1)
-                            .addGroup(EmployersContentPaneLayout.createSequentialGroup()
-                                .addComponent(button8)
-                                .addGap(18, 18, 18)
-                                .addComponent(button24)
-                                .addGap(18, 18, 18)
-                                .addComponent(button15)
-                                .addGap(18, 18, 18)
-                                .addComponent(button16)
-                                .addGap(18, 18, 18)
-                                .addComponent(button26)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(34, 34, 34))
+                        .addComponent(button8)
+                        .addGap(18, 18, 18)
+                        .addComponent(button24)
+                        .addGap(18, 18, 18)
+                        .addComponent(button15)
+                        .addGap(18, 18, 18)
+                        .addComponent(button16)
+                        .addGap(18, 18, 18)
+                        .addComponent(button26)
+                        .addContainerGap(13, Short.MAX_VALUE))
+                    .addGroup(GroupLayout.Alignment.TRAILING, EmployersContentPaneLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(scrollPane1)
+                        .addContainerGap())
             );
             EmployersContentPaneLayout.setVerticalGroup(
                 EmployersContentPaneLayout.createParallelGroup()
                     .addGroup(GroupLayout.Alignment.TRAILING, EmployersContentPaneLayout.createSequentialGroup()
-                        .addContainerGap(36, Short.MAX_VALUE)
+                        .addContainerGap(45, Short.MAX_VALUE)
                         .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 305, GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
+                        .addGap(18, 18, 18)
                         .addGroup(EmployersContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(button8)
                             .addComponent(button24)
@@ -1240,20 +1088,55 @@ public class UI {
                 }
             });
 
+            //---- button28 ----
+            button28.setText("\u67e5\u8be2/\u589e\u52a0\u9662\u7cfb");
+            button28.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button28MousePressed(e);
+                }
+            });
+
+            //======== scrollPane2 ========
+            {
+                scrollPane2.setViewportView(table2);
+            }
+
+            //---- button31 ----
+            button31.setText("\u5220\u9664\u9662\u7cfb");
+            button31.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button31MousePressed(e);
+                }
+            });
+
             GroupLayout Admin1ContentPaneLayout = new GroupLayout(Admin1ContentPane);
             Admin1ContentPane.setLayout(Admin1ContentPaneLayout);
             Admin1ContentPaneLayout.setHorizontalGroup(
                 Admin1ContentPaneLayout.createParallelGroup()
-                    .addGroup(Admin1ContentPaneLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(button17)
-                        .addContainerGap(462, Short.MAX_VALUE))
+                    .addGroup(GroupLayout.Alignment.TRAILING, Admin1ContentPaneLayout.createSequentialGroup()
+                        .addContainerGap(60, Short.MAX_VALUE)
+                        .addGroup(Admin1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(scrollPane2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addGroup(Admin1ContentPaneLayout.createSequentialGroup()
+                                .addComponent(button17)
+                                .addGap(76, 76, 76)
+                                .addComponent(button28)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(button31)))
+                        .addGap(54, 54, 54))
             );
             Admin1ContentPaneLayout.setVerticalGroup(
                 Admin1ContentPaneLayout.createParallelGroup()
                     .addGroup(Admin1ContentPaneLayout.createSequentialGroup()
-                        .addContainerGap(368, Short.MAX_VALUE)
-                        .addComponent(button17)
+                        .addContainerGap(28, Short.MAX_VALUE)
+                        .addComponent(scrollPane2, GroupLayout.PREFERRED_SIZE, 322, GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(Admin1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(button17)
+                            .addComponent(button28)
+                            .addComponent(button31))
                         .addContainerGap())
             );
             Admin1.pack();
@@ -1724,6 +1607,76 @@ public class UI {
             EmployersNeed.pack();
             EmployersNeed.setLocationRelativeTo(EmployersNeed.getOwner());
         }
+
+        //======== AdminSearch ========
+        {
+            AdminSearch.setTitle("\u67e5\u8be2\u4fe1\u606f");
+            AdminSearch.setAlwaysOnTop(true);
+            var AdminSearchContentPane = AdminSearch.getContentPane();
+
+            //---- label19 ----
+            label19.setText("\u9662\u7cfb\u540d\u79f0");
+
+            //---- button29 ----
+            button29.setText("\u67e5\u8be2");
+            button29.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button29MousePressed(e);
+                }
+            });
+
+            //---- label20 ----
+            label20.setText("\u9662\u7cfb\u7f16\u53f7");
+
+            //---- button30 ----
+            button30.setText("\u589e\u52a0");
+            button30.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button30MousePressed(e);
+                }
+            });
+
+            GroupLayout AdminSearchContentPaneLayout = new GroupLayout(AdminSearchContentPane);
+            AdminSearchContentPane.setLayout(AdminSearchContentPaneLayout);
+            AdminSearchContentPaneLayout.setHorizontalGroup(
+                AdminSearchContentPaneLayout.createParallelGroup()
+                    .addGroup(AdminSearchContentPaneLayout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(AdminSearchContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                            .addComponent(label19)
+                            .addComponent(label20))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(AdminSearchContentPaneLayout.createParallelGroup()
+                            .addComponent(textField12)
+                            .addGroup(AdminSearchContentPaneLayout.createSequentialGroup()
+                                .addComponent(textField13, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 1, Short.MAX_VALUE)))
+                        .addGap(97, 97, 97)
+                        .addGroup(AdminSearchContentPaneLayout.createParallelGroup()
+                            .addComponent(button29)
+                            .addComponent(button30))
+                        .addGap(43, 43, 43))
+            );
+            AdminSearchContentPaneLayout.setVerticalGroup(
+                AdminSearchContentPaneLayout.createParallelGroup()
+                    .addGroup(AdminSearchContentPaneLayout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addGroup(AdminSearchContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label19)
+                            .addComponent(textField12, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button29, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
+                        .addGap(48, 48, 48)
+                        .addGroup(AdminSearchContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(textField13, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label20)
+                            .addComponent(button30, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(47, Short.MAX_VALUE))
+            );
+            AdminSearch.pack();
+            AdminSearch.setLocationRelativeTo(AdminSearch.getOwner());
+        }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 
@@ -1771,6 +1724,10 @@ public class UI {
     private JButton button13;
     private JFrame Admin1;
     private JButton button17;
+    private JButton button28;
+    private JScrollPane scrollPane2;
+    private JTable table2;
+    private JButton button31;
     private JFrame Admin3;
     private JButton button25;
     private JFrame Student1;
@@ -1804,10 +1761,590 @@ public class UI {
     private JTextField textField10;
     private JTextField textField11;
     private JButton button27;
+    private JFrame AdminSearch;
+    private JLabel label19;
+    private JTextField textField12;
+    private JButton button29;
+    private JLabel label20;
+    private JTextField textField13;
+    private JButton button30;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
     public static void main(String[] args) throws Exception {
         UI ui = new UI();
         ui.initComponents();
         ui.Login.setVisible(true);
     }
+    //管理员删除院系记录
+    private void deleteDepartmentRecord(int departmentId) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 检查是否存在相关的毕业生信息
+            String checkQuery = "SELECT COUNT(*) AS count FROM 毕业生信息表 WHERE 所在院系 = ?";
+            statement = connection.prepareStatement(checkQuery);
+            statement.setInt(1, departmentId);
+            resultSet = statement.executeQuery();
+
+            // 获取查询结果
+            if (resultSet.next()) {
+                int count = resultSet.getInt("count");
+                if (count > 0) {
+                    // 存在相关数据，提示用户处理相关数据
+                    int option = JOptionPane.showConfirmDialog(Admin1,
+                            "存在与该院系相关的毕业生信息，确定要删除该院系及相关数据吗？相关的毕业生信息也会丢失",
+                            "确认删除",
+                            JOptionPane.YES_NO_OPTION);
+                    if (option != JOptionPane.YES_OPTION) {
+                        return; // 用户取消删除操作
+                    }
+                }
+            }
+
+            // 停用外键约束
+            String disableFKQuery = "SET FOREIGN_KEY_CHECKS = 0;";
+            statement = connection.prepareStatement(disableFKQuery);
+            statement.execute();
+
+            // 执行删除操作
+            String deleteQuery = "DELETE FROM 院系信息表 WHERE 院系编号 = ?";
+            statement = connection.prepareStatement(deleteQuery);
+            statement.setInt(1, departmentId);
+            statement.executeUpdate();
+
+            // 启用外键约束
+            String enableFKQuery = "SET FOREIGN_KEY_CHECKS = 1;";
+            statement = connection.prepareStatement(enableFKQuery);
+            statement.execute();
+
+            // 提示删除成功
+            JOptionPane.showMessageDialog(Admin1, "删除成功", "提示", JOptionPane.INFORMATION_MESSAGE);
+
+            // 刷新表格或执行其他操作
+            // ...
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, resultSet);
+        }
+    }
+
+    // 管理员添加院系时检查院系编号是否重复
+    private boolean isDepartmentIdDuplicate(int departmentId) {
+        boolean isDuplicate = false;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 查询数据库中是否存在相同的院系编号
+            String query = "SELECT 院系编号 FROM 院系信息表 WHERE 院系编号 = ?";
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, departmentId);
+            resultSet = statement.executeQuery();
+
+            // 检查查询结果
+            if (resultSet.next()) {
+                isDuplicate = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, resultSet);
+        }
+
+        return isDuplicate;
+    }
+
+    // 管理员添加院系时将新数据插入数据库
+    private void insertDepartmentRecord(int departmentId, String departmentName) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 创建 PreparedStatement 对象
+            String query = "INSERT INTO 院系信息表 (院系编号, 院系名称) VALUES (?, ?)";
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, departmentId);
+            statement.setString(2, departmentName);
+
+            // 执行插入语句
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, null);
+        }
+    }
+
+    // 管理员添加院系时生成新的院系编号
+    private int generateNewDepartmentId() {
+        int newDepartmentId = -1;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 查询数据库中的院系数量
+            String countQuery = "SELECT COUNT(*) AS count FROM 院系信息表";
+            statement = connection.prepareStatement(countQuery);
+            resultSet = statement.executeQuery();
+
+            // 获取查询结果
+            if (resultSet.next()) {
+                int count = resultSet.getInt("count");
+                newDepartmentId = count + 1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, resultSet);
+        }
+
+        return newDepartmentId;
+    }
+
+    //管理员进行院系查询方法
+    public void searchDepartments(String departmentName, int departmentId) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 创建 PreparedStatement 对象
+            String query = "SELECT * FROM 院系信息表 WHERE 1=1";
+            if (departmentName != null && !departmentName.isEmpty()) {
+                query += " AND 院系名称 LIKE ?";
+            }
+            if (departmentId != 0) {
+                query += " AND 院系编号 = ?";
+            }
+            statement = connection.prepareStatement(query);
+
+            // 设置查询参数
+            int parameterIndex = 1;
+            if (departmentName != null && !departmentName.isEmpty()) {
+                statement.setString(parameterIndex, "%" + departmentName + "%");
+                parameterIndex++;
+            }
+            if (departmentId != 0) {
+                statement.setInt(parameterIndex, departmentId);
+            }
+
+            // 执行查询语句
+            resultSet = statement.executeQuery();
+
+            // 清空表格模型
+            DefaultTableModel tableModel = (DefaultTableModel) table2.getModel();
+            tableModel.setRowCount(0);
+
+            // 遍历结果集，将数据填充到表格模型中
+            while (resultSet.next()) {
+                Object[] rowData = new Object[]{
+                        resultSet.getInt("院系编号"),
+                        resultSet.getString("院系名称")
+                };
+                tableModel.addRow(rowData);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, resultSet);
+        }
+    }
+
+    //管理员更新院系信息的方法
+    private void updateDepartmentRecord(Object departmentId, Object departmentName) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 创建 PreparedStatement 对象
+            String query;
+            if (departmentId != null && departmentName != null) {
+                // 同时修改院系编号和院系名称
+                query = "UPDATE 院系信息表 SET 院系编号 = ?, 院系名称 = ? WHERE 院系编号 = ?";
+                statement = connection.prepareStatement(query);
+                statement.setInt(1, Integer.parseInt(departmentId.toString()));
+                statement.setString(2, departmentName.toString());
+                statement.setInt(3, Integer.parseInt(departmentId.toString()));
+            } else if (departmentId != null) {
+                // 单独修改院系编号
+                query = "UPDATE 院系信息表 SET 院系编号 = ? WHERE 院系编号 = ?";
+                statement = connection.prepareStatement(query);
+                statement.setInt(1, Integer.parseInt(departmentId.toString()));
+                statement.setInt(2, Integer.parseInt(departmentId.toString()));
+            } else if (departmentName != null) {
+                // 单独修改院系名称
+                query = "UPDATE 院系信息表 SET 院系名称 = ? WHERE 院系名称 = ?";
+                statement = connection.prepareStatement(query);
+                statement.setString(1, departmentName.toString());
+                statement.setString(2, departmentName.toString());
+            }
+
+            // 执行更新语句
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, null);
+        }
+    }
+
+    //用人单位进行查询需求的方法
+    public static void fillTableData(DefaultTableModel tableModel, String jobName, String jobTypeName, String company) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 创建 PreparedStatement 对象
+            String query = "SELECT * FROM 职业信息表 WHERE 1=1 AND 用人单位 = '" + company + "'";
+            if (jobName != null && !jobName.isEmpty()) {
+                query += " AND 职业名称 = ?";
+            }
+            if (jobTypeName != null && !jobTypeName.isEmpty()) {
+                query += " AND 职业类型名称 = ?";
+            }
+            statement = connection.prepareStatement(query);
+
+            // 设置查询参数
+            int parameterIndex = 1;
+            if (jobName != null && !jobName.isEmpty()) {
+                statement.setString(parameterIndex, jobName);
+                parameterIndex++;
+            }
+            if (jobTypeName != null && !jobTypeName.isEmpty()) {
+                statement.setString(parameterIndex, jobTypeName);
+            }
+            // 执行查询语句
+            resultSet = statement.executeQuery();
+
+            // 清空表格模型
+            tableModel.setRowCount(0);
+
+            // 遍历结果集，将数据填充到表格模型中
+            while (resultSet.next()) {
+                Object[] rowData = new Object[]{
+                        resultSet.getInt("职业编号"),
+                        resultSet.getString("职业名称"),
+                        resultSet.getString("职业类型名称"),
+                        resultSet.getInt("需求数量"),
+                        resultSet.getInt("已聘用数量"),
+                        resultSet.getDate("发布日期"),
+                        resultSet.getDate("截止日期"),
+                };
+                tableModel.addRow(rowData);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, resultSet);
+        }
+    }
+
+    //用人单位进行发布需求的方法
+    public void insertJobData(String jobName, String jobTypeName, int demandQuantity, Date deadline, String currentCompany) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 查询现有数据的数量
+            String countQuery = "SELECT COUNT(*) FROM 职业信息表";
+            statement = connection.prepareStatement(countQuery);
+            resultSet = statement.executeQuery();
+            resultSet.next();
+            int jobCount = resultSet.getInt(1);
+
+            // 自动生成职业编号
+            int jobNumber = jobCount + 1;
+
+            // 创建插入数据的 PreparedStatement 对象
+            String insertQuery = "INSERT INTO 职业信息表 (职业编号, 职业名称, 职业类型名称, 需求数量, 用人单位,发布日期,截止日期,已聘用数量 ) VALUES (?, ?, ?, ?, ?, ?,?,?)";
+            statement = connection.prepareStatement(insertQuery);
+            statement.setInt(1, jobNumber);
+            statement.setString(2, jobName);
+            statement.setString(3, jobTypeName);
+            statement.setInt(4, demandQuantity);
+            statement.setString(5, currentCompany);
+            java.util.Date date = new java.util.Date();
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            statement.setDate(6, sqlDate);
+            statement.setDate(7, new java.sql.Date(deadline.getTime()));
+            statement.setInt(8, 0);
+
+            // 执行插入语句
+            statement.executeUpdate();
+
+            System.out.println("职业信息已成功插入数据库，职业编号为：" + jobNumber);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, resultSet);
+        }
+    }
+
+    //用人单位查询界面填充表格的方法（从数据库中获取职业信息并填充到表格模型中）
+    private static void fillTableData(CustomTableModel tableModel, String currentCompany) {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String URL = "jdbc:mysql://localhost:3306";  // 数据库连接URL
+        String USERNAME = "root";  // 数据库用户名
+        String PASSWORD = "Lzy-200387";  // 数据库密码
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 创建 Statement 对象
+            statement = connection.createStatement();
+
+            // 执行查询语句
+            String query = "SELECT * FROM 高校学生就业管理系统.职业信息表 WHERE 用人单位 = '" + currentCompany + "'";
+            resultSet = statement.executeQuery(query);
+            // 获取职业类型映射关系
+            // 遍历结果集，将数据填充到表格模型中
+            while (resultSet.next()) {
+                Object[] rowData = new Object[]{
+                        resultSet.getInt("职业编号"),
+                        resultSet.getString("职业名称"),
+                        resultSet.getString("职业类型名称"),
+                        resultSet.getInt("需求数量"),
+                        resultSet.getInt("已聘用数量"),
+                        resultSet.getDate("发布日期"),
+                        resultSet.getDate("截止日期"),
+                };
+                tableModel.addRow(rowData);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, resultSet);
+        }
+    }
+
+    //通过目前登陆的账号获取当前账号的公司的方法
+    private static String getCompanyByAccount(String account) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String URL = "jdbc:mysql://localhost:3306";  // 数据库连接URL
+        String USERNAME = "root";  // 数据库用户名
+        String PASSWORD = "Lzy-200387";  // 数据库密码
+        String company = "";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 创建 PreparedStatement 对象
+            String query = "SELECT 公司 FROM 高校学生就业管理系统.账号信息表 WHERE 账号 = ?";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, account);
+
+            // 执行查询语句
+            resultSet = statement.executeQuery();
+
+            // 获取查询结果
+            if (resultSet.next()) {
+                company = resultSet.getString("公司");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, resultSet);
+        }
+
+        return company;
+    }
+
+    //可以直接在jtable上进行修改的方法（用人单位版）
+    private static void updateDatabaseRecord(Object primaryKey, int column, Object newValue) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";  // 数据库连接URL
+        String USERNAME = "root";  // 数据库用户名
+        String PASSWORD = "Lzy-200387";  // 数据库密码
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 构建更新语句
+            String updateQuery = "UPDATE 高校学生就业管理系统.职业信息表 SET ";
+            String columnToUpdate;
+
+            // 根据列索引选择要更新的列
+            switch (column) {
+                case 0:
+                    return;
+                case 1:
+                    columnToUpdate = "职业名称";
+                    break;
+                case 2:
+                    return;
+                case 3:
+                    columnToUpdate = "需求数量";
+                    break;
+                case 4:
+                    return;
+                case 5:
+                    columnToUpdate = "发布日期";
+                    break;
+                case 6:
+                    columnToUpdate = "截止日期";
+                    break;
+                default:
+                    // 如果列索引无效，则不执行更新操作
+                    return;
+            }
+
+            // 构建完整的更新语句
+            updateQuery += columnToUpdate + " = ? WHERE 职业编号 = ?";
+
+            // 创建预编译语句对象
+            statement = connection.prepareStatement(updateQuery);
+
+            // 设置参数
+            statement.setObject(1, newValue);
+            statement.setObject(2, primaryKey);
+
+            // 执行更新操作
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    //禁止修改表格中某几列的方法
+    //通过重写 isCellEditable 方法来实现某列不可修改
+    //首先，创建一个自定义的 TableModel 类，继承自 DefaultTableModel，并重写 isCellEditable 方法。
+    // 在 isCellEditable 方法中，根据需要设置特定单元格的可编辑性。
+    public class CustomTableModel extends DefaultTableModel {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            // 设置特定单元格的可编辑性
+            if (column == 0 || column == 2 || column == 4 || column == 5) {
+                // 第一列职业编号、第三列职业类型名称、第五列、第六列已聘用数量不可编辑
+                return false;
+            }
+            // 其他单元格可编辑
+            return true;
+        }
+    }
+
+    //将字符串转化为日期的方法
+    public static Date convertStringToDate(String dateString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            java.util.Date utilDate = dateFormat.parse(dateString);
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            return  sqlDate;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //关闭数据库链接的方法
+    private static void closeConnection(Connection connection, Statement statement, ResultSet resultSet) {
+        if (resultSet != null) {
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (statement != null) {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 }
+
