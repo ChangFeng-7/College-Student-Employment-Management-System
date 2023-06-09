@@ -261,8 +261,8 @@ new FormModel {
 			"location": new java.awt.Point( 1215, 450 )
 		} )
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {space :p:28:p, comp button25:::p::p, space ::462:x}}"
-			"$verticalGroup": "par l {seq l {space ::368:x, comp button25:::p::p, space :::p}}"
+			"$horizontalGroup": "par l {seq l {space :p:28:p, par l:::p {seq {comp button25:::p::p, space :p:111:p, comp button38:::p::p, space :::x, comp button39:::p::p}, comp scrollPane4:::p:510:p}, space ::30:x}}"
+			"$verticalGroup": "par l {seq l {space :::x, comp scrollPane4:::p:350:p, space u:::p, par b {comp button25::b:p::p, comp button38::b:p::p, comp button39::b:p::p}, space :::p}}"
 		} ) {
 			name: "Admin3"
 			"title": "招聘信息管理"
@@ -271,6 +271,22 @@ new FormModel {
 				name: "button25"
 				"text": "返回"
 				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button25MousePressed", true ) )
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane4"
+				add( new FormComponent( "javax.swing.JTable" ) {
+					name: "table4"
+				} )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button38"
+				"text": "查询/增加招聘信息"
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button38MousePressed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button39"
+				"text": "删除招聘信息"
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button35MousePressed", true ) )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": #Dimension0
@@ -569,7 +585,7 @@ new FormModel {
 			"$verticalGroup": "par l {seq l {space :p:51:p, par b {comp label25::b:p::p, comp textField17::b:p::p}, space :p:28:p, par t {seq t {par b {comp label26::b:p::p, comp textField18::b:p::p}, space :p:27:p, par b {comp label29::b:p::p, comp textField21::b:p::p}, space :p:17:p, par b {comp textField22::b:p::p, comp label30::b:p::p}, space :p:22:p, par b {comp textField19::b:p::p, comp label27::b:p::p}, space :p:27:p, par b {comp textField20::b:p::p, comp label28::b:p::p}, space :p:28:p, par b {comp label31::b:p::p, comp textField23::b:p::p}, space :p:19:p, par b {comp label32::b:p::p, comp textField24::b:p::p}, space :p:17:p, par b {comp label33::b:p::p, comp textField25::b:p::p}, space ::73:x}, seq t {comp button36:::::x, space :p:48:p, comp button37:::p:167:p, space :p:93:p}}}}"
 		} ) {
 			name: "AdminSearch2"
-			"title": "查询/增加信息"
+			"title": "查询/增加毕业生信息"
 			"alwaysOnTop": true
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label25"
@@ -645,8 +661,84 @@ new FormModel {
 				name: "textField25"
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"size": new java.awt.Dimension( 785, 610 )
+			"size": &Dimension4 new java.awt.Dimension( 785, 610 )
 			"location": new java.awt.Point( 1130, 2160 )
+		} )
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq l {space :p:190:p, par t {comp label41:::p::p, comp label40:::p::p, comp label36::t:p::p, comp label37::t:p::p, comp label34::t:p::p, comp label35::t:p::p, comp label38:::p::p, comp label39::t:p::p}, space s:::p, par l {par l:::p {comp textField29:::::x, comp textField28:::::x, comp textField26::l:p:132:p, comp textField27::l:::x}, comp textField30:::p:132:p, comp textField32::l:p:132:p, comp textField33::l:p:132:p, comp textField31::l:p:132:p}, space :p:84:p, par l {comp button40:::::x, seq {comp button41:::p:177:p, space :0:0:x}}, space ::104:x}}"
+			"$verticalGroup": "par l {seq l {space :p:51:p, par b {comp label34::b:p::p, comp textField26::b:p::p}, space :p:28:p, par b {comp label35::b:p::p, comp textField27::b:p::p}, space :p:27:p, par b {comp label38::b:p::p, comp textField30::b:p::p}, space :p:17:p, par b {comp textField31::b:p::p, comp label39::b:p::p}, space :p:22:p, par b {comp textField28::b:p::p, comp label36::b:p::p}, space :p:27:p, par b {comp textField29::b:p::p, comp label37::b:p::p}, space :p:28:p, par b {comp label40::b:p::p, comp textField32::b:p::p}, space :p:19:p, par b {comp label41::b:p::p, comp textField33::b:p::p}, space ::120:x}, seq t {space :p:87:p, comp button40:::::x, space :p:34:p, comp button41:::p:167:p, space :p:129:p}}"
+		} ) {
+			name: "AdminSearch3"
+			"title": "查询/增加招聘信息"
+			"alwaysOnTop": true
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label34"
+				"text": "职业编号"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField26"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button40"
+				"text": "查询"
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button40MousePressed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label35"
+				"text": "职业名称"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField27"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button41"
+				"text": "增加"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField28"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField29"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label36"
+				"text": "用人单位"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label37"
+				"text": "发布日期"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label38"
+				"text": "职业类型名称"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label39"
+				"text": "需求数量"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label40"
+				"text": "截止日期"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label41"
+				"text": "已聘用数量"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField30"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField31"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField32"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField33"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": #Dimension4
+			"location": new java.awt.Point( 1130, 2785 )
 		} )
 	}
 }

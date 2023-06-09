@@ -330,6 +330,7 @@ public class UI {
     private void button7MousePressed(MouseEvent e) {
         Admin3.setVisible(true);
         Admin.setVisible(false);
+        loadJobInformation(table4);
     }
 
     private void button15MousePressed(MouseEvent e) {
@@ -593,6 +594,14 @@ public class UI {
         }
     }
 
+    private void button40MousePressed(MouseEvent e) {
+        searchJobInformation(textField26.getText(),textField27.getText(),textField31.getText(),textField28.getText(),textField29.getText(),textField32.getText(),textField33.getText(),textField30.getText());
+    }
+
+    private void button38MousePressed(MouseEvent e) {
+        AdminSearch3.setVisible(true);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         // Generated using JFormDesigner Evaluation license - 林正阳
@@ -645,12 +654,18 @@ public class UI {
         button31 = new JButton();
         Admin3 = new JFrame();
         button25 = new JButton();
+        scrollPane4 = new JScrollPane();
+        table4 = new JTable();
+        button38 = new JButton();
+        button39 = new JButton();
         Student1 = new JFrame();
         button18 = new JButton();
         Student2 = new JFrame();
         button19 = new JButton();
         Student3 = new JFrame();
         button20 = new JButton();
+        scrollPane5 = new JScrollPane();
+        table5 = new JTable();
         dialog2 = new JDialog();
         label8 = new JLabel();
         button14 = new JButton();
@@ -720,6 +735,25 @@ public class UI {
         textField23 = new JTextField();
         textField24 = new JTextField();
         textField25 = new JTextField();
+        AdminSearch3 = new JFrame();
+        label34 = new JLabel();
+        textField26 = new JTextField();
+        button40 = new JButton();
+        label35 = new JLabel();
+        textField27 = new JTextField();
+        button41 = new JButton();
+        textField28 = new JTextField();
+        textField29 = new JTextField();
+        label36 = new JLabel();
+        label37 = new JLabel();
+        label38 = new JLabel();
+        label39 = new JLabel();
+        label40 = new JLabel();
+        label41 = new JLabel();
+        textField30 = new JTextField();
+        textField31 = new JTextField();
+        textField32 = new JTextField();
+        textField33 = new JTextField();
 
         //======== Login ========
         {
@@ -1318,20 +1352,55 @@ public class UI {
                 }
             });
 
+            //======== scrollPane4 ========
+            {
+                scrollPane4.setViewportView(table4);
+            }
+
+            //---- button38 ----
+            button38.setText("\u67e5\u8be2/\u589e\u52a0\u62db\u8058\u4fe1\u606f");
+            button38.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button38MousePressed(e);
+                }
+            });
+
+            //---- button39 ----
+            button39.setText("\u5220\u9664\u62db\u8058\u4fe1\u606f");
+            button39.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button35MousePressed(e);
+                }
+            });
+
             GroupLayout Admin3ContentPaneLayout = new GroupLayout(Admin3ContentPane);
             Admin3ContentPane.setLayout(Admin3ContentPaneLayout);
             Admin3ContentPaneLayout.setHorizontalGroup(
                 Admin3ContentPaneLayout.createParallelGroup()
                     .addGroup(Admin3ContentPaneLayout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addComponent(button25)
-                        .addContainerGap(462, Short.MAX_VALUE))
+                        .addGroup(Admin3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                            .addGroup(Admin3ContentPaneLayout.createSequentialGroup()
+                                .addComponent(button25)
+                                .addGap(111, 111, 111)
+                                .addComponent(button38)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(button39))
+                            .addComponent(scrollPane4, GroupLayout.PREFERRED_SIZE, 510, GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(30, Short.MAX_VALUE))
             );
             Admin3ContentPaneLayout.setVerticalGroup(
                 Admin3ContentPaneLayout.createParallelGroup()
                     .addGroup(Admin3ContentPaneLayout.createSequentialGroup()
-                        .addContainerGap(368, Short.MAX_VALUE)
-                        .addComponent(button25)
+                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(scrollPane4, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(Admin3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(button25)
+                            .addComponent(button38)
+                            .addComponent(button39))
                         .addContainerGap())
             );
             Admin3.pack();
@@ -1438,19 +1507,28 @@ public class UI {
                 }
             });
 
+            //======== scrollPane5 ========
+            {
+                scrollPane5.setViewportView(table5);
+            }
+
             GroupLayout Student3ContentPaneLayout = new GroupLayout(Student3ContentPane);
             Student3ContentPane.setLayout(Student3ContentPaneLayout);
             Student3ContentPaneLayout.setHorizontalGroup(
                 Student3ContentPaneLayout.createParallelGroup()
                     .addGroup(Student3ContentPaneLayout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addComponent(button20)
-                        .addContainerGap(462, Short.MAX_VALUE))
+                        .addGroup(Student3ContentPaneLayout.createParallelGroup()
+                            .addComponent(button20)
+                            .addComponent(scrollPane5, GroupLayout.PREFERRED_SIZE, 514, GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(26, Short.MAX_VALUE))
             );
             Student3ContentPaneLayout.setVerticalGroup(
                 Student3ContentPaneLayout.createParallelGroup()
                     .addGroup(Student3ContentPaneLayout.createSequentialGroup()
-                        .addContainerGap(368, Short.MAX_VALUE)
+                        .addContainerGap()
+                        .addComponent(scrollPane5, GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button20)
                         .addContainerGap())
             );
@@ -1979,7 +2057,7 @@ public class UI {
 
         //======== AdminSearch2 ========
         {
-            AdminSearch2.setTitle("\u67e5\u8be2/\u589e\u52a0\u4fe1\u606f");
+            AdminSearch2.setTitle("\u67e5\u8be2/\u589e\u52a0\u6bd5\u4e1a\u751f\u4fe1\u606f");
             AdminSearch2.setAlwaysOnTop(true);
             var AdminSearch2ContentPane = AdminSearch2.getContentPane();
 
@@ -2113,6 +2191,129 @@ public class UI {
             AdminSearch2.pack();
             AdminSearch2.setLocationRelativeTo(AdminSearch2.getOwner());
         }
+
+        //======== AdminSearch3 ========
+        {
+            AdminSearch3.setTitle("\u67e5\u8be2/\u589e\u52a0\u62db\u8058\u4fe1\u606f");
+            AdminSearch3.setAlwaysOnTop(true);
+            var AdminSearch3ContentPane = AdminSearch3.getContentPane();
+
+            //---- label34 ----
+            label34.setText("\u804c\u4e1a\u7f16\u53f7");
+
+            //---- button40 ----
+            button40.setText("\u67e5\u8be2");
+            button40.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button40MousePressed(e);
+                }
+            });
+
+            //---- label35 ----
+            label35.setText("\u804c\u4e1a\u540d\u79f0");
+
+            //---- button41 ----
+            button41.setText("\u589e\u52a0");
+
+            //---- label36 ----
+            label36.setText("\u7528\u4eba\u5355\u4f4d");
+
+            //---- label37 ----
+            label37.setText("\u53d1\u5e03\u65e5\u671f");
+
+            //---- label38 ----
+            label38.setText("\u804c\u4e1a\u7c7b\u578b\u540d\u79f0");
+
+            //---- label39 ----
+            label39.setText("\u9700\u6c42\u6570\u91cf");
+
+            //---- label40 ----
+            label40.setText("\u622a\u6b62\u65e5\u671f");
+
+            //---- label41 ----
+            label41.setText("\u5df2\u8058\u7528\u6570\u91cf");
+
+            GroupLayout AdminSearch3ContentPaneLayout = new GroupLayout(AdminSearch3ContentPane);
+            AdminSearch3ContentPane.setLayout(AdminSearch3ContentPaneLayout);
+            AdminSearch3ContentPaneLayout.setHorizontalGroup(
+                AdminSearch3ContentPaneLayout.createParallelGroup()
+                    .addGroup(AdminSearch3ContentPaneLayout.createSequentialGroup()
+                        .addGap(190, 190, 190)
+                        .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                            .addComponent(label41)
+                            .addComponent(label40)
+                            .addComponent(label36)
+                            .addComponent(label37)
+                            .addComponent(label34)
+                            .addComponent(label35)
+                            .addComponent(label38)
+                            .addComponent(label39))
+                        .addGap(18, 18, 18)
+                        .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup()
+                            .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                .addComponent(textField29)
+                                .addComponent(textField28)
+                                .addComponent(textField26, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(textField27))
+                            .addComponent(textField30, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textField32, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textField33, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textField31, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE))
+                        .addGap(84, 84, 84)
+                        .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup()
+                            .addComponent(button40, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(AdminSearch3ContentPaneLayout.createSequentialGroup()
+                                .addComponent(button41, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap(104, Short.MAX_VALUE))
+            );
+            AdminSearch3ContentPaneLayout.setVerticalGroup(
+                AdminSearch3ContentPaneLayout.createParallelGroup()
+                    .addGroup(AdminSearch3ContentPaneLayout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label34)
+                            .addComponent(textField26, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)
+                        .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label35)
+                            .addComponent(textField27, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)
+                        .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label38)
+                            .addComponent(textField30, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17)
+                        .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(textField31, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label39))
+                        .addGap(22, 22, 22)
+                        .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(textField28, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label36))
+                        .addGap(27, 27, 27)
+                        .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(textField29, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label37))
+                        .addGap(28, 28, 28)
+                        .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label40)
+                            .addComponent(textField32, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(19, 19, 19)
+                        .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label41)
+                            .addComponent(textField33, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(120, Short.MAX_VALUE))
+                    .addGroup(GroupLayout.Alignment.TRAILING, AdminSearch3ContentPaneLayout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addComponent(button40, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(34, 34, 34)
+                        .addComponent(button41, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
+                        .addGap(129, 129, 129))
+            );
+            AdminSearch3.pack();
+            AdminSearch3.setLocationRelativeTo(AdminSearch3.getOwner());
+        }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 
@@ -2167,12 +2368,18 @@ public class UI {
     private JButton button31;
     private JFrame Admin3;
     private JButton button25;
+    private JScrollPane scrollPane4;
+    private JTable table4;
+    private JButton button38;
+    private JButton button39;
     private JFrame Student1;
     private JButton button18;
     private JFrame Student2;
     private JButton button19;
     private JFrame Student3;
     private JButton button20;
+    private JScrollPane scrollPane5;
+    private JTable table5;
     private JDialog dialog2;
     private JLabel label8;
     private JButton button14;
@@ -2242,12 +2449,201 @@ public class UI {
     private JTextField textField23;
     private JTextField textField24;
     private JTextField textField25;
+    private JFrame AdminSearch3;
+    private JLabel label34;
+    private JTextField textField26;
+    private JButton button40;
+    private JLabel label35;
+    private JTextField textField27;
+    private JButton button41;
+    private JTextField textField28;
+    private JTextField textField29;
+    private JLabel label36;
+    private JLabel label37;
+    private JLabel label38;
+    private JLabel label39;
+    private JLabel label40;
+    private JLabel label41;
+    private JTextField textField30;
+    private JTextField textField31;
+    private JTextField textField32;
+    private JTextField textField33;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
     public static void main(String[] args) throws Exception {
         UI ui = new UI();
         ui.initComponents();
         ui.Login.setVisible(true);
     }
+    //管理员查询职业信息
+    public void searchJobInformation(String jobId, String jobName, String demandQuantity, String employer, String publishDate, String deadline, String employedQuantity, String jobType) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 创建查询语句
+            String query = "SELECT * FROM 职业信息表 WHERE 1=1";
+            if (jobId != null && !jobId.isEmpty()) {
+                query += " AND 职业编号 = ?";
+            }
+            if (jobName != null && !jobName.isEmpty()) {
+                query += " AND 职业名称 LIKE ?";
+            }
+            if (demandQuantity != null && !demandQuantity.isEmpty()) {
+                query += " AND 需求数量 = ?";
+            }
+            if (employer != null && !employer.isEmpty()) {
+                query += " AND 用人单位 LIKE ?";
+            }
+            if (publishDate != null && !publishDate.isEmpty()) {
+                query += " AND 发布日期 = ?";
+            }
+            if (deadline != null && !deadline.isEmpty()) {
+                query += " AND 截止日期 = ?";
+            }
+            if (employedQuantity != null && !employedQuantity.isEmpty()) {
+                query += " AND 已聘用数量 = ?";
+            }
+            if (jobType != null && !jobType.isEmpty()) {
+                query += " AND 职业类型名称 LIKE ?";
+            }
+
+            // 创建PreparedStatement对象
+            statement = connection.prepareStatement(query);
+
+            // 设置查询参数
+            int parameterIndex = 1;
+            if (jobId != null && !jobId.isEmpty()) {
+                statement.setInt(parameterIndex, Integer.parseInt(jobId));
+                parameterIndex++;
+            }
+            if (jobName != null && !jobName.isEmpty()) {
+                statement.setString(parameterIndex, "%" + jobName + "%");
+                parameterIndex++;
+            }
+            if (demandQuantity != null && !demandQuantity.isEmpty()) {
+                statement.setInt(parameterIndex, Integer.parseInt(demandQuantity));
+                parameterIndex++;
+            }
+            if (employer != null && !employer.isEmpty()) {
+                statement.setString(parameterIndex, "%" + employer + "%");
+                parameterIndex++;
+            }
+            if (publishDate != null && !publishDate.isEmpty()) {
+                Date publishDateSql = convertStringToDate(publishDate);
+                statement.setDate(parameterIndex, publishDateSql);
+                parameterIndex++;
+            }
+            if (deadline != null && !deadline.isEmpty()) {
+                Date deadlineSql = convertStringToDate(deadline);
+                statement.setDate(parameterIndex, deadlineSql);
+                parameterIndex++;
+            }
+            if (employedQuantity != null && !employedQuantity.isEmpty()) {
+                statement.setInt(parameterIndex, Integer.parseInt(employedQuantity));
+                parameterIndex++;
+            }
+            if (jobType != null && !jobType.isEmpty()) {
+                statement.setString(parameterIndex, "%" + jobType + "%");
+            }
+
+            // 执行查询语句
+            resultSet = statement.executeQuery();
+
+            // 获取结果集的元数据
+            ResultSetMetaData metaData = resultSet.getMetaData();
+
+            // 获取列数
+            int columnCount = metaData.getColumnCount();
+
+            // 创建表格模型
+            DefaultTableModel tableModel = new DefaultTableModel();
+
+            // 添加列名到表格模型
+            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+                tableModel.addColumn(metaData.getColumnName(columnIndex));
+            }
+
+            // 添加数据到表格模型
+            while (resultSet.next()) {
+                Object[] rowData = new Object[columnCount];
+                for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+                    rowData[columnIndex - 1] = resultSet.getObject(columnIndex);
+                }
+                tableModel.addRow(rowData);
+            }
+
+            // 设置表格模型到JTable
+            table4.setModel(tableModel);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, resultSet);
+        }
+    }
+
+    //管理员获取全部招聘信息
+    public void loadJobInformation(JTable table4) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 创建查询语句
+            String query = "SELECT * FROM 职业信息表";
+
+            // 创建PreparedStatement对象
+            statement = connection.prepareStatement(query);
+
+            // 执行查询语句
+            resultSet = statement.executeQuery();
+
+            // 获取结果集的元数据
+            ResultSetMetaData metaData = resultSet.getMetaData();
+
+            // 获取列数
+            int columnCount = metaData.getColumnCount();
+
+            // 创建表格模型
+            DefaultTableModel tableModel = new DefaultTableModel();
+
+            // 添加列名到表格模型
+            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+                tableModel.addColumn(metaData.getColumnName(columnIndex));
+            }
+
+            // 添加数据到表格模型
+            while (resultSet.next()) {
+                Object[] rowData = new Object[columnCount];
+                for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+                    rowData[columnIndex - 1] = resultSet.getObject(columnIndex);
+                }
+                tableModel.addRow(rowData);
+            }
+
+            // 设置表格模型到JTable
+            table4.setModel(tableModel);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, resultSet);
+        }
+    }
+
 
     //管理员删除毕业生信息
     private void deleteStudentRecord(int studentId) {
