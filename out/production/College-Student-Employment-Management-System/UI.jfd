@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq l {space :p:195:p, par l:::p {seq l {par l {comp label1::l:p::p, comp label2::l:p::p}, space u:::p, par l:::p {comp textField1::::148:x, comp passwordField1::::148:x}}, seq l {comp label3:::p::p, space s:::p, comp comboBox1:::p::p}, comp button1::l:::x, comp button11:::::x}, space ::212:x}}"
-			"$verticalGroup": "par l {seq l {space :p:107:p, par b {comp label1::b:p::p, comp textField1::b:p::p}, space :p:35:p, par b {comp label2::b:p::p, comp passwordField1::b:p::p}, space :p:32:p, par b {comp label3::b:p::p, comp comboBox1::b:p::p}, space :p:28:p, comp button1:::p::p, space s:::p, comp button11:::p::p, space ::54:x}}"
+			"$horizontalGroup": "par l {seq l {space :p:193:p, par l:::p {seq l {par l {comp label1::l:p::p, comp label2::l:p::p}, space u:::p, par l:::p {comp textField1:::::x, comp passwordField1:::p:148:p}}, seq l {comp label3:::p::p, space s:::p, comp comboBox1:::p::p}, comp button1::l:::x, comp button11:::::x, comp button32:::::x}, space ::214:x}}"
+			"$verticalGroup": "par l {seq l {space :p:73:p, par b {comp label1::b:p::p, comp textField1::b:p::p}, space :p:35:p, par b {comp label2::b:p::p, comp passwordField1::b:p::p}, space :p:32:p, par b {comp label3::b:p::p, comp comboBox1::b:p::p}, space :p:28:p, comp button1:::p::p, space s:::p, comp button11:::p::p, space s:::p, comp button32:::p::p, space ::40:x}}"
 		} ) {
 			name: "Login"
 			"title": "登陆"
@@ -48,6 +48,11 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JPasswordField" ) {
 				name: "passwordField1"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button32"
+				"text": "修改密码"
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button32MousePressed", true ) )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
@@ -200,7 +205,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 460 )
-			"size": new java.awt.Dimension( 320, 380 )
+			"size": &Dimension1 new java.awt.Dimension( 320, 380 )
 		} )
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 			"$horizontalGroup": "par l {seq {space ::81:x, comp label7:::p::p, space :p:69:p}, seq l {space :p:104:p, comp button13:::p::p, space ::111:x}}"
@@ -221,7 +226,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 15, 855 )
-			"size": &Dimension1 new java.awt.Dimension( 295, 200 )
+			"size": &Dimension2 new java.awt.Dimension( 295, 200 )
 		} )
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 			"$horizontalGroup": "par l {seq t {space ::60:x, par t:::p {comp scrollPane2:::p::p, seq {comp button17:::p::p, space :p:76:p, comp button28:::p::p, space :::x, comp button31:::p::p}}, space :p:54:p}}"
@@ -337,12 +342,12 @@ new FormModel {
 				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button14MousePressed", true ) )
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"size": #Dimension1
-			"location": new java.awt.Point( 325, 550 )
+			"size": #Dimension2
+			"location": new java.awt.Point( 335, 855 )
 		} )
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {space :p:28:p, comp button21:::p::p, space ::462:x}}"
-			"$verticalGroup": "par l {seq l {space ::368:x, comp button21:::p::p, space :::p}}"
+			"$horizontalGroup": "par l {seq t {space ::37:x, par l:::p {seq {comp button21:::p::p, space :p:105:p, comp button34:::p::p, space :::x, comp button35:::p::p}, comp scrollPane3:::p:494:p}, space :p:37:p}}"
+			"$verticalGroup": "par l {seq l {space ::23:x, comp scrollPane3:::p:333:p, space u:::p, par b {comp button21::b:p::p, comp button34::b:p::p, comp button35::b:p::p}, space :::p}}"
 		} ) {
 			name: "Admin2"
 			"title": "毕业生信息管理"
@@ -351,6 +356,22 @@ new FormModel {
 				name: "button21"
 				"text": "返回"
 				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button21MousePressed", true ) )
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane3"
+				add( new FormComponent( "javax.swing.JTable" ) {
+					name: "table3"
+				} )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button34"
+				"text": "查询/增加毕业生"
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button34MousePressed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button35"
+				"text": "删除毕业生"
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button31MousePressed", true ) )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": #Dimension0
@@ -406,7 +427,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 675, 455 )
-			"size": &Dimension2 new java.awt.Dimension( 440, 325 )
+			"size": &Dimension3 new java.awt.Dimension( 440, 325 )
 		} )
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 			"$horizontalGroup": "par l {seq l {space :p:59:p, par l {seq l {par t {seq t {comp label15:::p::p, space :::p, comp textField8:::p:101:p}, seq {comp label16:::p::p, space :::p, comp textField9:::p:101:p}, seq t {comp label17:::p::p, space :::p, comp textField10:::p:101:p}}, space ::76:x}, seq {space :0:24:x, comp label18:::p::p, space :::p, comp textField11:::p:101:p, space :p:78:p}}, comp button27:::p::p, space :p:62:p}}"
@@ -485,8 +506,147 @@ new FormModel {
 				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button30MousePressed", true ) )
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"size": #Dimension2
-			"location": new java.awt.Point( 1270, 1815 )
+			"size": #Dimension3
+			"location": new java.awt.Point( 1265, 1810 )
+		} )
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq l {par l {seq l {space :p:36:p, comp label23:::p::p, space u:::p, comp textField15:::p:148:p}, seq l {space :p:73:p, par l {seq l {comp label12:::p::p, space :12:12:p, comp textField5:::p:148:p}, comp button33::l:p:186:p, seq l {comp label21:::p::p, space u:::p, comp textField14:::p:148:p}, seq l {comp label22:::p::p, space u:::p, comp comboBox3:::p::p}}}, seq t {space :::p, comp label24:::p::p, space u:::p, comp textField16:::p:148:p}}, space ::59:x}}"
+			"$verticalGroup": "par l {seq {space :p:50:p, par l {seq l {space :7:7:p, comp label12:::p::p}, comp textField5:::p::p}, space :p:33:p, par b {comp label21::b:p::p, comp textField14::b:p::p}, space ::28:x, par b {comp textField16::b:p::p, comp label24::b:p::p}, space :p:30:p, par b {comp label23::b:p::p, comp textField15::b:p::p}, space :::p, par b {comp label22::b:p::p, comp comboBox3::b:p::p}, space s:::p, comp button33:::p::p, space :p:40:p}}"
+		} ) {
+			name: "Register2"
+			"title": "修改密码"
+			"alwaysOnTop": true
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label12"
+				"text": "账号"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField5"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField14"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label21"
+				"text": "密码"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label22"
+				"text": "身份"
+			} )
+			add( new FormComponent( "javax.swing.JComboBox" ) {
+				name: "comboBox3"
+				"model": #DefaultComboBoxModel0
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "comboBox2", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button33"
+				"text": "修改"
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button33MousePressed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label23"
+				"text": "公司名称"
+				"visible": false
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField15"
+				"visible": false
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label24"
+				"text": "新密码"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField16"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": #Dimension1
+			"location": new java.awt.Point( 335, 460 )
+		} )
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq l {space :p:190:p, par t {comp label33:::p::p, comp label32:::p::p, comp label31:::p::p, comp label27::t:p::p, comp label28::t:p::p, comp label25::t:p::p, comp label26::t:p::p, comp label29:::p::p, comp label30::t:p::p}, space s:::p, par l {par l:::p {comp textField20:::::x, comp textField19:::::x, comp textField17::l:p:132:p, comp textField18::l:::x}, comp textField21:::p:132:p, comp textField23::l:p:132:p, comp textField24::l:p:132:p, comp textField25::l:p:132:p, comp textField22::l:p:132:p}, space :p:84:p, par l:::p {comp button36::::177:x, comp button37::::177:x}, space ::130:x}}"
+			"$verticalGroup": "par l {seq l {space :p:51:p, par b {comp label25::b:p::p, comp textField17::b:p::p}, space :p:28:p, par t {seq t {par b {comp label26::b:p::p, comp textField18::b:p::p}, space :p:27:p, par b {comp label29::b:p::p, comp textField21::b:p::p}, space :p:17:p, par b {comp textField22::b:p::p, comp label30::b:p::p}, space :p:22:p, par b {comp textField19::b:p::p, comp label27::b:p::p}, space :p:27:p, par b {comp textField20::b:p::p, comp label28::b:p::p}, space :p:28:p, par b {comp label31::b:p::p, comp textField23::b:p::p}, space :p:19:p, par b {comp label32::b:p::p, comp textField24::b:p::p}, space :p:17:p, par b {comp label33::b:p::p, comp textField25::b:p::p}, space ::73:x}, seq t {comp button36:::::x, space :p:48:p, comp button37:::p:167:p, space :p:93:p}}}}"
+		} ) {
+			name: "AdminSearch2"
+			"title": "查询信息"
+			"alwaysOnTop": true
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label25"
+				"text": "学号"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField17"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button36"
+				"text": "查询"
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button36MousePressed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label26"
+				"text": "姓名"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField18"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button37"
+				"text": "增加"
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button30MousePressed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField19"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField20"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label27"
+				"text": "所在院系"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label28"
+				"text": "所学专业"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label29"
+				"text": "性别"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label30"
+				"text": "出生日期"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label31"
+				"text": "联系方式"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label32"
+				"text": "就业状态"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label33"
+				"text": "职业"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField21"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField22"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField23"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField24"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField25"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": new java.awt.Dimension( 785, 610 )
+			"location": new java.awt.Point( 1130, 2160 )
 		} )
 	}
 }

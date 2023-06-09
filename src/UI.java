@@ -305,6 +305,25 @@ public class UI {
     private void button6MousePressed(MouseEvent e) {
         Admin2.setVisible(true);
         Admin.setVisible(false);
+        updateGraduateDetailsTable(table3);
+        table3.getModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if (e.getType() == TableModelEvent.UPDATE) {
+                    int row = e.getFirstRow();
+                    int column = e.getColumn();
+
+                    // 获取修改后的值
+                    Object newValue = table3.getModel().getValueAt(row, column);
+
+                    // 获取学号列的值
+                    Object studentId = table3.getModel().getValueAt(row, 0);
+
+                    // 更新数据库中的毕业生信息
+                    updateStudentInfo(studentId, column, newValue);
+                }
+            }
+        });
     }
 
     private void button7MousePressed(MouseEvent e) {
@@ -407,7 +426,6 @@ public class UI {
 
     private void button28MousePressed(MouseEvent e) {
         AdminSearch.setVisible(true);
-
     }
 
     private void button29MousePressed(MouseEvent e) {
@@ -488,6 +506,74 @@ public class UI {
         }
     }
 
+    private void button32MousePressed(MouseEvent e) {
+        Register2.setVisible(true);
+    }
+
+    private void button33MousePressed(MouseEvent e) {
+            String account = textField5.getText();
+            String oldPassword = textField14.getText();
+            String newPassword = textField16.getText();
+            String identity = comboBox3.getSelectedItem().toString();
+
+            if (account.isEmpty() || oldPassword.isEmpty() || newPassword.isEmpty() || identity.isEmpty()) {
+                JOptionPane.showMessageDialog(Register2, "请输入完整的账号、旧密码、新密码和身份信息", "错误", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Connection connection = null;
+            PreparedStatement statement = null;
+            ResultSet resultSet = null;
+            String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+            String USERNAME = "root";
+            String PASSWORD = "Lzy-200387";
+
+            try {
+                // 建立数据库连接
+                connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+                // 检查账号、密码和身份是否匹配数据库中的记录
+                String query = "SELECT * FROM 账号信息表 WHERE 账号 = ? AND 密码 = ? AND 身份 = ?";
+                statement = connection.prepareStatement(query);
+                statement.setString(1, account);
+                statement.setString(2, oldPassword);
+                statement.setString(3, identity);
+                resultSet = statement.executeQuery();
+
+                // 如果存在匹配的记录，则更新密码
+                if (resultSet.next()) {
+                    // 更新密码
+                    String updateQuery = "UPDATE 账号信息表 SET 密码 = ? WHERE 账号 = ?";
+                    statement = connection.prepareStatement(updateQuery);
+                    statement.setString(1, newPassword);
+                    statement.setString(2, account);
+                    statement.executeUpdate();
+
+                    JOptionPane.showMessageDialog(Register2, "密码修改成功", "成功", JOptionPane.INFORMATION_MESSAGE);
+                    Register2.setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(Register2, "账号信息输入错误", "错误", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException y) {
+                y.printStackTrace();
+            } finally {
+                // 关闭连接和资源
+                closeConnection(connection, statement, resultSet);
+            }
+    }
+
+    private void button34MousePressed(MouseEvent e) {
+        AdminSearch2.setVisible(true);
+        if (textField22.getText().equals("")){
+            textField22.setForeground(Color.gray); //将提示文字设置为灰色
+            textField22.setText("XXXX-XX-XX");     //显示提示文字
+        }
+    }
+
+    private void button36MousePressed(MouseEvent e) {
+        searchStudentInfo(textField17.getText(),textField18.getText(),textField21.getText(),textField22.getText(),textField19.getText(),textField20.getText(),textField23.getText(),textField24.getText(),textField25.getText());
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         // Generated using JFormDesigner Evaluation license - 林正阳
@@ -500,6 +586,7 @@ public class UI {
         button1 = new JButton();
         button11 = new JButton();
         passwordField1 = new JPasswordField();
+        button32 = new JButton();
         Student = new JFrame();
         button2 = new JButton();
         button3 = new JButton();
@@ -550,6 +637,10 @@ public class UI {
         button14 = new JButton();
         Admin2 = new JFrame();
         button21 = new JButton();
+        scrollPane3 = new JScrollPane();
+        table3 = new JTable();
+        button34 = new JButton();
+        button35 = new JButton();
         dialog3 = new JDialog();
         label10 = new JLabel();
         button22 = new JButton();
@@ -577,6 +668,39 @@ public class UI {
         label20 = new JLabel();
         textField13 = new JTextField();
         button30 = new JButton();
+        Register2 = new JFrame();
+        label12 = new JLabel();
+        textField5 = new JTextField();
+        textField14 = new JTextField();
+        label21 = new JLabel();
+        label22 = new JLabel();
+        comboBox3 = new JComboBox<>();
+        button33 = new JButton();
+        label23 = new JLabel();
+        textField15 = new JTextField();
+        label24 = new JLabel();
+        textField16 = new JTextField();
+        AdminSearch2 = new JFrame();
+        label25 = new JLabel();
+        textField17 = new JTextField();
+        button36 = new JButton();
+        label26 = new JLabel();
+        textField18 = new JTextField();
+        button37 = new JButton();
+        textField19 = new JTextField();
+        textField20 = new JTextField();
+        label27 = new JLabel();
+        label28 = new JLabel();
+        label29 = new JLabel();
+        label30 = new JLabel();
+        label31 = new JLabel();
+        label32 = new JLabel();
+        label33 = new JLabel();
+        textField21 = new JTextField();
+        textField22 = new JTextField();
+        textField23 = new JTextField();
+        textField24 = new JTextField();
+        textField25 = new JTextField();
 
         //======== Login ========
         {
@@ -628,12 +752,21 @@ public class UI {
                 }
             });
 
+            //---- button32 ----
+            button32.setText("\u4fee\u6539\u5bc6\u7801");
+            button32.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button32MousePressed(e);
+                }
+            });
+
             GroupLayout LoginContentPaneLayout = new GroupLayout(LoginContentPane);
             LoginContentPane.setLayout(LoginContentPaneLayout);
             LoginContentPaneLayout.setHorizontalGroup(
                 LoginContentPaneLayout.createParallelGroup()
                     .addGroup(LoginContentPaneLayout.createSequentialGroup()
-                        .addGap(195, 195, 195)
+                        .addGap(193, 193, 193)
                         .addGroup(LoginContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                             .addGroup(LoginContentPaneLayout.createSequentialGroup()
                                 .addGroup(LoginContentPaneLayout.createParallelGroup()
@@ -641,20 +774,21 @@ public class UI {
                                     .addComponent(label2))
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(LoginContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(textField1, GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                                    .addComponent(passwordField1, GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)))
+                                    .addComponent(textField1)
+                                    .addComponent(passwordField1, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE)))
                             .addGroup(LoginContentPaneLayout.createSequentialGroup()
                                 .addComponent(label3)
                                 .addGap(18, 18, 18)
                                 .addComponent(comboBox1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                             .addComponent(button1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(button11, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(212, Short.MAX_VALUE))
+                            .addComponent(button11, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(button32, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(214, Short.MAX_VALUE))
             );
             LoginContentPaneLayout.setVerticalGroup(
                 LoginContentPaneLayout.createParallelGroup()
                     .addGroup(LoginContentPaneLayout.createSequentialGroup()
-                        .addGap(107, 107, 107)
+                        .addGap(73, 73, 73)
                         .addGroup(LoginContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(label1)
                             .addComponent(textField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -670,7 +804,9 @@ public class UI {
                         .addComponent(button1)
                         .addGap(18, 18, 18)
                         .addComponent(button11)
-                        .addContainerGap(54, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(button32)
+                        .addContainerGap(40, Short.MAX_VALUE))
             );
             Login.pack();
             Login.setLocationRelativeTo(Login.getOwner());
@@ -1374,20 +1510,55 @@ public class UI {
                 }
             });
 
+            //======== scrollPane3 ========
+            {
+                scrollPane3.setViewportView(table3);
+            }
+
+            //---- button34 ----
+            button34.setText("\u67e5\u8be2/\u589e\u52a0\u6bd5\u4e1a\u751f");
+            button34.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button34MousePressed(e);
+                }
+            });
+
+            //---- button35 ----
+            button35.setText("\u5220\u9664\u6bd5\u4e1a\u751f");
+            button35.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button31MousePressed(e);
+                }
+            });
+
             GroupLayout Admin2ContentPaneLayout = new GroupLayout(Admin2ContentPane);
             Admin2ContentPane.setLayout(Admin2ContentPaneLayout);
             Admin2ContentPaneLayout.setHorizontalGroup(
                 Admin2ContentPaneLayout.createParallelGroup()
-                    .addGroup(Admin2ContentPaneLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(button21)
-                        .addContainerGap(462, Short.MAX_VALUE))
+                    .addGroup(GroupLayout.Alignment.TRAILING, Admin2ContentPaneLayout.createSequentialGroup()
+                        .addContainerGap(37, Short.MAX_VALUE)
+                        .addGroup(Admin2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                            .addGroup(Admin2ContentPaneLayout.createSequentialGroup()
+                                .addComponent(button21)
+                                .addGap(105, 105, 105)
+                                .addComponent(button34)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(button35))
+                            .addComponent(scrollPane3, GroupLayout.PREFERRED_SIZE, 494, GroupLayout.PREFERRED_SIZE))
+                        .addGap(37, 37, 37))
             );
             Admin2ContentPaneLayout.setVerticalGroup(
                 Admin2ContentPaneLayout.createParallelGroup()
                     .addGroup(Admin2ContentPaneLayout.createSequentialGroup()
-                        .addContainerGap(368, Short.MAX_VALUE)
-                        .addComponent(button21)
+                        .addContainerGap(23, Short.MAX_VALUE)
+                        .addComponent(scrollPane3, GroupLayout.PREFERRED_SIZE, 333, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(Admin2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(button21)
+                            .addComponent(button34)
+                            .addComponent(button35))
                         .addContainerGap())
             );
             Admin2.pack();
@@ -1677,6 +1848,252 @@ public class UI {
             AdminSearch.pack();
             AdminSearch.setLocationRelativeTo(AdminSearch.getOwner());
         }
+
+        //======== Register2 ========
+        {
+            Register2.setTitle("\u4fee\u6539\u5bc6\u7801");
+            Register2.setAlwaysOnTop(true);
+            var Register2ContentPane = Register2.getContentPane();
+
+            //---- label12 ----
+            label12.setText("\u8d26\u53f7");
+
+            //---- label21 ----
+            label21.setText("\u5bc6\u7801");
+
+            //---- label22 ----
+            label22.setText("\u8eab\u4efd");
+
+            //---- comboBox3 ----
+            comboBox3.setModel(new DefaultComboBoxModel<>(new String[] {
+                "\u5b66\u751f",
+                "\u7ba1\u7406\u5458",
+                "\u7528\u4eba\u5355\u4f4d"
+            }));
+            comboBox3.addActionListener(e -> comboBox2(e));
+
+            //---- button33 ----
+            button33.setText("\u4fee\u6539");
+            button33.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button33MousePressed(e);
+                }
+            });
+
+            //---- label23 ----
+            label23.setText("\u516c\u53f8\u540d\u79f0");
+            label23.setVisible(false);
+
+            //---- textField15 ----
+            textField15.setVisible(false);
+
+            //---- label24 ----
+            label24.setText("\u65b0\u5bc6\u7801");
+
+            GroupLayout Register2ContentPaneLayout = new GroupLayout(Register2ContentPane);
+            Register2ContentPane.setLayout(Register2ContentPaneLayout);
+            Register2ContentPaneLayout.setHorizontalGroup(
+                Register2ContentPaneLayout.createParallelGroup()
+                    .addGroup(Register2ContentPaneLayout.createSequentialGroup()
+                        .addGroup(Register2ContentPaneLayout.createParallelGroup()
+                            .addGroup(Register2ContentPaneLayout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addComponent(label23)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(textField15, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))
+                            .addGroup(Register2ContentPaneLayout.createSequentialGroup()
+                                .addGap(73, 73, 73)
+                                .addGroup(Register2ContentPaneLayout.createParallelGroup()
+                                    .addGroup(Register2ContentPaneLayout.createSequentialGroup()
+                                        .addComponent(label12)
+                                        .addGap(12, 12, 12)
+                                        .addComponent(textField5, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(button33, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(Register2ContentPaneLayout.createSequentialGroup()
+                                        .addComponent(label21)
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(textField14, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(Register2ContentPaneLayout.createSequentialGroup()
+                                        .addComponent(label22)
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(comboBox3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(GroupLayout.Alignment.TRAILING, Register2ContentPaneLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(label24)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(textField16, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(59, Short.MAX_VALUE))
+            );
+            Register2ContentPaneLayout.setVerticalGroup(
+                Register2ContentPaneLayout.createParallelGroup()
+                    .addGroup(Register2ContentPaneLayout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addGroup(Register2ContentPaneLayout.createParallelGroup()
+                            .addGroup(Register2ContentPaneLayout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addComponent(label12))
+                            .addComponent(textField5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33)
+                        .addGroup(Register2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label21)
+                            .addComponent(textField14, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                        .addGroup(Register2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(textField16, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label24))
+                        .addGap(30, 30, 30)
+                        .addGroup(Register2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label23)
+                            .addComponent(textField15, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(Register2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label22)
+                            .addComponent(comboBox3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(button33)
+                        .addGap(40, 40, 40))
+            );
+            Register2.pack();
+            Register2.setLocationRelativeTo(Register2.getOwner());
+        }
+
+        //======== AdminSearch2 ========
+        {
+            AdminSearch2.setTitle("\u67e5\u8be2\u4fe1\u606f");
+            AdminSearch2.setAlwaysOnTop(true);
+            var AdminSearch2ContentPane = AdminSearch2.getContentPane();
+
+            //---- label25 ----
+            label25.setText("\u5b66\u53f7");
+
+            //---- button36 ----
+            button36.setText("\u67e5\u8be2");
+            button36.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button36MousePressed(e);
+                }
+            });
+
+            //---- label26 ----
+            label26.setText("\u59d3\u540d");
+
+            //---- button37 ----
+            button37.setText("\u589e\u52a0");
+            button37.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button30MousePressed(e);
+                }
+            });
+
+            //---- label27 ----
+            label27.setText("\u6240\u5728\u9662\u7cfb");
+
+            //---- label28 ----
+            label28.setText("\u6240\u5b66\u4e13\u4e1a");
+
+            //---- label29 ----
+            label29.setText("\u6027\u522b");
+
+            //---- label30 ----
+            label30.setText("\u51fa\u751f\u65e5\u671f");
+
+            //---- label31 ----
+            label31.setText("\u8054\u7cfb\u65b9\u5f0f");
+
+            //---- label32 ----
+            label32.setText("\u5c31\u4e1a\u72b6\u6001");
+
+            //---- label33 ----
+            label33.setText("\u804c\u4e1a");
+
+            GroupLayout AdminSearch2ContentPaneLayout = new GroupLayout(AdminSearch2ContentPane);
+            AdminSearch2ContentPane.setLayout(AdminSearch2ContentPaneLayout);
+            AdminSearch2ContentPaneLayout.setHorizontalGroup(
+                AdminSearch2ContentPaneLayout.createParallelGroup()
+                    .addGroup(AdminSearch2ContentPaneLayout.createSequentialGroup()
+                        .addGap(190, 190, 190)
+                        .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                            .addComponent(label33)
+                            .addComponent(label32)
+                            .addComponent(label31)
+                            .addComponent(label27)
+                            .addComponent(label28)
+                            .addComponent(label25)
+                            .addComponent(label26)
+                            .addComponent(label29)
+                            .addComponent(label30))
+                        .addGap(18, 18, 18)
+                        .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup()
+                            .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                .addComponent(textField20)
+                                .addComponent(textField19)
+                                .addComponent(textField17, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(textField18))
+                            .addComponent(textField21, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textField23, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textField24, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textField25, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textField22, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE))
+                        .addGap(84, 84, 84)
+                        .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                            .addComponent(button36, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                            .addComponent(button37, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
+                        .addContainerGap(130, Short.MAX_VALUE))
+            );
+            AdminSearch2ContentPaneLayout.setVerticalGroup(
+                AdminSearch2ContentPaneLayout.createParallelGroup()
+                    .addGroup(AdminSearch2ContentPaneLayout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label25)
+                            .addComponent(textField17, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)
+                        .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                            .addGroup(AdminSearch2ContentPaneLayout.createSequentialGroup()
+                                .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(label26)
+                                    .addComponent(textField18, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(27, 27, 27)
+                                .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(label29)
+                                    .addComponent(textField21, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(17, 17, 17)
+                                .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(textField22, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label30))
+                                .addGap(22, 22, 22)
+                                .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(textField19, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label27))
+                                .addGap(27, 27, 27)
+                                .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(textField20, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label28))
+                                .addGap(28, 28, 28)
+                                .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(label31)
+                                    .addComponent(textField23, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(19, 19, 19)
+                                .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(label32)
+                                    .addComponent(textField24, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(17, 17, 17)
+                                .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(label33)
+                                    .addComponent(textField25, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(73, Short.MAX_VALUE))
+                            .addGroup(AdminSearch2ContentPaneLayout.createSequentialGroup()
+                                .addComponent(button36, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(48, 48, 48)
+                                .addComponent(button37, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
+                                .addGap(93, 93, 93))))
+            );
+            AdminSearch2.pack();
+            AdminSearch2.setLocationRelativeTo(AdminSearch2.getOwner());
+        }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 
@@ -1691,6 +2108,7 @@ public class UI {
     private JButton button1;
     private JButton button11;
     private JPasswordField passwordField1;
+    private JButton button32;
     private JFrame Student;
     private JButton button2;
     private JButton button3;
@@ -1741,6 +2159,10 @@ public class UI {
     private JButton button14;
     private JFrame Admin2;
     private JButton button21;
+    private JScrollPane scrollPane3;
+    private JTable table3;
+    private JButton button34;
+    private JButton button35;
     private JDialog dialog3;
     private JLabel label10;
     private JButton button22;
@@ -1768,12 +2190,270 @@ public class UI {
     private JLabel label20;
     private JTextField textField13;
     private JButton button30;
+    private JFrame Register2;
+    private JLabel label12;
+    private JTextField textField5;
+    private JTextField textField14;
+    private JLabel label21;
+    private JLabel label22;
+    private JComboBox<String> comboBox3;
+    private JButton button33;
+    private JLabel label23;
+    private JTextField textField15;
+    private JLabel label24;
+    private JTextField textField16;
+    private JFrame AdminSearch2;
+    private JLabel label25;
+    private JTextField textField17;
+    private JButton button36;
+    private JLabel label26;
+    private JTextField textField18;
+    private JButton button37;
+    private JTextField textField19;
+    private JTextField textField20;
+    private JLabel label27;
+    private JLabel label28;
+    private JLabel label29;
+    private JLabel label30;
+    private JLabel label31;
+    private JLabel label32;
+    private JLabel label33;
+    private JTextField textField21;
+    private JTextField textField22;
+    private JTextField textField23;
+    private JTextField textField24;
+    private JTextField textField25;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
     public static void main(String[] args) throws Exception {
         UI ui = new UI();
         ui.initComponents();
         ui.Login.setVisible(true);
     }
+
+    // 管理员查询毕业生信息
+    private void searchStudentInfo(String studentId, String name, String gender, String birthdate, String department, String major, String contact, String employmentStatus, String occupation) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 创建查询语句
+            String query = "SELECT * FROM 毕业生信息表 WHERE 1=1";
+            if (!studentId.isEmpty()) {
+                query += " AND 学号 = ?";
+            }
+            if (!name.isEmpty()) {
+                query += " AND 姓名 LIKE ?";
+            }
+            if (!gender.isEmpty()) {
+                query += " AND 性别 = ?";
+            }
+            if (!birthdate.isEmpty()) {
+                query += " AND 出生日期 = ?";
+            }
+            if (!department.isEmpty()) {
+                query += " AND 所在院系 = ?";
+            }
+            if (!major.isEmpty()) {
+                query += " AND 所学专业 = ?";
+            }
+            if (!contact.isEmpty()) {
+                query += " AND 联系方式 = ?";
+            }
+            if (!employmentStatus.isEmpty()) {
+                query += " AND 就业状态 = ?";
+            }
+            if (!occupation.isEmpty()) {
+                query += " AND 职业 = ?";
+            }
+            statement = connection.prepareStatement(query);
+
+            // 设置查询参数
+            int parameterIndex = 1;
+            if (!studentId.isEmpty()) {
+                statement.setString(parameterIndex, studentId);
+                parameterIndex++;
+            }
+            if (!name.isEmpty()) {
+                statement.setString(parameterIndex, "%" + name + "%");
+                parameterIndex++;
+            }
+            if (!gender.isEmpty()) {
+                statement.setString(parameterIndex, gender);
+                parameterIndex++;
+            }
+            if (!birthdate.isEmpty()) {
+                Date birthDate = convertStringToDate(birthdate);
+                statement.setDate(parameterIndex, birthDate);
+                parameterIndex++;
+            }
+            if (!department.isEmpty()) {
+                statement.setString(parameterIndex, department);
+                parameterIndex++;
+            }
+            if (!major.isEmpty()) {
+                statement.setString(parameterIndex, major);
+                parameterIndex++;
+            }
+            if (!contact.isEmpty()) {
+                statement.setString(parameterIndex, contact);
+                parameterIndex++;
+            }
+            if (!employmentStatus.isEmpty()) {
+                statement.setString(parameterIndex, employmentStatus);
+                parameterIndex++;
+            }
+            if (!occupation.isEmpty()) {
+                statement.setString(parameterIndex, occupation);
+            }
+
+            // 执行查询语句
+            resultSet = statement.executeQuery();
+
+            // 清空表格模型
+            DefaultTableModel tableModel = (DefaultTableModel) table3.getModel();
+            tableModel.setRowCount(0);
+
+            // 遍历结果集，将数据填充到表格模型中
+            while (resultSet.next()) {
+                Object[] rowData = new Object[]{
+                        resultSet.getString("学号"),
+                        resultSet.getString("姓名"),
+                        resultSet.getString("性别"),
+                        resultSet.getDate("出生日期"),
+                        resultSet.getString("所在院系"),
+                        resultSet.getString("所学专业"),
+                        resultSet.getString("联系方式"),
+                        resultSet.getString("就业状态"),
+                        resultSet.getString("职业")
+                };
+                tableModel.addRow(rowData);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, resultSet);
+        }
+    }
+
+    // 更新数据库中的毕业生信息
+    private void updateStudentInfo(Object studentId, int column, Object newValue) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 创建更新语句
+            String updateQuery = "";
+            switch (column) {
+                case 1:
+                    updateQuery = "UPDATE 毕业生信息表 SET 姓名 = ? WHERE 学号 = ?";
+                    break;
+                case 2:
+                    updateQuery = "UPDATE 毕业生信息表 SET 性别 = ? WHERE 学号 = ?";
+                    break;
+                case 3:
+                    updateQuery = "UPDATE 毕业生信息表 SET 出生日期 = ? WHERE 学号 = ?";
+                    break;
+                case 4:
+                    updateQuery = "UPDATE 毕业生信息表 SET 所在院系 = ? WHERE 学号 = ?";
+                    break;
+                case 5:
+                    updateQuery = "UPDATE 毕业生信息表 SET 所学专业 = ? WHERE 学号 = ?";
+                    break;
+                case 6:
+                    updateQuery = "UPDATE 毕业生信息表 SET 联系方式 = ? WHERE 学号 = ?";
+                    break;
+                case 7:
+                    updateQuery = "UPDATE 毕业生信息表 SET 就业状态 = ? WHERE 学号 = ?";
+                    break;
+                case 8:
+                    updateQuery = "UPDATE 毕业生信息表 SET 职业 = ? WHERE 学号 = ?";
+                    break;
+            }
+
+            // 创建PreparedStatement对象
+            statement = connection.prepareStatement(updateQuery);
+            statement.setObject(1, newValue);
+            statement.setObject(2, studentId);
+
+            // 执行更新语句
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, null);
+        }
+    }
+
+    //显示毕业生信息表中的所有内容
+    public void updateGraduateDetailsTable(JTable table3) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 创建查询语句
+            String query = "SELECT * FROM 毕业生信息表";
+
+            // 创建PreparedStatement对象
+            statement = connection.prepareStatement(query);
+
+            // 执行查询语句
+            resultSet = statement.executeQuery();
+
+            // 获取结果集的元数据
+            ResultSetMetaData metaData = resultSet.getMetaData();
+
+            // 获取列数
+            int columnCount = metaData.getColumnCount();
+
+            // 创建表格模型
+            DefaultTableModel tableModel = new DefaultTableModel();
+
+            // 添加列名到表格模型
+            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+                tableModel.addColumn(metaData.getColumnName(columnIndex));
+            }
+
+            // 添加数据到表格模型
+            while (resultSet.next()) {
+                Object[] rowData = new Object[columnCount];
+                for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+                    rowData[columnIndex - 1] = resultSet.getObject(columnIndex);
+                }
+                tableModel.addRow(rowData);
+            }
+
+            // 设置表格模型到JTable
+            table3.setModel(tableModel);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, resultSet);
+        }
+    }
+
     //管理员删除院系记录
     private void deleteDepartmentRecord(int departmentId) {
         Connection connection = null;
@@ -2311,6 +2991,8 @@ public class UI {
     public static Date convertStringToDate(String dateString) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
+            // 设置解析日期时不严格匹配模式，即宽松模式
+            dateFormat.setLenient(false);
             java.util.Date utilDate = dateFormat.parse(dateString);
             java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
             return  sqlDate;
@@ -2319,6 +3001,7 @@ public class UI {
             return null;
         }
     }
+
 
     //关闭数据库链接的方法
     private static void closeConnection(Connection connection, Statement statement, ResultSet resultSet) {
