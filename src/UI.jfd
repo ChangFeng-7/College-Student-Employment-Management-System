@@ -371,7 +371,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button35"
 				"text": "删除毕业生"
-				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button31MousePressed", true ) )
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button35MousePressed", true ) )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": #Dimension0
@@ -569,7 +569,7 @@ new FormModel {
 			"$verticalGroup": "par l {seq l {space :p:51:p, par b {comp label25::b:p::p, comp textField17::b:p::p}, space :p:28:p, par t {seq t {par b {comp label26::b:p::p, comp textField18::b:p::p}, space :p:27:p, par b {comp label29::b:p::p, comp textField21::b:p::p}, space :p:17:p, par b {comp textField22::b:p::p, comp label30::b:p::p}, space :p:22:p, par b {comp textField19::b:p::p, comp label27::b:p::p}, space :p:27:p, par b {comp textField20::b:p::p, comp label28::b:p::p}, space :p:28:p, par b {comp label31::b:p::p, comp textField23::b:p::p}, space :p:19:p, par b {comp label32::b:p::p, comp textField24::b:p::p}, space :p:17:p, par b {comp label33::b:p::p, comp textField25::b:p::p}, space ::73:x}, seq t {comp button36:::::x, space :p:48:p, comp button37:::p:167:p, space :p:93:p}}}}"
 		} ) {
 			name: "AdminSearch2"
-			"title": "查询信息"
+			"title": "查询/增加信息"
 			"alwaysOnTop": true
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label25"
@@ -593,7 +593,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button37"
 				"text": "增加"
-				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button30MousePressed", true ) )
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button37MousePressed", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "textField19"

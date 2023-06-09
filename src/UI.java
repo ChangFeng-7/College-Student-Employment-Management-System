@@ -9,6 +9,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import javax.swing.*;
 import javax.swing.GroupLayout;
 import javax.swing.event.TableModelEvent;
@@ -423,7 +424,6 @@ public class UI {
             textField11.setText("XXXX-XX-XX");     //显示提示文字
         }
     }
-
     private void button28MousePressed(MouseEvent e) {
         AdminSearch.setVisible(true);
     }
@@ -564,14 +564,33 @@ public class UI {
 
     private void button34MousePressed(MouseEvent e) {
         AdminSearch2.setVisible(true);
-        if (textField22.getText().equals("")){
-            textField22.setForeground(Color.gray); //将提示文字设置为灰色
-            textField22.setText("XXXX-XX-XX");     //显示提示文字
-        }
     }
 
     private void button36MousePressed(MouseEvent e) {
         searchStudentInfo(textField17.getText(),textField18.getText(),textField21.getText(),textField22.getText(),textField19.getText(),textField20.getText(),textField23.getText(),textField24.getText(),textField25.getText());
+    }
+
+    private void button37MousePressed(MouseEvent e) {
+        addStudentInfo(textField17.getText(),textField18.getText(),textField21.getText(),textField22.getText(),Integer.parseInt(textField19.getText()),Integer.parseInt(textField20.getText()),textField23.getText(),textField24.getText(),textField25.getText());
+    }
+
+    private void button35MousePressed(MouseEvent e) {
+        int selectedRow = table3.getSelectedRow();
+        if (selectedRow == -1) {
+            // 没有选择任何行
+            JOptionPane.showMessageDialog(Admin1, "请选择要删除的行", "提示", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        int studentId = (int) table3.getValueAt(selectedRow, 0);
+        String studentName = (String) table3.getValueAt(selectedRow, 1);
+
+// 确认删除操作
+        int option = JOptionPane.showConfirmDialog(Admin1, "确定删除学生 " + studentName + " 吗？", "确认删除", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            // 执行删除操作
+            deleteStudentRecord(studentId);
+        }
     }
 
     private void initComponents() {
@@ -1529,7 +1548,7 @@ public class UI {
             button35.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
-                    button31MousePressed(e);
+                    button35MousePressed(e);
                 }
             });
 
@@ -1960,7 +1979,7 @@ public class UI {
 
         //======== AdminSearch2 ========
         {
-            AdminSearch2.setTitle("\u67e5\u8be2\u4fe1\u606f");
+            AdminSearch2.setTitle("\u67e5\u8be2/\u589e\u52a0\u4fe1\u606f");
             AdminSearch2.setAlwaysOnTop(true);
             var AdminSearch2ContentPane = AdminSearch2.getContentPane();
 
@@ -1984,7 +2003,7 @@ public class UI {
             button37.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
-                    button30MousePressed(e);
+                    button37MousePressed(e);
                 }
             });
 
@@ -2230,6 +2249,89 @@ public class UI {
         ui.Login.setVisible(true);
     }
 
+    //管理员删除毕业生信息
+    private void deleteStudentRecord(int studentId) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 执行删除操作
+            String deleteQuery = "DELETE FROM 毕业生信息表 WHERE 学号 = ?";
+            statement = connection.prepareStatement(deleteQuery);
+            statement.setInt(1, studentId);
+            statement.executeUpdate();
+
+            // 提示删除成功
+            JOptionPane.showMessageDialog(Admin2, "删除成功", "提示", JOptionPane.INFORMATION_MESSAGE);
+
+            // 刷新表格或执行其他操作
+            // ...
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, null);
+        }
+    }
+
+    //管理员增加毕业生信息
+    public void addStudentInfo(String studentId, String name, String gender, String birthdate, int departmentId, int majorId, String contact, String employmentStatus, String occupation) {
+        // 检测必填项是否为空
+        if (studentId.isEmpty() || name.isEmpty() || gender.isEmpty() || birthdate.isEmpty() || contact.isEmpty() || employmentStatus.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "除职业外均需填写", "错误", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Connection connection = null;
+        PreparedStatement statement = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 创建插入语句
+            String query = "INSERT INTO 毕业生信息表 (学号, 姓名, 性别, 出生日期, 所在院系, 所学专业, 联系方式, 就业状态, 职业) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            statement = connection.prepareStatement(query);
+
+            // 设置插入参数
+            statement.setString(1, studentId);
+            statement.setString(2, name);
+            statement.setString(3, gender);
+            statement.setDate(4, convertStringToDate(birthdate));
+            statement.setInt(5, departmentId);
+            statement.setInt(6, majorId);
+            statement.setString(7, contact);
+            statement.setString(8, employmentStatus);
+            if (occupation.isEmpty()) {
+                statement.setNull(9, java.sql.Types.INTEGER);
+            } else {
+                statement.setInt(9, Integer.parseInt(occupation));
+            }
+
+            // 执行插入语句
+            int rowsAffected = statement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("毕业生信息添加成功");
+            } else {
+                System.out.println("毕业生信息添加失败");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, null);
+        }
+    }
+
     // 管理员查询毕业生信息
     private void searchStudentInfo(String studentId, String name, String gender, String birthdate, String department, String major, String contact, String employmentStatus, String occupation) {
         Connection connection = null;
@@ -2238,7 +2340,9 @@ public class UI {
         String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
         String USERNAME = "root";
         String PASSWORD = "Lzy-200387";
-
+        if(birthdate == "XXXX-XX-XX"){
+            birthdate = "";
+        }
         try {
             // 建立数据库连接
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
