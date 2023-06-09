@@ -15,6 +15,7 @@ import javax.swing.GroupLayout;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 /*
  * Created by JFormDesigner on Tue May 23 19:25:37 CST 2023
  */
@@ -331,6 +332,22 @@ public class UI {
         Admin3.setVisible(true);
         Admin.setVisible(false);
         loadJobInformation(table4);
+        table4.getModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                // 表格被修改时触发的事件处理逻辑
+                if (e.getType() == TableModelEvent.UPDATE) {
+                    int row = e.getFirstRow();
+                    int column = e.getColumn();
+                    // 处理表格中特定单元格的修改
+                    if (row != -1 && column != -1) {
+                        Object data = table4.getValueAt(row, column);
+                        // 调用方法处理修改后的数据
+                        handleTableModification(row, column, data);
+                    }
+                }
+            }
+        });
     }
 
     private void button15MousePressed(MouseEvent e) {
@@ -582,11 +599,10 @@ public class UI {
             JOptionPane.showMessageDialog(Admin1, "请选择要删除的行", "提示", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-
         int studentId = (int) table3.getValueAt(selectedRow, 0);
         String studentName = (String) table3.getValueAt(selectedRow, 1);
 
-// 确认删除操作
+        // 确认删除操作
         int option = JOptionPane.showConfirmDialog(Admin1, "确定删除学生 " + studentName + " 吗？", "确认删除", JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
             // 执行删除操作
@@ -601,6 +617,28 @@ public class UI {
     private void button38MousePressed(MouseEvent e) {
         AdminSearch3.setVisible(true);
     }
+
+    private void button41MousePressed(MouseEvent e) {
+        insertOccupation(textField26.getText(),textField27.getText(),Integer.parseInt(textField31.getText()),textField28.getText(),textField29.getText(),textField32.getText(),Integer.parseInt(textField33.getText()),textField30.getText());
+    }
+
+    private void button39MousePressed(MouseEvent e) {
+            int selectedRow = table4.getSelectedRow();
+            if (selectedRow == -1) {
+                // 没有选择任何行
+                JOptionPane.showMessageDialog(Admin3, "请选择要删除的行", "提示", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            int occupationId = (int) table4.getValueAt(selectedRow, 0);
+            String occupationName = (String) table4.getValueAt(selectedRow, 1);
+
+            // 确认删除操作
+            int option = JOptionPane.showConfirmDialog(Admin3, "确定删除职业 " + occupationName + " 吗？", "确认删除", JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.YES_OPTION) {
+                // 执行删除操作
+                deleteOccupationRecord(occupationId);
+            }
+        }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
@@ -1371,7 +1409,7 @@ public class UI {
             button39.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
-                    button35MousePressed(e);
+                    button39MousePressed(e);
                 }
             });
 
@@ -2215,6 +2253,12 @@ public class UI {
 
             //---- button41 ----
             button41.setText("\u589e\u52a0");
+            button41.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button41MousePressed(e);
+                }
+            });
 
             //---- label36 ----
             label36.setText("\u7528\u4eba\u5355\u4f4d");
@@ -2474,6 +2518,172 @@ public class UI {
         ui.initComponents();
         ui.Login.setVisible(true);
     }
+
+    // 管理员删除职业信息表记录
+    private void deleteOccupationRecord(int occupationId) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 执行删除操作
+            String deleteQuery = "DELETE FROM 职业信息表 WHERE 职业编号 = ?";
+            statement = connection.prepareStatement(deleteQuery);
+            statement.setInt(1, occupationId);
+            statement.executeUpdate();
+
+            // 提示删除成功
+            JOptionPane.showMessageDialog(Admin3, "删除成功", "提示", JOptionPane.INFORMATION_MESSAGE);
+
+            // 刷新表格或执行其他操作
+            // ...
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, null);
+        }
+    }
+
+    //管理员修改职业信息表中数据的方法
+    public void insertOccupation(String occupationId, String occupationName, int demand, String employer, String startDateString, String endDateString, int hiredCount, String occupationTypeName) {
+        // 检测是否有任何一个文本字段为空
+        if (occupationId.isEmpty() || occupationName.isEmpty() || employer.isEmpty() || startDateString.isEmpty() || endDateString.isEmpty() || occupationTypeName.isEmpty()) {
+            JOptionPane.showMessageDialog(Admin3, "请填写所有必要信息", "错误", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 检测需求数量和已聘用数量是否为非负数
+        if (demand < 0 || hiredCount < 0) {
+            JOptionPane.showMessageDialog(Admin3, "需求数量和已聘用数量必须为非负数", "错误", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Connection connection = null;
+        PreparedStatement statement = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 创建 PreparedStatement 对象
+            String query = "INSERT INTO 职业信息表 (职业编号, 职业名称, 需求数量, 用人单位, 发布日期, 截止日期, 已聘用数量, 职业类型名称) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            statement = connection.prepareStatement(query);
+
+            // 设置参数
+            statement.setInt(1, Integer.parseInt(occupationId));
+            statement.setString(2, occupationName);
+            statement.setInt(3, demand);
+            statement.setString(4, employer);
+            statement.setDate(5, convertStringToDate(startDateString));
+            statement.setDate(6, convertStringToDate(endDateString));
+            statement.setInt(7, hiredCount);
+            statement.setString(8, occupationTypeName);
+
+            // 执行插入操作
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, null);
+        }
+    }
+
+    //管理员更新数据库中的职业信息表数据的方法
+    private void handleTableModification(int row, int column, Object data) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 创建更新语句
+            String updateQuery = "";
+            switch (column) {
+                case 0:
+                    updateQuery = "UPDATE 职业信息表 SET 职业编号 = ? WHERE 职业编号 = ?";
+                    break;
+                case 1:
+                    updateQuery = "UPDATE 职业信息表 SET 职业名称 = ? WHERE 职业编号 = ?";
+                    break;
+                case 2:
+                    updateQuery = "UPDATE 职业信息表 SET 需求数量 = ? WHERE 职业编号 = ?";
+                    break;
+                case 3:
+                    updateQuery = "UPDATE 职业信息表 SET 用人单位 = ? WHERE 职业编号 = ?";
+                    break;
+                case 4:
+                    updateQuery = "UPDATE 职业信息表 SET 发布日期 = ? WHERE 职业编号 = ?";
+                    break;
+                case 5:
+                    updateQuery = "UPDATE 职业信息表 SET 截止日期 = ? WHERE 职业编号 = ?";
+                    break;
+                case 6:
+                    updateQuery = "UPDATE 职业信息表 SET 已聘用数量 = ? WHERE 职业编号 = ?";
+                    break;
+                case 7:
+                    updateQuery = "UPDATE 职业信息表 SET 职业类型名称 = ? WHERE 职业编号 = ?";
+                    break;
+            }
+
+            // 创建 PreparedStatement 对象
+            statement = connection.prepareStatement(updateQuery);
+
+            // 设置更新参数
+            switch (column) {
+                case 0:
+                case 2:
+                case 6:
+                    try {
+                        int demand = Integer.parseInt((String) data);
+                        statement.setInt(1, demand);
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                        return;
+                    }
+                    break;
+                case 1:
+                case 3:
+                case 7:
+                    statement.setString(1, (String) data);
+                    break;
+                case 4:
+                case 5:
+                    String dateString = (String) data;
+                    Date date = convertStringToDate(dateString);
+                    statement.setDate(1, date);
+                    break;
+            }
+            int jobId = (int) table4.getValueAt(row, 0);
+            statement.setInt(2, jobId);
+
+            // 执行更新语句
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows > 0) {
+                System.out.println("表格修改已更新到数据库");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, resultSet);
+        }
+    }
+
     //管理员查询职业信息
     public void searchJobInformation(String jobId, String jobName, String demandQuantity, String employer, String publishDate, String deadline, String employedQuantity, String jobType) {
         Connection connection = null;
@@ -3502,7 +3712,6 @@ public class UI {
         }
     }
 
-
     //关闭数据库链接的方法
     private static void closeConnection(Connection connection, Statement statement, ResultSet resultSet) {
         if (resultSet != null) {
@@ -3527,7 +3736,6 @@ public class UI {
             }
         }
     }
-
 
 }
 

@@ -286,7 +286,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button39"
 				"text": "删除招聘信息"
-				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button35MousePressed", true ) )
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button39MousePressed", true ) )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": #Dimension0
@@ -699,6 +699,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button41"
 				"text": "增加"
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button41MousePressed", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "textField28"

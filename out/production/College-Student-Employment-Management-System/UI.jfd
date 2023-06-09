@@ -286,14 +286,14 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button39"
 				"text": "删除招聘信息"
-				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button35MousePressed", true ) )
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button39MousePressed", true ) )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": #Dimension0
 			"location": new java.awt.Point( 1215, 1355 )
 		} )
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {space :p:28:p, comp button18:::p::p, space ::462:x}}"
+			"$horizontalGroup": "par l {seq l {space :p:28:p, comp button18:::p::p, space ::462:x}}"
 			"$verticalGroup": "par l {seq l {space ::368:x, comp button18:::p::p, space :::p}}"
 		} ) {
 			name: "Student1"
@@ -325,8 +325,8 @@ new FormModel {
 			"location": new java.awt.Point( 1810, 905 )
 		} )
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {space :p:28:p, comp button20:::p::p, space ::462:x}}"
-			"$verticalGroup": "par l {seq l {space ::368:x, comp button20:::p::p, space :::p}}"
+			"$horizontalGroup": "par l {seq l {space :p:28:p, par l {comp button20:::p::p, comp scrollPane5:::p:514:p}, space ::26:x}}"
+			"$verticalGroup": "par l {seq l {space :::p, comp scrollPane5::::356:x, space :::p, comp button20:::p::p, space :::p}}"
 		} ) {
 			name: "Student3"
 			"title": "招聘信息"
@@ -335,6 +335,12 @@ new FormModel {
 				name: "button20"
 				"text": "返回"
 				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "button9MouseClicked", true ) )
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane5"
+				add( new FormComponent( "javax.swing.JTable" ) {
+					name: "table5"
+				} )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": #Dimension0
@@ -693,6 +699,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button41"
 				"text": "增加"
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button41MousePressed", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "textField28"
