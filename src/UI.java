@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -12,6 +13,8 @@ import java.util.Map;
 import java.util.Objects;
 import javax.swing.*;
 import javax.swing.GroupLayout;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -186,8 +189,14 @@ public class UI {
         String password = textField4.getText();
         String identity = comboBox2.getSelectedItem().toString();
         String company = textField2.getText();
+        int studentID;
         if (company == "") {
             company = null;
+        }
+        if(textField34.getText()==""){
+            studentID = 0;
+        }else{
+            studentID = Integer.parseInt(textField34.getText());
         }
 
         // 数据库连接信息
@@ -198,7 +207,7 @@ public class UI {
         // 建立数据库连接
         try (Connection connection = DriverManager.getConnection(url, username, password1)) {
             // 创建插入数据的 SQL 语句
-            String sql = "INSERT INTO 高校学生就业管理系统.账号信息表 (账号, 密码, 身份 , 公司) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO 高校学生就业管理系统.账号信息表 (账号, 密码, 身份 , 公司 ,学号) VALUES (?, ?, ?, ?, ?)";
 
             // 创建 PreparedStatement 对象并设置参数
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -206,7 +215,7 @@ public class UI {
                 statement.setString(2, password);
                 statement.setString(3, identity);
                 statement.setString(4, company);
-
+                statement.setInt(5, studentID);
                 // 执行插入操作
                 int rowsAffected = statement.executeUpdate();
 
@@ -362,6 +371,13 @@ public class UI {
         } else {
             label9.setVisible(false);
             textField2.setVisible(false);
+        }
+        if (comboBox2.getSelectedItem().toString() == "学生") {
+            label42.setVisible(true);
+            textField34.setVisible(true);
+        } else {
+            label42.setVisible(false);
+            textField34.setVisible(false);
         }
     }
 
@@ -640,6 +656,71 @@ public class UI {
             }
         }
 
+    private void button4MousePressed(MouseEvent e) {
+        Student.setVisible(false);
+        Student1.setVisible(true);
+        displayCurrentGraduateStudentInfo(textField1.getText(),textField41,textField35,textField36,textField43,textField37,textField38,textField39,textField40,textField42);
+        textField41.setEditable(false);
+        textField35.setEditable(false);
+        textField36.setEditable(false);
+        textField37.setEditable(false);
+        textField38.setEditable(false);
+        textField39.setEditable(false);
+        textField40.setEditable(false);
+        textField43.setEditable(false);
+        textField42.setEditable(false);
+    }
+
+    private void button18MousePressed(MouseEvent e) {
+        Student1.setVisible(false);
+        Student.setVisible(true);
+    }
+
+    private void button42MousePressed(MouseEvent e) {
+        JOptionPane.showMessageDialog(Student1,"请在联系方式一栏输入修改后的联系方式,按Enter完成修改","提示",JOptionPane.INFORMATION_MESSAGE);
+        textField39.setEditable(true);
+        textField39.setText("");
+        textField39.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // 检测按下的键是否为 Enter 键
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    // 获取文本字段的内容
+                    String text = textField39.getText();
+
+                    // 调用更新数据库的方法，并传递学号和文本字段内容
+                    int studentId = getCurrentUserStudentId(textField1.getText());
+                    updateContactInfoInDatabase(studentId, text);
+                }
+            }
+        });
+    }
+
+    private void button43MousePressed(MouseEvent e) {
+        processJobRegistration(textField44.getText(),textField45.getText());
+    }
+
+    private void button3MousePressed(MouseEvent e) {
+        Student2.setVisible(true);
+        Student.setVisible(false);
+    }
+
+    private void button19MousePressed(MouseEvent e) {
+        Student2.setVisible(false);
+        Student.setVisible(true);
+    }
+
+    private void button2MousePressed(MouseEvent e) {
+        Student.setVisible(false);
+        Student3.setVisible(true);
+        loadJobDataToTable(table5);
+    }
+
+    private void button20MousePressed(MouseEvent e) {
+        Student.setVisible(true);
+        Student3.setVisible(false);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         // Generated using JFormDesigner Evaluation license - 林正阳
@@ -681,6 +762,8 @@ public class UI {
         button12 = new JButton();
         label9 = new JLabel();
         textField2 = new JTextField();
+        label42 = new JLabel();
+        textField34 = new JTextField();
         dialog1 = new JDialog();
         label7 = new JLabel();
         button13 = new JButton();
@@ -698,8 +781,32 @@ public class UI {
         button39 = new JButton();
         Student1 = new JFrame();
         button18 = new JButton();
+        label43 = new JLabel();
+        label44 = new JLabel();
+        label45 = new JLabel();
+        label46 = new JLabel();
+        label47 = new JLabel();
+        label48 = new JLabel();
+        textField35 = new JTextField();
+        textField36 = new JTextField();
+        textField37 = new JTextField();
+        textField38 = new JTextField();
+        textField39 = new JTextField();
+        textField40 = new JTextField();
+        label49 = new JLabel();
+        textField41 = new JTextField();
+        label50 = new JLabel();
+        textField42 = new JTextField();
+        label51 = new JLabel();
+        textField43 = new JTextField();
+        button42 = new JButton();
         Student2 = new JFrame();
         button19 = new JButton();
+        label52 = new JLabel();
+        label53 = new JLabel();
+        textField44 = new JTextField();
+        textField45 = new JTextField();
+        button43 = new JButton();
         Student3 = new JFrame();
         button20 = new JButton();
         scrollPane5 = new JScrollPane();
@@ -825,10 +932,6 @@ public class UI {
             button1.setText("\u767b\u9646");
             button1.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {
-                    button1MouseClicked(e);
-                }
-                @Override
                 public void mousePressed(MouseEvent e) {
                     button1MousePressed(e);
                 }
@@ -916,12 +1019,30 @@ public class UI {
 
             //---- button2 ----
             button2.setText("\u62db\u8058\u4fe1\u606f");
+            button2.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button2MousePressed(e);
+                }
+            });
 
             //---- button3 ----
             button3.setText("\u5c31\u4e1a\u767b\u8bb0");
+            button3.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button3MousePressed(e);
+                }
+            });
 
             //---- button4 ----
-            button4.setText("\u4e2a\u4eba\u4fe1\u606f\u767b\u8bb0");
+            button4.setText("\u4e2a\u4eba\u4fe1\u606f\u67e5\u8be2");
+            button4.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button4MousePressed(e);
+                }
+            });
 
             //---- button10 ----
             button10.setText("\u9000\u51fa\u7cfb\u7edf");
@@ -952,12 +1073,12 @@ public class UI {
             StudentContentPaneLayout.setVerticalGroup(
                 StudentContentPaneLayout.createParallelGroup()
                     .addGroup(StudentContentPaneLayout.createSequentialGroup()
-                        .addContainerGap(138, Short.MAX_VALUE)
+                        .addContainerGap(128, Short.MAX_VALUE)
                         .addGroup(StudentContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(button4, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
                             .addComponent(button3, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
                             .addComponent(button2, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE))
-                        .addGap(120, 120, 120)
+                        .addGap(130, 130, 130)
                         .addComponent(button10)
                         .addContainerGap())
             );
@@ -1161,8 +1282,8 @@ public class UI {
 
             //---- comboBox2 ----
             comboBox2.setModel(new DefaultComboBoxModel<>(new String[] {
-                "\u5b66\u751f",
                 "\u7ba1\u7406\u5458",
+                "\u5b66\u751f",
                 "\u7528\u4eba\u5355\u4f4d"
             }));
             comboBox2.addActionListener(e -> comboBox2(e));
@@ -1187,13 +1308,25 @@ public class UI {
             //---- textField2 ----
             textField2.setVisible(false);
 
+            //---- label42 ----
+            label42.setText("\u5b66\u53f7");
+            label42.setVisible(false);
+
+            //---- textField34 ----
+            textField34.setVisible(false);
+
             GroupLayout RegisterContentPaneLayout = new GroupLayout(RegisterContentPane);
             RegisterContentPane.setLayout(RegisterContentPaneLayout);
             RegisterContentPaneLayout.setHorizontalGroup(
                 RegisterContentPaneLayout.createParallelGroup()
                     .addGroup(RegisterContentPaneLayout.createSequentialGroup()
-                        .addGroup(RegisterContentPaneLayout.createParallelGroup()
+                        .addGroup(RegisterContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
                             .addGroup(RegisterContentPaneLayout.createSequentialGroup()
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(label9)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(textField2, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))
+                            .addGroup(GroupLayout.Alignment.LEADING, RegisterContentPaneLayout.createSequentialGroup()
                                 .addGap(60, 60, 60)
                                 .addGroup(RegisterContentPaneLayout.createParallelGroup()
                                     .addGroup(RegisterContentPaneLayout.createSequentialGroup()
@@ -1202,19 +1335,17 @@ public class UI {
                                         .addComponent(textField3, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))
                                     .addComponent(button12, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)
                                     .addGroup(RegisterContentPaneLayout.createSequentialGroup()
-                                        .addComponent(label5)
+                                        .addGroup(RegisterContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                            .addComponent(label5)
+                                            .addComponent(label6)
+                                            .addComponent(label42))
                                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(textField4, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(RegisterContentPaneLayout.createSequentialGroup()
-                                        .addComponent(label6)
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(comboBox2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(RegisterContentPaneLayout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(label9)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(textField2, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(72, Short.MAX_VALUE))
+                                        .addGroup(RegisterContentPaneLayout.createParallelGroup()
+                                            .addComponent(comboBox2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(textField4, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(textField34, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))))
+                                .addGap(6, 6, 6)))
+                        .addContainerGap(66, Short.MAX_VALUE))
             );
             RegisterContentPaneLayout.setVerticalGroup(
                 RegisterContentPaneLayout.createParallelGroup()
@@ -1231,12 +1362,16 @@ public class UI {
                             .addComponent(textField4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                         .addGap(29, 29, 29)
                         .addGroup(RegisterContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(label6)
-                            .addComponent(comboBox2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(comboBox2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label6))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(RegisterContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label42)
+                            .addComponent(textField34, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                         .addGroup(RegisterContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(label9)
-                            .addComponent(textField2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(textField2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label9))
                         .addGap(18, 18, 18)
                         .addComponent(button12)
                         .addGap(40, 40, 40))
@@ -1447,7 +1582,7 @@ public class UI {
 
         //======== Student1 ========
         {
-            Student1.setTitle("\u4e2a\u4eba\u4fe1\u606f\u767b\u8bb0");
+            Student1.setTitle("\u4e2a\u4eba\u4fe1\u606f\u67e5\u8be2");
             Student1.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -1460,8 +1595,44 @@ public class UI {
             button18.setText("\u8fd4\u56de");
             button18.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {
-                    button9MouseClicked(e);
+                public void mousePressed(MouseEvent e) {
+                    button18MousePressed(e);
+                }
+            });
+
+            //---- label43 ----
+            label43.setText("\u59d3\u540d");
+
+            //---- label44 ----
+            label44.setText("\u6027\u522b");
+
+            //---- label45 ----
+            label45.setText("\u6240\u5728\u9662\u7cfb");
+
+            //---- label46 ----
+            label46.setText("\u6240\u5b66\u4e13\u4e1a");
+
+            //---- label47 ----
+            label47.setText("\u8054\u7cfb\u65b9\u5f0f");
+
+            //---- label48 ----
+            label48.setText("\u5c31\u4e1a\u72b6\u6001");
+
+            //---- label49 ----
+            label49.setText("\u5b66\u53f7");
+
+            //---- label50 ----
+            label50.setText("\u804c\u4e1a");
+
+            //---- label51 ----
+            label51.setText("\u51fa\u751f\u65e5\u671f");
+
+            //---- button42 ----
+            button42.setText("\u4fee\u6539\u8054\u7cfb\u65b9\u5f0f");
+            button42.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button42MousePressed(e);
                 }
             });
 
@@ -1470,14 +1641,86 @@ public class UI {
             Student1ContentPaneLayout.setHorizontalGroup(
                 Student1ContentPaneLayout.createParallelGroup()
                     .addGroup(Student1ContentPaneLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(button18)
-                        .addContainerGap(462, Short.MAX_VALUE))
+                        .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                            .addComponent(label50)
+                            .addComponent(label48)
+                            .addComponent(label47)
+                            .addGroup(Student1ContentPaneLayout.createParallelGroup()
+                                .addGroup(Student1ContentPaneLayout.createSequentialGroup()
+                                    .addGap(28, 28, 28)
+                                    .addComponent(button18))
+                                .addGroup(Student1ContentPaneLayout.createSequentialGroup()
+                                    .addGap(64, 64, 64)
+                                    .addComponent(label46))
+                                .addGroup(Student1ContentPaneLayout.createSequentialGroup()
+                                    .addGap(62, 62, 62)
+                                    .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                        .addComponent(label45)
+                                        .addGroup(Student1ContentPaneLayout.createSequentialGroup()
+                                            .addGroup(Student1ContentPaneLayout.createParallelGroup()
+                                                .addComponent(label43)
+                                                .addComponent(label49)
+                                                .addComponent(label44))
+                                            .addGap(26, 26, 26))
+                                        .addComponent(label51)))))
+                        .addGap(36, 36, 36)
+                        .addGroup(Student1ContentPaneLayout.createParallelGroup()
+                            .addComponent(textField35, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textField37, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textField38, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
+                            .addGroup(Student1ContentPaneLayout.createSequentialGroup()
+                                .addComponent(textField39, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(button42))
+                            .addComponent(textField40, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textField41, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textField42, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textField36, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textField43, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(173, Short.MAX_VALUE))
             );
             Student1ContentPaneLayout.setVerticalGroup(
                 Student1ContentPaneLayout.createParallelGroup()
                     .addGroup(Student1ContentPaneLayout.createSequentialGroup()
-                        .addContainerGap(368, Short.MAX_VALUE)
+                        .addGap(7, 7, 7)
+                        .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label49)
+                            .addComponent(textField41, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label43)
+                            .addComponent(textField35, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label44)
+                            .addComponent(textField36, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(textField43, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label51))
+                        .addGap(13, 13, 13)
+                        .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label45)
+                            .addComponent(textField37, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33)
+                        .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label46)
+                            .addComponent(textField38, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30)
+                        .addGroup(Student1ContentPaneLayout.createParallelGroup()
+                            .addComponent(label47)
+                            .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(textField39, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(button42)))
+                        .addGap(24, 24, 24)
+                        .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label48)
+                            .addComponent(textField40, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label50)
+                            .addComponent(textField42, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button18)
                         .addContainerGap())
             );
@@ -1500,8 +1743,23 @@ public class UI {
             button19.setText("\u8fd4\u56de");
             button19.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {
-                    button9MouseClicked(e);
+                public void mousePressed(MouseEvent e) {
+                    button19MousePressed(e);
+                }
+            });
+
+            //---- label52 ----
+            label52.setText("\u5c31\u4e1a\u516c\u53f8");
+
+            //---- label53 ----
+            label53.setText("\u804c\u4e1a\u540d\u79f0");
+
+            //---- button43 ----
+            button43.setText("\u767b\u8bb0");
+            button43.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button43MousePressed(e);
                 }
             });
 
@@ -1510,14 +1768,40 @@ public class UI {
             Student2ContentPaneLayout.setHorizontalGroup(
                 Student2ContentPaneLayout.createParallelGroup()
                     .addGroup(Student2ContentPaneLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(button19)
-                        .addContainerGap(462, Short.MAX_VALUE))
+                        .addGroup(Student2ContentPaneLayout.createParallelGroup()
+                            .addGroup(Student2ContentPaneLayout.createSequentialGroup()
+                                .addGroup(Student2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                    .addComponent(label53)
+                                    .addGroup(Student2ContentPaneLayout.createParallelGroup()
+                                        .addGroup(Student2ContentPaneLayout.createSequentialGroup()
+                                            .addGap(28, 28, 28)
+                                            .addComponent(button19))
+                                        .addGroup(Student2ContentPaneLayout.createSequentialGroup()
+                                            .addGap(133, 133, 133)
+                                            .addComponent(label52))))
+                                .addGap(18, 18, 18)
+                                .addGroup(Student2ContentPaneLayout.createParallelGroup()
+                                    .addComponent(textField44, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(textField45, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(Student2ContentPaneLayout.createSequentialGroup()
+                                .addGap(246, 246, 246)
+                                .addComponent(button43)))
+                        .addContainerGap(220, Short.MAX_VALUE))
             );
             Student2ContentPaneLayout.setVerticalGroup(
                 Student2ContentPaneLayout.createParallelGroup()
                     .addGroup(Student2ContentPaneLayout.createSequentialGroup()
-                        .addContainerGap(368, Short.MAX_VALUE)
+                        .addGap(99, 99, 99)
+                        .addGroup(Student2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label52)
+                            .addComponent(textField44, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(69, 69, 69)
+                        .addGroup(Student2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label53)
+                            .addComponent(textField45, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(55, 55, 55)
+                        .addComponent(button43)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                         .addComponent(button19)
                         .addContainerGap())
             );
@@ -1540,8 +1824,8 @@ public class UI {
             button20.setText("\u8fd4\u56de");
             button20.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {
-                    button9MouseClicked(e);
+                public void mousePressed(MouseEvent e) {
+                    button20MousePressed(e);
                 }
             });
 
@@ -2401,6 +2685,8 @@ public class UI {
     private JButton button12;
     private JLabel label9;
     private JTextField textField2;
+    private JLabel label42;
+    private JTextField textField34;
     private JDialog dialog1;
     private JLabel label7;
     private JButton button13;
@@ -2418,8 +2704,32 @@ public class UI {
     private JButton button39;
     private JFrame Student1;
     private JButton button18;
+    private JLabel label43;
+    private JLabel label44;
+    private JLabel label45;
+    private JLabel label46;
+    private JLabel label47;
+    private JLabel label48;
+    private JTextField textField35;
+    private JTextField textField36;
+    private JTextField textField37;
+    private JTextField textField38;
+    private JTextField textField39;
+    private JTextField textField40;
+    private JLabel label49;
+    private JTextField textField41;
+    private JLabel label50;
+    private JTextField textField42;
+    private JLabel label51;
+    private JTextField textField43;
+    private JButton button42;
     private JFrame Student2;
     private JButton button19;
+    private JLabel label52;
+    private JLabel label53;
+    private JTextField textField44;
+    private JTextField textField45;
+    private JButton button43;
     private JFrame Student3;
     private JButton button20;
     private JScrollPane scrollPane5;
@@ -2513,10 +2823,218 @@ public class UI {
     private JTextField textField32;
     private JTextField textField33;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
+
+    //毕业生查看招聘信息的方法
+    public static void loadJobDataToTable(JTable table5) {
+            DefaultTableModel model = new DefaultTableModel();
+        String[] columnNames = {"职业名称", "需求数量", "用人单位", "截止日期", "已聘用数量", "职业类型名称"};
+        model.setColumnIdentifiers(columnNames);
+        table5.setModel(model);
+            // 建立数据库连接
+            String url = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+            String username = "root";
+            String password = "Lzy-200387";
+            try (Connection conn = DriverManager.getConnection(url, username, password)) {
+                // 执行查询
+                String query = "SELECT 职业名称, 需求数量, 用人单位, 截止日期, 已聘用数量, 职业类型名称 FROM 职业信息表";
+                Statement statement = conn.createStatement();
+                ResultSet resultSet = statement.executeQuery(query);
+                // 遍历结果集并将数据添加到表格模型中
+                while (resultSet.next()) {
+                    String 职业名称 = resultSet.getString("职业名称");
+                    int 需求数量 = resultSet.getInt("需求数量");
+                    String 用人单位 = resultSet.getString("用人单位");
+                    String 截止日期 = resultSet.getString("截止日期");
+                    int 已聘用数量 = resultSet.getInt("已聘用数量");
+                    String 职业类型名称 = resultSet.getString("职业类型名称");
+
+                    model.addRow(new Object[]{职业名称, 需求数量, 用人单位, 截止日期, 已聘用数量, 职业类型名称});
+                }
+                // 关闭数据库连接
+                resultSet.close();
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+    }
     public static void main(String[] args) throws Exception {
         UI ui = new UI();
         ui.initComponents();
         ui.Login.setVisible(true);
+    }
+    //毕业生登记就业信息的方法
+    private void processJobRegistration(String employer, String occupationName) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        CallableStatement callableStatement = null;
+        ResultSet resultSet = null;
+
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 检查职业信息表中是否存在指定的职业名称
+            String checkQuery = "SELECT * FROM 职业信息表 WHERE 职业名称 = ? AND 用人单位 = ?";
+            statement = connection.prepareStatement(checkQuery);
+            statement.setString(1, occupationName);
+            statement.setString(2, employer);
+            resultSet = statement.executeQuery();
+
+            // 如果职业信息表中不存在指定的职业名称，则显示提示框并返回
+            if (!resultSet.next()) {
+                JOptionPane.showMessageDialog(Student2, "职业信息不存在", "提示", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            // 获取职业信息表中的需求数量和已聘用数量
+            int demand = resultSet.getInt("需求数量");
+            int hiredCount = resultSet.getInt("已聘用数量");
+
+            // 检查已聘用数量是否大于需求数量
+            if (hiredCount >= demand) {
+                JOptionPane.showMessageDialog(Student2, "已聘用数量已满", "提示", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            // 更新毕业生信息表中的就业状态和职业
+            int studentId = getCurrentUserStudentId(textField1.getText());
+            String updateQuery = "UPDATE 毕业生信息表 SET 就业状态 = '已就业', 职业 = ? WHERE 学号 = ?";
+            callableStatement = connection.prepareCall(updateQuery);
+            callableStatement.setString(1, occupationName);
+            callableStatement.setInt(2, studentId);
+            callableStatement.executeUpdate();
+
+            // 提示登记成功
+            JOptionPane.showMessageDialog(Student2, "登记成功", "提示", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, resultSet);
+            if (callableStatement != null) {
+                try {
+                    callableStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    //毕业生更新联系方式的方法
+    private void updateContactInfoInDatabase(int studentId, String newContactInfo) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 更新联系方式
+            String updateQuery = "UPDATE 毕业生信息表 SET 联系方式 = ? WHERE 学号 = ?";
+            statement = connection.prepareStatement(updateQuery);
+            statement.setString(1, newContactInfo);
+            statement.setInt(2, studentId);
+            statement.executeUpdate();
+
+            // 提示更新成功
+            JOptionPane.showMessageDialog(Admin2, "联系方式更新成功", "提示", JOptionPane.INFORMATION_MESSAGE);
+            textField39.setEditable(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, null);
+        }
+    }
+
+    //毕业生查询当前登录账户的毕业生详细信息并显示在 JTextField 中
+    private void displayCurrentGraduateStudentInfo(String loggedInUsername, JTextField textFieldStudentId, JTextField textFieldName, JTextField textFieldGender, JTextField textFieldBirthDate, JTextField textFieldDepartment, JTextField textFieldMajor, JTextField textFieldContact, JTextField textFieldEmploymentStatus, JTextField textFieldOccupation) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 查询毕业生详细信息
+            String query = "SELECT 学号, 姓名, 性别, 出生日期, 院系名称, 专业名称, 联系方式, 就业状态, 职业 FROM 毕业生详细信息视图 WHERE 学号 = ?";
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, getCurrentUserStudentId(loggedInUsername));
+            resultSet = statement.executeQuery();
+
+            // 显示查询结果
+            if (resultSet.next()) {
+                textFieldStudentId.setText(String.valueOf(resultSet.getInt("学号")));
+                textFieldName.setText(resultSet.getString("姓名"));
+                textFieldGender.setText(resultSet.getString("性别"));
+
+                // 格式化日期
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String birthDate = dateFormat.format(resultSet.getDate("出生日期"));
+                textFieldBirthDate.setText(birthDate);
+
+                textFieldDepartment.setText(resultSet.getString("院系名称"));
+                textFieldMajor.setText(resultSet.getString("专业名称"));
+                textFieldContact.setText(resultSet.getString("联系方式"));
+                textFieldEmploymentStatus.setText(resultSet.getString("就业状态"));
+
+                int occupationId = resultSet.getInt("职业");
+                String occupation = occupationId != 0 ? String.valueOf(occupationId) : "无";
+                textFieldOccupation.setText(occupation);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, resultSet);
+        }
+    }
+
+    // 查询当前登录账户的学号
+    private int getCurrentUserStudentId(String loggedInUsername) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        int studentId = -1;  // 默认值为 -1 表示未找到对应的学号
+
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 查询学号
+            String query = "SELECT 学号 FROM 账号信息表 WHERE 账号 = ?";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, loggedInUsername);
+            resultSet = statement.executeQuery();
+            // 获取学号
+            if (resultSet.next()) {
+                studentId = resultSet.getInt("学号");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, resultSet);
+        }
+
+        return studentId;
     }
 
     // 管理员删除职业信息表记录
