@@ -1,21 +1,16 @@
+import javax.swing.*;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import javax.swing.*;
-import javax.swing.GroupLayout;
-import javax.swing.event.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 /*
  * Created by JFormDesigner on Tue May 23 19:25:37 CST 2023
  */
@@ -759,6 +754,14 @@ public class UI {
         }
     }
 
+    private void createUIComponents() {
+        // TODO: add custom component creation code here
+    }
+
+    private void button6MouseEntered(MouseEvent e) {
+        // TODO add your code here
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         // Generated using JFormDesigner Evaluation license - 林正阳
@@ -772,6 +775,7 @@ public class UI {
         button11 = new JButton();
         passwordField1 = new JPasswordField();
         button32 = new JButton();
+        label57 = new JLabel();
         Student = new JFrame();
         button2 = new JButton();
         button3 = new JButton();
@@ -791,6 +795,7 @@ public class UI {
         button16 = new JButton();
         button24 = new JButton();
         button26 = new JButton();
+        button50 = new JButton();
         Register = new JFrame();
         label4 = new JLabel();
         textField3 = new JTextField();
@@ -958,6 +963,8 @@ public class UI {
         {
             Login.setTitle("\u767b\u9646");
             Login.setAlwaysOnTop(true);
+            Login.setAutoRequestFocus(false);
+            Login.setIconImage(new ImageIcon("/Users/linzhengyang/Pictures/ppt\u7d20\u6750/\u5c71\u5927\u56fe\u4e66\u9986.jpeg").getImage());
             Login.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -1009,34 +1016,45 @@ public class UI {
                 }
             });
 
+            //---- label57 ----
+            label57.setText("\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf");
+            label57.setFont(label57.getFont().deriveFont(label57.getFont().getSize() + 30f));
+
             GroupLayout LoginContentPaneLayout = new GroupLayout(LoginContentPane);
             LoginContentPane.setLayout(LoginContentPaneLayout);
             LoginContentPaneLayout.setHorizontalGroup(
                 LoginContentPaneLayout.createParallelGroup()
                     .addGroup(LoginContentPaneLayout.createSequentialGroup()
-                        .addGap(477, 477, 477)
-                        .addGroup(LoginContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                        .addGroup(LoginContentPaneLayout.createParallelGroup()
                             .addGroup(LoginContentPaneLayout.createSequentialGroup()
-                                .addGroup(LoginContentPaneLayout.createParallelGroup()
-                                    .addComponent(label1)
-                                    .addComponent(label2))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(477, 477, 477)
                                 .addGroup(LoginContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(textField1)
-                                    .addComponent(passwordField1, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(LoginContentPaneLayout.createSequentialGroup()
+                                        .addGroup(LoginContentPaneLayout.createParallelGroup()
+                                            .addComponent(label1)
+                                            .addComponent(label2))
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(LoginContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(textField1)
+                                            .addComponent(passwordField1, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(LoginContentPaneLayout.createSequentialGroup()
+                                        .addComponent(label3)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(comboBox1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(button1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(button11, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(button32, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)))
                             .addGroup(LoginContentPaneLayout.createSequentialGroup()
-                                .addComponent(label3)
-                                .addGap(18, 18, 18)
-                                .addComponent(comboBox1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                            .addComponent(button1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(button11, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(button32, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(515, Short.MAX_VALUE))
+                                .addGap(359, 359, 359)
+                                .addComponent(label57)))
+                        .addContainerGap(389, Short.MAX_VALUE))
             );
             LoginContentPaneLayout.setVerticalGroup(
                 LoginContentPaneLayout.createParallelGroup()
                     .addGroup(LoginContentPaneLayout.createSequentialGroup()
-                        .addGap(194, 194, 194)
+                        .addGap(73, 73, 73)
+                        .addComponent(label57)
+                        .addGap(129, 129, 129)
                         .addGroup(LoginContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(label1)
                             .addComponent(textField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -1054,7 +1072,7 @@ public class UI {
                         .addComponent(button11)
                         .addGap(18, 18, 18)
                         .addComponent(button32)
-                        .addContainerGap(269, Short.MAX_VALUE))
+                        .addContainerGap(209, Short.MAX_VALUE))
             );
             Login.pack();
             Login.setLocationRelativeTo(Login.getOwner());
@@ -1073,6 +1091,9 @@ public class UI {
 
             //---- button2 ----
             button2.setText("\u62db\u8058\u4fe1\u606f");
+            button2.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/person.2.crop.square.stack@2x.png"));
+            button2.setHorizontalTextPosition(SwingConstants.CENTER);
+            button2.setVerticalTextPosition(SwingConstants.BOTTOM);
             button2.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1082,6 +1103,9 @@ public class UI {
 
             //---- button3 ----
             button3.setText("\u5c31\u4e1a\u767b\u8bb0");
+            button3.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/square.and.pencil@2x.png"));
+            button3.setHorizontalTextPosition(SwingConstants.CENTER);
+            button3.setVerticalTextPosition(SwingConstants.BOTTOM);
             button3.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1090,7 +1114,10 @@ public class UI {
             });
 
             //---- button4 ----
-            button4.setText("\u4e2a\u4eba\u4fe1\u606f\u67e5\u8be2");
+            button4.setText("\u4e2a\u4eba\u4fe1\u606f");
+            button4.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/person.text.rectangle@2x.png"));
+            button4.setHorizontalTextPosition(SwingConstants.CENTER);
+            button4.setVerticalTextPosition(SwingConstants.BOTTOM);
             button4.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1099,7 +1126,7 @@ public class UI {
             });
 
             //---- button10 ----
-            button10.setText("\u9000\u51fa\u7cfb\u7edf");
+            button10.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/door.right.hand.open@2x.png"));
             button10.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -1112,16 +1139,16 @@ public class UI {
             StudentContentPaneLayout.setHorizontalGroup(
                 StudentContentPaneLayout.createParallelGroup()
                     .addGroup(GroupLayout.Alignment.TRAILING, StudentContentPaneLayout.createSequentialGroup()
-                        .addGap(159, 159, 159)
-                        .addComponent(button4)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 280, Short.MAX_VALUE)
+                        .addGap(158, 158, 158)
+                        .addComponent(button4, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
+                        .addGap(285, 285, 285)
                         .addComponent(button3, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
-                        .addGap(337, 337, 337)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 335, Short.MAX_VALUE)
                         .addComponent(button2, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
                         .addGap(101, 101, 101))
                     .addGroup(StudentContentPaneLayout.createSequentialGroup()
                         .addGap(31, 31, 31)
-                        .addComponent(button10)
+                        .addComponent(button10, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(1096, Short.MAX_VALUE))
             );
             StudentContentPaneLayout.setVerticalGroup(
@@ -1129,10 +1156,13 @@ public class UI {
                     .addGroup(StudentContentPaneLayout.createSequentialGroup()
                         .addContainerGap(308, Short.MAX_VALUE)
                         .addGroup(StudentContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(button3, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
                             .addComponent(button2, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button4, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE))
-                        .addGap(259, 259, 259)
+                            .addComponent(button3, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE))
+                        .addGap(349, 349, 349))
+                    .addGroup(StudentContentPaneLayout.createSequentialGroup()
+                        .addGap(310, 310, 310)
+                        .addComponent(button4, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 257, Short.MAX_VALUE)
                         .addComponent(button10, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
             );
@@ -1152,7 +1182,10 @@ public class UI {
             var AdminContentPane = Admin.getContentPane();
 
             //---- button5 ----
+            button5.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/building.columns@2x.png"));
             button5.setText("\u9662\u7cfb\u4fe1\u606f\u7ba1\u7406");
+            button5.setHorizontalTextPosition(SwingConstants.CENTER);
+            button5.setVerticalTextPosition(SwingConstants.BOTTOM);
             button5.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1162,7 +1195,14 @@ public class UI {
 
             //---- button6 ----
             button6.setText("\u6bd5\u4e1a\u751f\u4fe1\u606f\u7ba1\u7406");
+            button6.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/person.text.rectangle@2x.png"));
+            button6.setHorizontalTextPosition(SwingConstants.CENTER);
+            button6.setVerticalTextPosition(SwingConstants.BOTTOM);
             button6.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    button6MouseEntered(e);
+                }
                 @Override
                 public void mousePressed(MouseEvent e) {
                     button6MousePressed(e);
@@ -1171,6 +1211,9 @@ public class UI {
 
             //---- button7 ----
             button7.setText("\u62db\u8058\u4fe1\u606f\u7ba1\u7406");
+            button7.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/person.2.crop.square.stack@2x.png"));
+            button7.setVerticalTextPosition(SwingConstants.BOTTOM);
+            button7.setHorizontalTextPosition(SwingConstants.CENTER);
             button7.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1179,7 +1222,7 @@ public class UI {
             });
 
             //---- button9 ----
-            button9.setText("\u9000\u51fa\u7cfb\u7edf");
+            button9.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/door.right.hand.open@2x.png"));
             button9.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -1189,6 +1232,9 @@ public class UI {
 
             //---- button44 ----
             button44.setText("\u4e13\u4e1a\u4fe1\u606f\u7ba1\u7406");
+            button44.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/display@2x.png"));
+            button44.setHorizontalTextPosition(SwingConstants.CENTER);
+            button44.setVerticalTextPosition(SwingConstants.BOTTOM);
             button44.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1201,30 +1247,31 @@ public class UI {
             AdminContentPaneLayout.setHorizontalGroup(
                 AdminContentPaneLayout.createParallelGroup()
                     .addGroup(AdminContentPaneLayout.createSequentialGroup()
-                        .addGap(146, 146, 146)
-                        .addComponent(button5, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
-                        .addComponent(button6)
-                        .addGap(129, 129, 129)
-                        .addComponent(button7, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
-                        .addGap(157, 157, 157)
-                        .addComponent(button44, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
-                        .addGap(92, 92, 92))
-                    .addGroup(AdminContentPaneLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(button9)
-                        .addContainerGap(1059, Short.MAX_VALUE))
+                        .addGroup(AdminContentPaneLayout.createParallelGroup()
+                            .addGroup(AdminContentPaneLayout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addComponent(button9, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
+                            .addGroup(AdminContentPaneLayout.createSequentialGroup()
+                                .addGap(133, 133, 133)
+                                .addComponent(button7, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+                                .addGap(138, 138, 138)
+                                .addComponent(button5, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+                                .addGap(104, 104, 104)
+                                .addComponent(button44, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+                                .addGap(122, 122, 122)
+                                .addComponent(button6, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(175, Short.MAX_VALUE))
             );
             AdminContentPaneLayout.setVerticalGroup(
                 AdminContentPaneLayout.createParallelGroup()
                     .addGroup(AdminContentPaneLayout.createSequentialGroup()
-                        .addGap(310, 310, 310)
+                        .addContainerGap(302, Short.MAX_VALUE)
                         .addGroup(AdminContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(button6, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button44, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
                             .addComponent(button5, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button7, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 248, Short.MAX_VALUE)
+                            .addComponent(button7, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button44, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button6, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE))
+                        .addGap(251, 251, 251)
                         .addComponent(button9, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
             );
@@ -1244,7 +1291,7 @@ public class UI {
             var EmployersContentPane = Employers.getContentPane();
 
             //---- button8 ----
-            button8.setText("\u9000\u51fa\u7cfb\u7edf");
+            button8.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/door.right.hand.open@2x.png"));
             button8.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -1258,7 +1305,10 @@ public class UI {
             }
 
             //---- button15 ----
-            button15.setText("\u67e5\u8be2\u9700\u6c42");
+            button15.setText("\u5355\u4e2a");
+            button15.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/magnifyingglass@2x.png"));
+            button15.setHorizontalTextPosition(SwingConstants.CENTER);
+            button15.setVerticalTextPosition(SwingConstants.BOTTOM);
             button15.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1267,7 +1317,10 @@ public class UI {
             });
 
             //---- button16 ----
-            button16.setText("\u4fee\u6539\u9700\u6c42");
+            button16.setText("\u4fee\u6539");
+            button16.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/square.and.pencil@2x.png"));
+            button16.setHorizontalTextPosition(SwingConstants.CENTER);
+            button16.setVerticalTextPosition(SwingConstants.BOTTOM);
             button16.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1276,7 +1329,10 @@ public class UI {
             });
 
             //---- button24 ----
-            button24.setText("\u67e5\u8be2\u5168\u90e8\u9700\u6c42");
+            button24.setText("\u5168\u90e8");
+            button24.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/magnifyingglass@2x.png"));
+            button24.setHorizontalTextPosition(SwingConstants.CENTER);
+            button24.setVerticalTextPosition(SwingConstants.BOTTOM);
             button24.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1286,12 +1342,21 @@ public class UI {
 
             //---- button26 ----
             button26.setText("\u53d1\u5e03\u9700\u6c42");
+            button26.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/icloud.and.arrow.up@2x.png"));
+            button26.setHorizontalTextPosition(SwingConstants.CENTER);
+            button26.setVerticalTextPosition(SwingConstants.BOTTOM);
             button26.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
                     button26MousePressed(e);
                 }
             });
+
+            //---- button50 ----
+            button50.setText("\u5220\u9664\u9700\u6c42");
+            button50.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/delete.backward@2x.png"));
+            button50.setHorizontalTextPosition(SwingConstants.CENTER);
+            button50.setVerticalTextPosition(SwingConstants.BOTTOM);
 
             GroupLayout EmployersContentPaneLayout = new GroupLayout(EmployersContentPane);
             EmployersContentPane.setLayout(EmployersContentPaneLayout);
@@ -1301,15 +1366,17 @@ public class UI {
                         .addGap(92, 92, 92)
                         .addGroup(EmployersContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                             .addGroup(EmployersContentPaneLayout.createSequentialGroup()
-                                .addComponent(button8)
-                                .addGap(131, 131, 131)
-                                .addComponent(button24, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
-                                .addGap(132, 132, 132)
-                                .addComponent(button15)
-                                .addGap(133, 133, 133)
-                                .addComponent(button16)
+                                .addComponent(button8, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
+                                .addGap(84, 84, 84)
+                                .addComponent(button24, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+                                .addGap(101, 101, 101)
+                                .addComponent(button15, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)
+                                .addGap(96, 96, 96)
+                                .addComponent(button16, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(button26))
+                                .addComponent(button50, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+                                .addGap(84, 84, 84)
+                                .addComponent(button26, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE))
                             .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 993, GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(98, Short.MAX_VALUE))
             );
@@ -1318,14 +1385,18 @@ public class UI {
                     .addGroup(GroupLayout.Alignment.TRAILING, EmployersContentPaneLayout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 599, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                        .addGroup(EmployersContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(button8, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button24, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button15, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button16, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button26, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE))
-                        .addGap(19, 19, 19))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                        .addGroup(EmployersContentPaneLayout.createParallelGroup()
+                            .addGroup(EmployersContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                .addGroup(EmployersContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(button15, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(button16, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(button24, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE))
+                                .addGroup(EmployersContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(button50, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(button26, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(button8, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26))
             );
             Employers.pack();
             Employers.setLocationRelativeTo(Employers.getOwner());
@@ -1507,7 +1578,7 @@ public class UI {
             var Admin1ContentPane = Admin1.getContentPane();
 
             //---- button17 ----
-            button17.setText("\u8fd4\u56de");
+            button17.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/door.right.hand.open@2x.png"));
             button17.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1517,6 +1588,7 @@ public class UI {
 
             //---- button28 ----
             button28.setText("\u67e5\u8be2/\u589e\u52a0\u9662\u7cfb");
+            button28.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/magnifyingglass@2x.png"));
             button28.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1531,6 +1603,7 @@ public class UI {
 
             //---- button31 ----
             button31.setText("\u5220\u9664\u9662\u7cfb");
+            button31.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/delete.backward@2x.png"));
             button31.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1544,15 +1617,17 @@ public class UI {
                 Admin1ContentPaneLayout.createParallelGroup()
                     .addGroup(Admin1ContentPaneLayout.createSequentialGroup()
                         .addGap(79, 79, 79)
-                        .addGroup(Admin1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(Admin1ContentPaneLayout.createParallelGroup()
                             .addGroup(Admin1ContentPaneLayout.createSequentialGroup()
-                                .addComponent(button17)
-                                .addGap(369, 369, 369)
+                                .addComponent(scrollPane2, GroupLayout.PREFERRED_SIZE, 1027, GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(82, Short.MAX_VALUE))
+                            .addGroup(Admin1ContentPaneLayout.createSequentialGroup()
+                                .addComponent(button17, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 345, Short.MAX_VALUE)
                                 .addComponent(button28)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(button31))
-                            .addComponent(scrollPane2, GroupLayout.PREFERRED_SIZE, 1027, GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(82, Short.MAX_VALUE))
+                                .addGap(244, 244, 244)
+                                .addComponent(button31, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
+                                .addGap(107, 107, 107))))
             );
             Admin1ContentPaneLayout.setVerticalGroup(
                 Admin1ContentPaneLayout.createParallelGroup()
@@ -1560,10 +1635,10 @@ public class UI {
                         .addGap(32, 32, 32)
                         .addComponent(scrollPane2, GroupLayout.PREFERRED_SIZE, 603, GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(Admin1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(button31, GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
-                            .addComponent(button17, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button28, GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE))
+                        .addGroup(Admin1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                            .addComponent(button17, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(button28, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                            .addComponent(button31, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE))
                         .addGap(22, 22, 22))
             );
             Admin1.pack();
@@ -1582,7 +1657,7 @@ public class UI {
             var Admin3ContentPane = Admin3.getContentPane();
 
             //---- button25 ----
-            button25.setText("\u8fd4\u56de");
+            button25.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/door.right.hand.open@2x.png"));
             button25.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1597,6 +1672,7 @@ public class UI {
 
             //---- button38 ----
             button38.setText("\u67e5\u8be2/\u589e\u52a0\u62db\u8058\u4fe1\u606f");
+            button38.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/magnifyingglass@2x.png"));
             button38.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1606,6 +1682,7 @@ public class UI {
 
             //---- button39 ----
             button39.setText("\u5220\u9664\u62db\u8058\u4fe1\u606f");
+            button39.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/delete.backward@2x.png"));
             button39.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1618,15 +1695,17 @@ public class UI {
             Admin3ContentPaneLayout.setHorizontalGroup(
                 Admin3ContentPaneLayout.createParallelGroup()
                     .addGroup(Admin3ContentPaneLayout.createSequentialGroup()
-                        .addGap(71, 71, 71)
                         .addGroup(Admin3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                             .addGroup(Admin3ContentPaneLayout.createSequentialGroup()
-                                .addComponent(button25)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(463, 463, 463)
                                 .addComponent(button38)
-                                .addGap(341, 341, 341)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(button39))
-                            .addComponent(scrollPane4, GroupLayout.PREFERRED_SIZE, 1050, GroupLayout.PREFERRED_SIZE))
+                            .addGroup(GroupLayout.Alignment.TRAILING, Admin3ContentPaneLayout.createSequentialGroup()
+                                .addGap(71, 71, 71)
+                                .addGroup(Admin3ContentPaneLayout.createParallelGroup()
+                                    .addComponent(scrollPane4, GroupLayout.PREFERRED_SIZE, 1050, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(button25, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap(67, Short.MAX_VALUE))
             );
             Admin3ContentPaneLayout.setVerticalGroup(
@@ -1636,10 +1715,10 @@ public class UI {
                         .addComponent(scrollPane4, GroupLayout.PREFERRED_SIZE, 602, GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(Admin3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                            .addComponent(button25, GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
-                            .addComponent(button38, GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
-                            .addComponent(button39, GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))
-                        .addGap(21, 21, 21))
+                            .addComponent(button38, GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                            .addComponent(button25, GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                            .addComponent(button39, GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE))
+                        .addContainerGap())
             );
             Admin3.pack();
             Admin3.setLocationRelativeTo(Admin3.getOwner());
@@ -1657,7 +1736,7 @@ public class UI {
             var Student1ContentPane = Student1.getContentPane();
 
             //---- button18 ----
-            button18.setText("\u8fd4\u56de");
+            button18.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/door.right.hand.open@2x.png"));
             button18.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1706,16 +1785,20 @@ public class UI {
             Student1ContentPaneLayout.setHorizontalGroup(
                 Student1ContentPaneLayout.createParallelGroup()
                     .addGroup(Student1ContentPaneLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(button18)
-                        .addGap(146, 146, 146)
-                        .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                            .addGroup(Student1ContentPaneLayout.createParallelGroup()
-                                .addComponent(label49)
-                                .addComponent(label43)
-                                .addComponent(label44))
-                            .addComponent(label51)
-                            .addComponent(label50))
+                        .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(Student1ContentPaneLayout.createSequentialGroup()
+                                .addGap(252, 252, 252)
+                                .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                    .addGroup(Student1ContentPaneLayout.createParallelGroup()
+                                        .addComponent(label49)
+                                        .addComponent(label43)
+                                        .addComponent(label44))
+                                    .addComponent(label51)))
+                            .addGroup(Student1ContentPaneLayout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addComponent(button18, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(label50)))
                         .addGap(39, 39, 39)
                         .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                             .addComponent(textField42, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
@@ -1773,8 +1856,8 @@ public class UI {
                             .addComponent(label50)
                             .addComponent(textField42, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(button42))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
-                        .addComponent(button18)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
+                        .addComponent(button18, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
             );
             Student1.pack();
@@ -1793,7 +1876,7 @@ public class UI {
             var Student2ContentPane = Student2.getContentPane();
 
             //---- button19 ----
-            button19.setText("\u8fd4\u56de");
+            button19.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/door.right.hand.open@2x.png"));
             button19.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1809,6 +1892,9 @@ public class UI {
 
             //---- button43 ----
             button43.setText("\u767b\u8bb0");
+            button43.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/square.and.pencil@2x.png"));
+            button43.setHorizontalTextPosition(SwingConstants.CENTER);
+            button43.setVerticalTextPosition(SwingConstants.BOTTOM);
             button43.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1822,26 +1908,22 @@ public class UI {
                 Student2ContentPaneLayout.createParallelGroup()
                     .addGroup(Student2ContentPaneLayout.createSequentialGroup()
                         .addGroup(Student2ContentPaneLayout.createParallelGroup()
-                            .addGroup(Student2ContentPaneLayout.createSequentialGroup()
-                                .addGap(246, 246, 246)
-                                .addComponent(button43))
                             .addGroup(Student2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(GroupLayout.Alignment.LEADING, Student2ContentPaneLayout.createSequentialGroup()
-                                    .addGroup(Student2ContentPaneLayout.createParallelGroup()
-                                        .addGroup(Student2ContentPaneLayout.createSequentialGroup()
-                                            .addGap(28, 28, 28)
-                                            .addComponent(button19)
-                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGroup(GroupLayout.Alignment.TRAILING, Student2ContentPaneLayout.createSequentialGroup()
-                                            .addContainerGap()
-                                            .addComponent(label53)
-                                            .addGap(18, 18, 18)))
+                                    .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(label53)
+                                    .addGap(18, 18, 18)
                                     .addComponent(textField45, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE))
                                 .addGroup(GroupLayout.Alignment.LEADING, Student2ContentPaneLayout.createSequentialGroup()
                                     .addGap(169, 169, 169)
                                     .addComponent(label52)
                                     .addGap(18, 18, 18)
-                                    .addComponent(textField44, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(textField44, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(Student2ContentPaneLayout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addComponent(button19, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)
+                                .addGap(135, 135, 135)
+                                .addComponent(button43, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(184, Short.MAX_VALUE))
             );
             Student2ContentPaneLayout.setVerticalGroup(
@@ -1855,11 +1937,13 @@ public class UI {
                         .addGroup(Student2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(textField45, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(label53))
-                        .addGap(55, 55, 55)
-                        .addComponent(button43)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                        .addComponent(button19)
-                        .addContainerGap())
+                        .addGap(38, 38, 38)
+                        .addComponent(button43, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(62, Short.MAX_VALUE))
+                    .addGroup(GroupLayout.Alignment.TRAILING, Student2ContentPaneLayout.createSequentialGroup()
+                        .addContainerGap(308, Short.MAX_VALUE)
+                        .addComponent(button19, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))
             );
             Student2.pack();
             Student2.setLocationRelativeTo(Student2.getOwner());
@@ -1877,7 +1961,7 @@ public class UI {
             var Student3ContentPane = Student3.getContentPane();
 
             //---- button20 ----
-            button20.setText("\u8fd4\u56de");
+            button20.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/door.right.hand.open@2x.png"));
             button20.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1898,7 +1982,7 @@ public class UI {
                         .addGap(28, 28, 28)
                         .addGroup(Student3ContentPaneLayout.createParallelGroup()
                             .addComponent(scrollPane5, GroupLayout.PREFERRED_SIZE, 1157, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button20))
+                            .addComponent(button20, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(28, Short.MAX_VALUE))
             );
             Student3ContentPaneLayout.setVerticalGroup(
@@ -1977,7 +2061,7 @@ public class UI {
             var Admin2ContentPane = Admin2.getContentPane();
 
             //---- button21 ----
-            button21.setText("\u8fd4\u56de");
+            button21.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/door.right.hand.open@2x.png"));
             button21.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -1992,6 +2076,7 @@ public class UI {
 
             //---- button34 ----
             button34.setText("\u67e5\u8be2/\u589e\u52a0\u6bd5\u4e1a\u751f");
+            button34.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/magnifyingglass@2x.png"));
             button34.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -2001,6 +2086,7 @@ public class UI {
 
             //---- button35 ----
             button35.setText("\u5220\u9664\u6bd5\u4e1a\u751f");
+            button35.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/delete.backward@2x.png"));
             button35.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -2019,28 +2105,24 @@ public class UI {
                                 .addComponent(scrollPane3, GroupLayout.PREFERRED_SIZE, 1045, GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(75, Short.MAX_VALUE))
                             .addGroup(Admin2ContentPaneLayout.createSequentialGroup()
-                                .addComponent(button21)
-                                .addGap(377, 377, 377)
+                                .addComponent(button21, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
+                                .addGap(257, 257, 257)
                                 .addComponent(button34)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 335, Short.MAX_VALUE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 333, Short.MAX_VALUE)
                                 .addComponent(button35)
-                                .addGap(102, 102, 102))))
+                                .addGap(122, 122, 122))))
             );
             Admin2ContentPaneLayout.setVerticalGroup(
                 Admin2ContentPaneLayout.createParallelGroup()
                     .addGroup(Admin2ContentPaneLayout.createSequentialGroup()
                         .addGap(43, 43, 43)
                         .addComponent(scrollPane3, GroupLayout.PREFERRED_SIZE, 585, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                        .addGroup(Admin2ContentPaneLayout.createParallelGroup()
-                            .addGroup(GroupLayout.Alignment.TRAILING, Admin2ContentPaneLayout.createSequentialGroup()
-                                .addComponent(button21, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-                                .addGap(15, 15, 15))
-                            .addGroup(Admin2ContentPaneLayout.createSequentialGroup()
-                                .addGroup(Admin2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(button34, GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
-                                    .addComponent(button35, GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE))
-                                .addContainerGap())))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                        .addGroup(Admin2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(button35, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button34, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button21, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE))
+                        .addGap(15, 15, 15))
             );
             Admin2.pack();
             Admin2.setLocationRelativeTo(Admin2.getOwner());
@@ -2111,7 +2193,7 @@ public class UI {
             label13.setText("\u804c\u4e1a\u540d\u79f0");
 
             //---- button23 ----
-            button23.setText("\u67e5\u8be2");
+            button23.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/magnifyingglass@2x.png"));
             button23.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -2137,9 +2219,9 @@ public class UI {
                             .addGroup(EmployersSearchContentPaneLayout.createSequentialGroup()
                                 .addComponent(textField7, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
-                        .addComponent(button23)
-                        .addGap(42, 42, 42))
+                        .addGap(73, 73, 73)
+                        .addComponent(button23, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34))
             );
             EmployersSearchContentPaneLayout.setVerticalGroup(
                 EmployersSearchContentPaneLayout.createParallelGroup()
@@ -2191,6 +2273,9 @@ public class UI {
 
             //---- button27 ----
             button27.setText("\u53d1\u5e03\u9700\u6c42");
+            button27.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/icloud.and.arrow.up@2x.png"));
+            button27.setHorizontalTextPosition(SwingConstants.CENTER);
+            button27.setVerticalTextPosition(SwingConstants.BOTTOM);
             button27.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -2219,15 +2304,15 @@ public class UI {
                                         .addComponent(label17)
                                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(textField10, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                                .addComponent(button27, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
+                                .addGap(52, 52, 52))
                             .addGroup(EmployersNeedContentPaneLayout.createSequentialGroup()
                                 .addGap(0, 24, Short.MAX_VALUE)
                                 .addComponent(label18)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(textField11, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
-                                .addGap(78, 78, 78)))
-                        .addComponent(button27)
-                        .addGap(62, 62, 62))
+                                .addGap(226, 226, 226))))
             );
             EmployersNeedContentPaneLayout.setVerticalGroup(
                 EmployersNeedContentPaneLayout.createParallelGroup()
@@ -2245,12 +2330,11 @@ public class UI {
                                 .addGap(31, 31, 31)
                                 .addGroup(EmployersNeedContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                     .addComponent(label17)
-                                    .addComponent(textField10, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addGap(31, 31, 31))
-                            .addGroup(GroupLayout.Alignment.TRAILING, EmployersNeedContentPaneLayout.createSequentialGroup()
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button27, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-                                .addGap(45, 45, 45)))
+                                    .addComponent(textField10, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(EmployersNeedContentPaneLayout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(button27, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)))
+                        .addGap(31, 31, 31)
                         .addGroup(EmployersNeedContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(label18)
                             .addComponent(textField11, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -2262,7 +2346,7 @@ public class UI {
 
         //======== AdminSearch ========
         {
-            AdminSearch.setTitle("\u67e5\u8be2\u4fe1\u606f");
+            AdminSearch.setTitle("\u67e5\u8be2/\u589e\u52a0\u9662\u7cfb");
             AdminSearch.setAlwaysOnTop(true);
             var AdminSearchContentPane = AdminSearch.getContentPane();
 
@@ -2270,7 +2354,7 @@ public class UI {
             label19.setText("\u9662\u7cfb\u540d\u79f0");
 
             //---- button29 ----
-            button29.setText("\u67e5\u8be2");
+            button29.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/magnifyingglass@2x.png"));
             button29.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -2282,7 +2366,7 @@ public class UI {
             label20.setText("\u9662\u7cfb\u7f16\u53f7");
 
             //---- button30 ----
-            button30.setText("\u589e\u52a0");
+            button30.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/plus.square@2x.png"));
             button30.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -2304,27 +2388,32 @@ public class UI {
                             .addComponent(textField12)
                             .addGroup(AdminSearchContentPaneLayout.createSequentialGroup()
                                 .addComponent(textField13, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 1, Short.MAX_VALUE)))
-                        .addGap(97, 97, 97)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(90, 90, 90)
                         .addGroup(AdminSearchContentPaneLayout.createParallelGroup()
-                            .addComponent(button29)
-                            .addComponent(button30))
-                        .addGap(43, 43, 43))
+                            .addComponent(button29, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button30, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE))
+                        .addGap(40, 40, 40))
             );
             AdminSearchContentPaneLayout.setVerticalGroup(
                 AdminSearchContentPaneLayout.createParallelGroup()
                     .addGroup(AdminSearchContentPaneLayout.createSequentialGroup()
                         .addGap(49, 49, 49)
-                        .addGroup(AdminSearchContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(label19)
-                            .addComponent(textField12, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button29, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
-                        .addGap(48, 48, 48)
-                        .addGroup(AdminSearchContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(textField13, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label20)
-                            .addComponent(button30, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(47, Short.MAX_VALUE))
+                        .addGroup(AdminSearchContentPaneLayout.createParallelGroup()
+                            .addGroup(AdminSearchContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(label19)
+                                .addComponent(textField12, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(button29, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
+                        .addGroup(AdminSearchContentPaneLayout.createParallelGroup()
+                            .addGroup(AdminSearchContentPaneLayout.createSequentialGroup()
+                                .addGap(55, 55, 55)
+                                .addGroup(AdminSearchContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(textField13, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label20)))
+                            .addGroup(AdminSearchContentPaneLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(button30, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(78, Short.MAX_VALUE))
             );
             AdminSearch.pack();
             AdminSearch.setLocationRelativeTo(AdminSearch.getOwner());
@@ -2449,7 +2538,7 @@ public class UI {
             label25.setText("\u5b66\u53f7");
 
             //---- button36 ----
-            button36.setText("\u67e5\u8be2");
+            button36.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/magnifyingglass@2x.png"));
             button36.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -2461,7 +2550,7 @@ public class UI {
             label26.setText("\u59d3\u540d");
 
             //---- button37 ----
-            button37.setText("\u589e\u52a0");
+            button37.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/plus.square@2x.png"));
             button37.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -2516,47 +2605,50 @@ public class UI {
                                     .addComponent(label33, GroupLayout.Alignment.TRAILING))))
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup()
+                            .addComponent(textField23, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textField24, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textField25, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
                             .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                 .addComponent(textField20)
                                 .addComponent(textField19)
                                 .addComponent(textField17, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
                                 .addComponent(textField18))
                             .addComponent(textField21, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField23, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField24, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField25, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
                             .addComponent(textField22, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE))
-                        .addGap(84, 84, 84)
-                        .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                            .addComponent(button36, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
-                            .addComponent(button37, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
-                        .addContainerGap(142, Short.MAX_VALUE))
+                        .addGap(87, 87, 87)
+                        .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup()
+                            .addComponent(button37, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button36, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(139, Short.MAX_VALUE))
             );
             AdminSearch2ContentPaneLayout.setVerticalGroup(
                 AdminSearch2ContentPaneLayout.createParallelGroup()
                     .addGroup(AdminSearch2ContentPaneLayout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(label25)
-                            .addComponent(textField17, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addGap(28, 28, 28)
-                        .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                        .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
                             .addGroup(AdminSearch2ContentPaneLayout.createSequentialGroup()
-                                .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(textField18, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(label26))
-                                .addGap(27, 27, 27)
-                                .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(textField21, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(label29))
-                                .addGap(17, 17, 17)
-                                .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(textField22, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(label30))
-                                .addGap(22, 22, 22)
-                                .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(textField19, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(label27))
+                                .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup()
+                                    .addGroup(AdminSearch2ContentPaneLayout.createSequentialGroup()
+                                        .addGap(109, 109, 109)
+                                        .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                            .addComponent(textField18, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(label26))
+                                        .addGap(27, 27, 27)
+                                        .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                            .addComponent(textField21, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(label29))
+                                        .addGap(17, 17, 17)
+                                        .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                            .addComponent(textField22, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(label30))
+                                        .addGap(22, 22, 22)
+                                        .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                            .addComponent(textField19, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(label27)))
+                                    .addGroup(AdminSearch2ContentPaneLayout.createSequentialGroup()
+                                        .addGap(51, 51, 51)
+                                        .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                            .addComponent(label25)
+                                            .addComponent(textField17, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
                                 .addGap(27, 27, 27)
                                 .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                     .addComponent(textField20, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -2568,17 +2660,17 @@ public class UI {
                                 .addGap(19, 19, 19)
                                 .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                     .addComponent(label32)
-                                    .addComponent(textField24, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addGap(17, 17, 17)
-                                .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(textField25, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(label33))
-                                .addContainerGap(73, Short.MAX_VALUE))
+                                    .addComponent(textField24, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
                             .addGroup(AdminSearch2ContentPaneLayout.createSequentialGroup()
-                                .addComponent(button36, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(48, 48, 48)
-                                .addComponent(button37, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
-                                .addGap(93, 93, 93))))
+                                .addGap(81, 81, 81)
+                                .addComponent(button36, GroupLayout.PREFERRED_SIZE, 162, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(button37, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)))
+                        .addGap(17, 17, 17)
+                        .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(textField25, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label33))
+                        .addContainerGap(73, Short.MAX_VALUE))
             );
             AdminSearch2.pack();
             AdminSearch2.setLocationRelativeTo(AdminSearch2.getOwner());
@@ -2594,7 +2686,7 @@ public class UI {
             label34.setText("\u804c\u4e1a\u7f16\u53f7");
 
             //---- button40 ----
-            button40.setText("\u67e5\u8be2");
+            button40.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/magnifyingglass@2x.png"));
             button40.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -2606,7 +2698,7 @@ public class UI {
             label35.setText("\u804c\u4e1a\u540d\u79f0");
 
             //---- button41 ----
-            button41.setText("\u589e\u52a0");
+            button41.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/plus.square@2x.png"));
             button41.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -2663,12 +2755,10 @@ public class UI {
                             .addComponent(textField33, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
                             .addComponent(textField31, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE))
                         .addGap(84, 84, 84)
-                        .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup()
-                            .addComponent(button40, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(AdminSearch3ContentPaneLayout.createSequentialGroup()
-                                .addComponent(button41, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap(108, Short.MAX_VALUE))
+                        .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                            .addComponent(button41, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                            .addComponent(button40, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
+                        .addContainerGap(109, Short.MAX_VALUE))
             );
             AdminSearch3ContentPaneLayout.setVerticalGroup(
                 AdminSearch3ContentPaneLayout.createParallelGroup()
@@ -2689,7 +2779,7 @@ public class UI {
                         .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(textField31, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(label39))
-                        .addGap(22, 22, 22)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(textField28, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(label36))
@@ -2705,11 +2795,11 @@ public class UI {
                         .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(textField33, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(label41))
-                        .addContainerGap(120, Short.MAX_VALUE))
+                        .addContainerGap(136, Short.MAX_VALUE))
                     .addGroup(GroupLayout.Alignment.TRAILING, AdminSearch3ContentPaneLayout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(button40, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(34, 34, 34)
+                        .addContainerGap(81, Short.MAX_VALUE)
+                        .addComponent(button40, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                         .addComponent(button41, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
                         .addGap(129, 129, 129))
             );
@@ -2729,7 +2819,7 @@ public class UI {
             var Admin4ContentPane = Admin4.getContentPane();
 
             //---- button45 ----
-            button45.setText("\u8fd4\u56de");
+            button45.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/door.right.hand.open@2x.png"));
             button45.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -2744,6 +2834,7 @@ public class UI {
 
             //---- button46 ----
             button46.setText("\u67e5\u8be2/\u589e\u52a0\u4e13\u4e1a\u4fe1\u606f");
+            button46.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/magnifyingglass@2x.png"));
             button46.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -2753,6 +2844,7 @@ public class UI {
 
             //---- button47 ----
             button47.setText("\u5220\u9664\u4e13\u4e1a\u4fe1\u606f");
+            button47.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/delete.backward@2x.png"));
             button47.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -2768,10 +2860,10 @@ public class UI {
                         .addGap(78, 78, 78)
                         .addGroup(Admin4ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                             .addGroup(Admin4ContentPaneLayout.createSequentialGroup()
-                                .addComponent(button45)
+                                .addComponent(button45, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(button46)
-                                .addGap(344, 344, 344)
+                                .addGap(271, 271, 271)
                                 .addComponent(button47))
                             .addComponent(scrollPane6, GroupLayout.PREFERRED_SIZE, 1028, GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(82, Short.MAX_VALUE))
@@ -2781,11 +2873,11 @@ public class UI {
                     .addGroup(Admin4ContentPaneLayout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addComponent(scrollPane6, GroupLayout.PREFERRED_SIZE, 601, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                        .addGroup(Admin4ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(button45, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button46, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button47, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(Admin4ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                            .addComponent(button45, GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                            .addComponent(button46, GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                            .addComponent(button47, GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
                         .addGap(19, 19, 19))
             );
             Admin4.pack();
@@ -2794,7 +2886,7 @@ public class UI {
 
         //======== AdminSearch4 ========
         {
-            AdminSearch4.setTitle("\u67e5\u8be2\u4fe1\u606f");
+            AdminSearch4.setTitle("\u67e5\u8be2/\u589e\u52a0\u4e13\u4e1a");
             AdminSearch4.setAlwaysOnTop(true);
             var AdminSearch4ContentPane = AdminSearch4.getContentPane();
 
@@ -2802,7 +2894,7 @@ public class UI {
             label54.setText("\u4e13\u4e1a\u540d\u79f0");
 
             //---- button48 ----
-            button48.setText("\u67e5\u8be2");
+            button48.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/magnifyingglass@2x.png"));
             button48.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -2814,7 +2906,7 @@ public class UI {
             label55.setText("\u4e13\u4e1a\u7f16\u53f7");
 
             //---- button49 ----
-            button49.setText("\u589e\u52a0");
+            button49.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/plus.square@2x.png"));
             button49.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -2833,43 +2925,42 @@ public class UI {
                         .addGap(31, 31, 31)
                         .addGroup(AdminSearch4ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                             .addComponent(label54)
-                            .addComponent(label55)
-                            .addComponent(label56))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(AdminSearch4ContentPaneLayout.createParallelGroup()
-                            .addGroup(AdminSearch4ContentPaneLayout.createSequentialGroup()
-                                .addGroup(AdminSearch4ContentPaneLayout.createParallelGroup()
-                                    .addComponent(textField46, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                                    .addGroup(AdminSearch4ContentPaneLayout.createSequentialGroup()
-                                        .addComponent(textField47, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 1, Short.MAX_VALUE)))
-                                .addGap(97, 97, 97))
-                            .addGroup(AdminSearch4ContentPaneLayout.createSequentialGroup()
-                                .addComponent(textField48, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)))
-                        .addGroup(AdminSearch4ContentPaneLayout.createParallelGroup()
-                            .addComponent(button48)
-                            .addComponent(button49))
+                            .addComponent(label56)
+                            .addComponent(label55))
+                        .addGap(18, 18, 18)
+                        .addGroup(AdminSearch4ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                            .addComponent(textField48, GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                            .addComponent(textField46, GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                            .addComponent(textField47, GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                        .addGroup(AdminSearch4ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                            .addComponent(button48, GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                            .addComponent(button49, GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
                         .addGap(43, 43, 43))
             );
             AdminSearch4ContentPaneLayout.setVerticalGroup(
                 AdminSearch4ContentPaneLayout.createParallelGroup()
                     .addGroup(AdminSearch4ContentPaneLayout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addGroup(AdminSearch4ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(label54)
-                            .addComponent(textField46, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button48, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
-                        .addGap(13, 13, 13)
-                        .addGroup(AdminSearch4ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(label55)
-                            .addComponent(textField47, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(AdminSearch4ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(button49, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label56)
-                            .addComponent(textField48, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(40, Short.MAX_VALUE))
+                        .addGroup(AdminSearch4ContentPaneLayout.createParallelGroup()
+                            .addGroup(AdminSearch4ContentPaneLayout.createSequentialGroup()
+                                .addGap(49, 49, 49)
+                                .addGroup(AdminSearch4ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(label54)
+                                    .addComponent(textField46, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(30, 30, 30)
+                                .addGroup(AdminSearch4ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(textField47, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label55))
+                                .addGap(34, 34, 34)
+                                .addGroup(AdminSearch4ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(label56)
+                                    .addComponent(textField48, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(AdminSearch4ContentPaneLayout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addComponent(button48, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27)
+                                .addComponent(button49, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(81, Short.MAX_VALUE))
             );
             AdminSearch4.pack();
             AdminSearch4.setLocationRelativeTo(AdminSearch4.getOwner());
@@ -2889,6 +2980,7 @@ public class UI {
     private JButton button11;
     private JPasswordField passwordField1;
     private JButton button32;
+    private JLabel label57;
     private JFrame Student;
     private JButton button2;
     private JButton button3;
@@ -2908,6 +3000,7 @@ public class UI {
     private JButton button16;
     private JButton button24;
     private JButton button26;
+    private JButton button50;
     private JFrame Register;
     private JLabel label4;
     private JTextField textField3;
@@ -3071,6 +3164,11 @@ public class UI {
     private JLabel label56;
     private JTextField textField48;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
+    public static void main(String[] args) throws Exception {
+        UI ui = new UI();
+        ui.initComponents();
+        ui.Login.setVisible(true);
+    }
     //管理员删除专业信息的方法
     private void deleteMajorRecord(int majorId) {
         Connection connection = null;
@@ -3148,7 +3246,7 @@ public class UI {
     }
 
     //管理员查询专业信息的方法
-        public static void queryMajorInformation(JTable table, JTextField idTextField, JTextField nameTextField, JTextField departmentTextField) {
+    public static void queryMajorInformation(JTable table, JTextField idTextField, JTextField nameTextField, JTextField departmentTextField) {
             try {
                 String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
                 String USERNAME = "root";
@@ -3343,11 +3441,6 @@ public class UI {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-    }
-    public static void main(String[] args) throws Exception {
-        UI ui = new UI();
-        ui.initComponents();
-        ui.Login.setVisible(true);
     }
     //毕业生登记就业信息的方法
     private void processJobRegistration(String employer, String occupationName) {
