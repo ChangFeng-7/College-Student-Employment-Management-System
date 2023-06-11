@@ -61,7 +61,7 @@ new FormModel {
 				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 30, false )
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 295, 25 )
+			"location": new java.awt.Point( 295, 15 )
 			"size": new java.awt.Dimension( 1180, 805 )
 		} )
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
@@ -366,8 +366,8 @@ new FormModel {
 			"location": new java.awt.Point( 1500, 3315 )
 		} )
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq l {par t:::p {seq t {space :p:252:p, par t {par l {comp label49:::p::p, comp label43:::p::p, comp label44::l:p::p}, comp label51:::p::p}}, seq t {space :p:28:p, comp button18:::p:90:p, space :::x, comp label50:::p::p}}, space :p:39:p, par l:::p {comp textField42::::169:x, comp textField41::::169:x, comp textField35::::169:x, comp textField36::::169:x, comp textField43::::169:x}, space ::215:x, par l:::p {seq {par l {par t:l {comp label48:::p::p, comp label46::t:p::p, comp label47::t:p::p}, comp label45::l:p::p}, space :p:36:p, par t:::p {comp textField39::::174:x, comp textField38::l::174:x, comp textField37::l::174:x, comp textField40::::174:x}}, comp button42::::262:x}, space :p:234:p}}"
-			"$verticalGroup": "par l {seq l {space :p:265:p, par b {comp label45::b:p::p, comp textField37::b:p::p, comp textField41::b:p::p, comp label49::b:p::p}, space :p:20:p, par b {comp label46::b:p::p, comp textField38::b:p::p, comp label43::b:p::p, comp textField35::b:p::p}, space :p:30:p, par b {comp label47::b:p::p, comp textField39::b:p::p, comp label44::b:p::p, comp textField36::b:p::p}, space :p:24:p, par b {comp label48::b:p::p, comp textField40::b:p::p, comp label51::b:p::p, comp textField43::b:p::p}, space :p:39:p, par b {comp label50::b:p::p, comp textField42::b:p::p, comp button42::b:p::p}, space ::160:x, comp button18:::p:75:p, space :::p}}"
+			"$horizontalGroup": "par l {seq l {par t {seq l {space :p:28:p, comp button18:::p:90:p}, seq {space :p:58:p, par t {seq t {comp label60:::p::p, space :p:44:p, par l {par l:t {comp label49:::p::p, comp label43:::p::p, comp label44::l:p::p}, comp label51::t:p::p}}, comp label50::t:p::p}}}, space :p:39:p, par l:::p {comp textField41::::169:x, comp textField35::::169:x, comp textField36::::169:x, comp textField43::l::169:x, comp textField42::l::169:x}, space ::215:x, par l {seq {par l {par t:l {comp label46::t:p::p, comp label47::t:p::p, comp label48::t:p::p}, comp label45::l:p::p}, space :p:36:p, par t:::p {comp textField39::::174:x, comp textField38::l::174:x, comp textField37::l::174:x, comp textField40::l::174:x}}, comp button42::::262:x}, space :p:234:p}}"
+			"$verticalGroup": "par l {seq l {space :p:265:p, par b {comp label45::b:p::p, comp textField37::b:p::p, comp textField41::b:p::p, comp label49::b:p::p}, space :p:20:p, par l {comp label60::l:p::p, seq l {par b {comp label46::b:p::p, comp textField38::b:p::p, comp label43::b:p::p, comp textField35::b:p::p}, space :p:30:p, par b {comp label47::b:p::p, comp textField39::b:p::p, comp label44::b:p::p, comp textField36::b:p::p}, space :p:43:p, par b {comp textField43::b:p::p, comp label51::b:p::p, comp textField40::b:p::p, comp label48::b:p::p}, space :p:53:p, par b {comp textField42::b:p::p, comp label50::b:p::p, comp button42::b:p::p}}}, space ::127:x, comp button18:::p:75:p, space :::p}}"
 		} ) {
 			name: "Student1"
 			"title": "个人信息查询"
@@ -444,6 +444,10 @@ new FormModel {
 				name: "button42"
 				"text": "修改联系方式"
 				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button42MousePressed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label60"
+				"icon": new com.jformdesigner.model.SwingIcon( 1, "/Users/linzhengyang/Desktop/大二下/数据库作业文档/高校学生就业管理系统图标/人物图片.jpeg" )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": new java.awt.Dimension( 1225, 800 )
@@ -755,8 +759,8 @@ new FormModel {
 			"location": new java.awt.Point( 30, 2120 )
 		} )
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq l {par l {par l {seq {space :p:190:p, par t {comp label32:::p::p, comp label31:::p::p, comp label27::t:p::p, comp label28::t:p::p, comp label25::t:p::p, comp label30::t:p::p}}, seq t {space :::p, comp label26:::p::p}}, seq t {space :::p, par l {comp label29::t:p::p, comp label33::t:p::p}}}, space :::p, par l {comp textField23::l:p:132:p, comp textField24::l:p:132:p, comp textField25::l:p:132:p, par l:l::p {comp textField20:::::x, comp textField19:::::x, comp textField17::l:p:132:p, comp textField18::l:::x}, comp textField21::l:p:132:p, comp textField22::l:p:132:p}, space :p:87:p, par l {comp button37:::p:177:p, comp button36:::p:177:p}, space ::139:x}}"
-			"$verticalGroup": "par l {seq {par t:::p {seq {par l {seq l {space :p:109:p, par b {comp textField18::b:p::p, comp label26::b:p::p}, space :p:27:p, par b {comp textField21::b:p::p, comp label29::b:p::p}, space :p:17:p, par b {comp textField22::b:p::p, comp label30::b:p::p}, space :p:22:p, par b {comp textField19::b:p::p, comp label27::b:p::p}}, seq l {space :p:51:p, par b {comp label25::b:p::p, comp textField17::b:p::p}}}, space :p:27:p, par b {comp textField20::b:p::p, comp label28::b:p::p}, space :p:28:p, par b {comp label31::b:p::p, comp textField23::b:p::p}, space :p:19:p, par b {comp label32::b:p::p, comp textField24::b:p::p}}, seq t {space :p:81:p, comp button36:::p:162:p, space :::x, comp button37:::p:167:p}}, space :p:17:p, par b {comp textField25::b:p::p, comp label33::b:p::p}, space ::73:x}}"
+			"$horizontalGroup": "par l {seq l {par l {par l {seq {space :p:190:p, par t {comp label32:::p::p, comp label31:::p::p, comp label27::t:p::p, comp label28::t:p::p, comp label25::t:p::p, comp label30::t:p::p}}, seq t {space :::p, comp label26:::p::p}}, seq t {space :::p, par l {comp label29::t:p::p, comp label33::t:p::p, comp label59::t:p::p}}}, space :::p, par l {seq {par l {comp textField23::l:p:132:p, comp textField24::l:p:132:p, comp textField25::l:p:132:p, par l:l::p {comp textField20:::::x, comp textField19:::::x, comp textField17::l:p:132:p, comp textField18::l:::x}, comp textField21::l:p:132:p, comp textField22::l:p:132:p}, space :p:87:p, par l {comp button37:::p:177:p, comp button36:::p:177:p, comp button52:::p:177:p}}, comp textField50:::p:132:p}, space ::139:x}}"
+			"$verticalGroup": "par l {seq {par t:::p {seq {par l {seq l {space :p:109:p, par b {comp textField18::b:p::p, comp label26::b:p::p}, space :p:27:p, par b {comp textField21::b:p::p, comp label29::b:p::p}, space :p:17:p, par b {comp textField22::b:p::p, comp label30::b:p::p}, space :p:22:p, par b {comp textField19::b:p::p, comp label27::b:p::p}}, seq l {space :p:51:p, par b {comp label25::b:p::p, comp textField17::b:p::p}}}, space :p:27:p, par b {comp textField20::b:p::p, comp label28::b:p::p}, space :p:28:p, par b {comp label31::b:p::p, comp textField23::b:p::p}, space :p:19:p, par b {comp label32::b:p::p, comp textField24::b:p::p}}, seq t {space :p:81:p, comp button36:::p:162:p, space :::x, comp button37:::p:167:p}}, par l {seq {space :p:17:p, par b {comp textField25::b:p::p, comp label33::b:p::p}}, seq l {space :p:29:p, comp button52:::p::p}}, space u:::p, par b {comp textField50::b:p::p, comp label59::b:p::p}, space ::19:x}}"
 		} ) {
 			name: "AdminSearch2"
 			"title": "查询/增加毕业生信息"
@@ -834,13 +838,25 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "textField25"
 			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button52"
+				"text": "重置"
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button52MousePressed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField50"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label59"
+				"text": "职业"
+			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": new java.awt.Dimension( 785, 610 )
 			"location": new java.awt.Point( 1510, 4755 )
 		} )
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq l {par l {seq {space :p:190:p, par t {comp label36::t:p::p, comp label37::t:p::p, comp label34::t:p::p, comp label35::t:p::p, comp label38:::p::p, comp label39::t:p::p, comp label40::t:p::p}}, seq t {space :::p, comp label41:::p::p}}, space s:::p, par l {par l:::p {comp textField29:::::x, comp textField28:::::x, comp textField26::l:p:132:p, comp textField27::l:::x}, comp textField30:::p:132:p, comp textField32::l:p:132:p, comp textField33::l:p:132:p, comp textField31::l:p:132:p}, space :p:84:p, par l:::p {comp button41::::177:x, comp button40::::177:x}, space ::109:x}}"
-			"$verticalGroup": "par l {seq l {space :p:51:p, par b {comp label34::b:p::p, comp textField26::b:p::p}, space :p:28:p, par b {comp label35::b:p::p, comp textField27::b:p::p}, space :p:27:p, par b {comp label38::b:p::p, comp textField30::b:p::p}, space :p:17:p, par b {comp textField31::b:p::p, comp label39::b:p::p}, space :::x, par b {comp textField28::b:p::p, comp label36::b:p::p}, space :p:27:p, par b {comp textField29::b:p::p, comp label37::b:p::p}, space :p:28:p, par b {comp textField32::b:p::p, comp label40::b:p::p}, space :p:19:p, par b {comp textField33::b:p::p, comp label41::b:p::p}, space ::136:x}, seq t {space ::81:x, comp button40:::p:163:p, space ::39:x, comp button41:::p:167:p, space :p:129:p}}"
+			"$horizontalGroup": "par l {seq l {par l {seq {space :p:190:p, par t {comp label36::t:p::p, comp label37::t:p::p, comp label34::t:p::p, comp label35::t:p::p, comp label38:::p::p, comp label39::t:p::p, comp label40::t:p::p}}, seq t {space :::p, par l {comp label41::t:p::p, comp label58::t:p::p}}}, space s:::p, par l:::p {comp textField49::::132:x, comp textField29:::::x, comp textField28:::::x, comp textField26::l::132:x, comp textField27::l:::x, comp textField30::::132:x, comp textField32::l::132:x, comp textField33::l::132:x, comp textField31::l::132:x}, space :p:84:p, par l:::p {comp button41::::177:x, comp button40::::177:x, comp button51::l::177:x}, space ::109:x}}"
+			"$verticalGroup": "par l {seq l {space :p:51:p, par b {comp label34::b:p::p, comp textField26::b:p::p}, space :p:28:p, par b {comp label35::b:p::p, comp textField27::b:p::p}, space :p:27:p, par b {comp label38::b:p::p, comp textField30::b:p::p}, space :p:17:p, par b {comp textField31::b:p::p, comp label39::b:p::p}, space :::x, par b {comp textField28::b:p::p, comp label36::b:p::p}, space :p:27:p, par b {comp textField29::b:p::p, comp label37::b:p::p}, space :p:28:p, par b {comp textField32::b:p::p, comp label40::b:p::p}, space :p:19:p, par b {comp textField33::b:p::p, comp label41::b:p::p}, space :p:27:p, par b {comp textField49::b:p::p, comp label58::b:p::p, comp button51::b:p::p}, space ::79:x}, seq t {space ::76:x, comp button40:::p:163:p, space ::34:x, comp button41:::p:167:p, space :p:139:p}}"
 		} ) {
 			name: "AdminSearch3"
 			"title": "查询/增加招聘信息"
@@ -910,6 +926,18 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "textField33"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField49"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label58"
+				"text": "职业类型号"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button51"
+				"text": "重置"
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button51MousePressed", true ) )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": new java.awt.Dimension( 790, 610 )
@@ -989,7 +1017,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": #Dimension2
-			"location": new java.awt.Point( 2300, 4465 )
+			"location": new java.awt.Point( 2385, 4465 )
 		} )
 	}
 }

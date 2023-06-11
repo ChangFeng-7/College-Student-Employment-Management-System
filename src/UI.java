@@ -592,11 +592,11 @@ public class UI {
     }
 
     private void button36MousePressed(MouseEvent e) {
-        searchStudentInfo(textField17.getText(),textField18.getText(),textField21.getText(),textField22.getText(),textField19.getText(),textField20.getText(),textField23.getText(),textField24.getText(),textField25.getText());
+        searchStudentInfo(textField17.getText(),textField18.getText(),textField21.getText(),textField22.getText(),textField19.getText(),textField20.getText(),textField23.getText(),textField24.getText(),textField25.getText(),textField50.getText());
     }
 
     private void button37MousePressed(MouseEvent e) {
-        addStudentInfo(textField17.getText(),textField18.getText(),textField21.getText(),textField22.getText(),Integer.parseInt(textField19.getText()),Integer.parseInt(textField20.getText()),textField23.getText(),textField24.getText(),textField25.getText());
+        addStudentInfo(textField17.getText(),textField18.getText(),textField21.getText(),textField22.getText(),textField19.getText(),textField20.getText(),textField23.getText(),textField24.getText(),textField25.getText(),textField50.getText());
     }
 
     private void button35MousePressed(MouseEvent e) {
@@ -618,7 +618,7 @@ public class UI {
     }
 
     private void button40MousePressed(MouseEvent e) {
-        searchJobInformation(textField26.getText(),textField27.getText(),textField31.getText(),textField28.getText(),textField29.getText(),textField32.getText(),textField33.getText(),textField30.getText());
+        searchJobInformation(textField26.getText(),textField27.getText(),textField31.getText(),textField28.getText(),textField29.getText(),textField32.getText(),textField33.getText(),textField30.getText(),textField49.getText());
     }
 
     private void button38MousePressed(MouseEvent e) {
@@ -626,7 +626,7 @@ public class UI {
     }
 
     private void button41MousePressed(MouseEvent e) {
-        insertOccupation(textField26.getText(),textField27.getText(),Integer.parseInt(textField31.getText()),textField28.getText(),textField29.getText(),textField32.getText(),Integer.parseInt(textField33.getText()),textField30.getText());
+        insertOccupation(textField26.getText(),textField27.getText(),Integer.parseInt(textField31.getText()),textField28.getText(),textField29.getText(),textField32.getText(),Integer.parseInt(textField33.getText()),textField30.getText(),Integer.parseInt(textField49.getText()));
     }
 
     private void button39MousePressed(MouseEvent e) {
@@ -762,6 +762,30 @@ public class UI {
         // TODO add your code here
     }
 
+    private void button51MousePressed(MouseEvent e) {
+        textField26.setText("");
+        textField27.setText("");
+        textField30.setText("");
+        textField31.setText("");
+        textField28.setText("");
+        textField29.setText("");
+        textField32.setText("");
+        textField33.setText("");
+        textField49.setText("");
+    }
+
+    private void button52MousePressed(MouseEvent e) {
+        textField17.setText("");
+        textField18.setText("");
+        textField21.setText("");
+        textField22.setText("");
+        textField19.setText("");
+        textField20.setText("");
+        textField23.setText("");
+        textField24.setText("");
+        textField25.setText("");
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         // Generated using JFormDesigner Evaluation license - 林正阳
@@ -844,6 +868,7 @@ public class UI {
         label51 = new JLabel();
         textField43 = new JTextField();
         button42 = new JButton();
+        label60 = new JLabel();
         Student2 = new JFrame();
         button19 = new JButton();
         label52 = new JLabel();
@@ -924,6 +949,9 @@ public class UI {
         textField23 = new JTextField();
         textField24 = new JTextField();
         textField25 = new JTextField();
+        button52 = new JButton();
+        textField50 = new JTextField();
+        label59 = new JLabel();
         AdminSearch3 = new JFrame();
         label34 = new JLabel();
         textField26 = new JTextField();
@@ -943,6 +971,9 @@ public class UI {
         textField31 = new JTextField();
         textField32 = new JTextField();
         textField33 = new JTextField();
+        textField49 = new JTextField();
+        label58 = new JLabel();
+        button51 = new JButton();
         Admin4 = new JFrame();
         button45 = new JButton();
         scrollPane6 = new JScrollPane();
@@ -1780,47 +1811,53 @@ public class UI {
                 }
             });
 
+            //---- label60 ----
+            label60.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/\u4eba\u7269\u56fe\u7247.jpeg"));
+
             GroupLayout Student1ContentPaneLayout = new GroupLayout(Student1ContentPane);
             Student1ContentPane.setLayout(Student1ContentPaneLayout);
             Student1ContentPaneLayout.setHorizontalGroup(
                 Student1ContentPaneLayout.createParallelGroup()
                     .addGroup(Student1ContentPaneLayout.createSequentialGroup()
-                        .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(Student1ContentPaneLayout.createSequentialGroup()
-                                .addGap(252, 252, 252)
-                                .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                    .addGroup(Student1ContentPaneLayout.createParallelGroup()
-                                        .addComponent(label49)
-                                        .addComponent(label43)
-                                        .addComponent(label44))
-                                    .addComponent(label51)))
-                            .addGroup(Student1ContentPaneLayout.createSequentialGroup()
+                        .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                            .addGroup(GroupLayout.Alignment.LEADING, Student1ContentPaneLayout.createSequentialGroup()
                                 .addGap(28, 28, 28)
-                                .addComponent(button18, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(label50)))
+                                .addComponent(button18, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE))
+                            .addGroup(Student1ContentPaneLayout.createSequentialGroup()
+                                .addGap(58, 58, 58)
+                                .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                    .addGroup(Student1ContentPaneLayout.createSequentialGroup()
+                                        .addComponent(label60)
+                                        .addGap(44, 44, 44)
+                                        .addGroup(Student1ContentPaneLayout.createParallelGroup()
+                                            .addGroup(GroupLayout.Alignment.TRAILING, Student1ContentPaneLayout.createParallelGroup()
+                                                .addComponent(label49)
+                                                .addComponent(label43)
+                                                .addComponent(label44))
+                                            .addComponent(label51, GroupLayout.Alignment.TRAILING)))
+                                    .addComponent(label50))))
                         .addGap(39, 39, 39)
                         .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                            .addComponent(textField42, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                             .addComponent(textField41, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                             .addComponent(textField35, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                             .addComponent(textField36, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-                            .addComponent(textField43, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE))
+                            .addComponent(textField43, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                            .addComponent(textField42, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE))
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)
-                        .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                        .addGroup(Student1ContentPaneLayout.createParallelGroup()
                             .addGroup(Student1ContentPaneLayout.createSequentialGroup()
                                 .addGroup(Student1ContentPaneLayout.createParallelGroup()
                                     .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                        .addComponent(label48)
                                         .addComponent(label46)
-                                        .addComponent(label47))
+                                        .addComponent(label47)
+                                        .addComponent(label48))
                                     .addComponent(label45))
                                 .addGap(36, 36, 36)
                                 .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(textField39, GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
                                     .addComponent(textField38, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
                                     .addComponent(textField37, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
-                                    .addComponent(textField40, GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)))
+                                    .addComponent(textField40, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)))
                             .addComponent(button42, GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE))
                         .addGap(234, 234, 234))
             );
@@ -1834,29 +1871,32 @@ public class UI {
                             .addComponent(textField41, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(label49))
                         .addGap(20, 20, 20)
-                        .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(label46)
-                            .addComponent(textField38, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label43)
-                            .addComponent(textField35, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(label47)
-                            .addComponent(textField39, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label44)
-                            .addComponent(textField36, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
-                        .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(label48)
-                            .addComponent(textField40, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label51)
-                            .addComponent(textField43, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addGap(39, 39, 39)
-                        .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(label50)
-                            .addComponent(textField42, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button42))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
+                        .addGroup(Student1ContentPaneLayout.createParallelGroup()
+                            .addComponent(label60)
+                            .addGroup(Student1ContentPaneLayout.createSequentialGroup()
+                                .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(label46)
+                                    .addComponent(textField38, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label43)
+                                    .addComponent(textField35, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(30, 30, 30)
+                                .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(label47)
+                                    .addComponent(textField39, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label44)
+                                    .addComponent(textField36, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(43, 43, 43)
+                                .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(textField43, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label51)
+                                    .addComponent(textField40, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label48))
+                                .addGap(53, 53, 53)
+                                .addGroup(Student1ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(textField42, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label50)
+                                    .addComponent(button42))))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
                         .addComponent(button18, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
             );
@@ -2579,6 +2619,18 @@ public class UI {
             //---- label33 ----
             label33.setText("\u804c\u4e1a");
 
+            //---- button52 ----
+            button52.setText("\u91cd\u7f6e");
+            button52.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button52MousePressed(e);
+                }
+            });
+
+            //---- label59 ----
+            label59.setText("\u804c\u4e1a");
+
             GroupLayout AdminSearch2ContentPaneLayout = new GroupLayout(AdminSearch2ContentPane);
             AdminSearch2ContentPane.setLayout(AdminSearch2ContentPaneLayout);
             AdminSearch2ContentPaneLayout.setHorizontalGroup(
@@ -2602,23 +2654,28 @@ public class UI {
                                 .addContainerGap()
                                 .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup()
                                     .addComponent(label29, GroupLayout.Alignment.TRAILING)
-                                    .addComponent(label33, GroupLayout.Alignment.TRAILING))))
+                                    .addComponent(label33, GroupLayout.Alignment.TRAILING)
+                                    .addComponent(label59, GroupLayout.Alignment.TRAILING))))
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup()
-                            .addComponent(textField23, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField24, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField25, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
-                            .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                .addComponent(textField20)
-                                .addComponent(textField19)
-                                .addComponent(textField17, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(textField18))
-                            .addComponent(textField21, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField22, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE))
-                        .addGap(87, 87, 87)
-                        .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup()
-                            .addComponent(button37, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button36, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE))
+                            .addGroup(AdminSearch2ContentPaneLayout.createSequentialGroup()
+                                .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup()
+                                    .addComponent(textField23, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(textField24, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(textField25, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(textField20)
+                                        .addComponent(textField19)
+                                        .addComponent(textField17, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(textField18))
+                                    .addComponent(textField21, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(textField22, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE))
+                                .addGap(87, 87, 87)
+                                .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup()
+                                    .addComponent(button37, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(button36, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(button52, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(textField50, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(139, Short.MAX_VALUE))
             );
             AdminSearch2ContentPaneLayout.setVerticalGroup(
@@ -2666,11 +2723,20 @@ public class UI {
                                 .addComponent(button36, GroupLayout.PREFERRED_SIZE, 162, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(button37, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)))
-                        .addGap(17, 17, 17)
+                        .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup()
+                            .addGroup(AdminSearch2ContentPaneLayout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(textField25, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label33)))
+                            .addGroup(AdminSearch2ContentPaneLayout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(button52)))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(AdminSearch2ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(textField25, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label33))
-                        .addContainerGap(73, Short.MAX_VALUE))
+                            .addComponent(textField50, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label59))
+                        .addContainerGap(19, Short.MAX_VALUE))
             );
             AdminSearch2.pack();
             AdminSearch2.setLocationRelativeTo(AdminSearch2.getOwner());
@@ -2724,6 +2790,18 @@ public class UI {
             //---- label41 ----
             label41.setText("\u5df2\u8058\u7528\u6570\u91cf");
 
+            //---- label58 ----
+            label58.setText("\u804c\u4e1a\u7c7b\u578b\u53f7");
+
+            //---- button51 ----
+            button51.setText("\u91cd\u7f6e");
+            button51.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button51MousePressed(e);
+                }
+            });
+
             GroupLayout AdminSearch3ContentPaneLayout = new GroupLayout(AdminSearch3ContentPane);
             AdminSearch3ContentPane.setLayout(AdminSearch3ContentPaneLayout);
             AdminSearch3ContentPaneLayout.setHorizontalGroup(
@@ -2742,22 +2820,25 @@ public class UI {
                                     .addComponent(label40)))
                             .addGroup(GroupLayout.Alignment.TRAILING, AdminSearch3ContentPaneLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(label41)))
+                                .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup()
+                                    .addComponent(label41, GroupLayout.Alignment.TRAILING)
+                                    .addComponent(label58, GroupLayout.Alignment.TRAILING))))
                         .addGap(18, 18, 18)
-                        .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup()
-                            .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                .addComponent(textField29)
-                                .addComponent(textField28)
-                                .addComponent(textField26, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(textField27))
-                            .addComponent(textField30, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField32, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField33, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField31, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE))
+                        .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                            .addComponent(textField49, GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                            .addComponent(textField29)
+                            .addComponent(textField28)
+                            .addComponent(textField26, GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                            .addComponent(textField27)
+                            .addComponent(textField30, GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                            .addComponent(textField32, GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                            .addComponent(textField33, GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                            .addComponent(textField31, GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
                         .addGap(84, 84, 84)
                         .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                             .addComponent(button41, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
-                            .addComponent(button40, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
+                            .addComponent(button40, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                            .addComponent(button51, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
                         .addContainerGap(109, Short.MAX_VALUE))
             );
             AdminSearch3ContentPaneLayout.setVerticalGroup(
@@ -2795,13 +2876,18 @@ public class UI {
                         .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(textField33, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(label41))
-                        .addContainerGap(136, Short.MAX_VALUE))
+                        .addGap(27, 27, 27)
+                        .addGroup(AdminSearch3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(textField49, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label58)
+                            .addComponent(button51))
+                        .addContainerGap(79, Short.MAX_VALUE))
                     .addGroup(GroupLayout.Alignment.TRAILING, AdminSearch3ContentPaneLayout.createSequentialGroup()
-                        .addContainerGap(81, Short.MAX_VALUE)
+                        .addContainerGap(76, Short.MAX_VALUE)
                         .addComponent(button40, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                         .addComponent(button41, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
-                        .addGap(129, 129, 129))
+                        .addGap(139, 139, 139))
             );
             AdminSearch3.pack();
             AdminSearch3.setLocationRelativeTo(AdminSearch3.getOwner());
@@ -3049,6 +3135,7 @@ public class UI {
     private JLabel label51;
     private JTextField textField43;
     private JButton button42;
+    private JLabel label60;
     private JFrame Student2;
     private JButton button19;
     private JLabel label52;
@@ -3129,6 +3216,9 @@ public class UI {
     private JTextField textField23;
     private JTextField textField24;
     private JTextField textField25;
+    private JButton button52;
+    private JTextField textField50;
+    private JLabel label59;
     private JFrame AdminSearch3;
     private JLabel label34;
     private JTextField textField26;
@@ -3148,6 +3238,9 @@ public class UI {
     private JTextField textField31;
     private JTextField textField32;
     private JTextField textField33;
+    private JTextField textField49;
+    private JLabel label58;
+    private JButton button51;
     private JFrame Admin4;
     private JButton button45;
     private JScrollPane scrollPane6;
@@ -3473,6 +3566,7 @@ public class UI {
             // 获取职业信息表中的需求数量和已聘用数量
             int demand = resultSet.getInt("需求数量");
             int hiredCount = resultSet.getInt("已聘用数量");
+            int occupationId = resultSet.getInt("职业编号");
 
             // 检查已聘用数量是否大于需求数量
             if (hiredCount >= demand) {
@@ -3482,10 +3576,11 @@ public class UI {
 
             // 更新毕业生信息表中的就业状态和职业
             int studentId = getCurrentUserStudentId(textField1.getText());
-            String updateQuery = "UPDATE 毕业生信息表 SET 就业状态 = '已就业', 职业 = ? WHERE 学号 = ?";
+            String updateQuery = "UPDATE 毕业生信息表 SET 就业状态 = '已就业', 职业 = ? ,职业编号 = ? WHERE 学号 = ?";
             callableStatement = connection.prepareCall(updateQuery);
             callableStatement.setString(1, occupationName);
             callableStatement.setInt(2, studentId);
+            callableStatement.setInt(3, occupationId);
             callableStatement.executeUpdate();
 
             // 提示登记成功
@@ -3650,8 +3745,8 @@ public class UI {
         }
     }
 
-    //管理员修改职业信息表中数据的方法
-    public void insertOccupation(String occupationId, String occupationName, int demand, String employer, String startDateString, String endDateString, int hiredCount, String occupationTypeName) {
+    //管理员增加职业信息表中数据的方法
+    public void insertOccupation(String occupationId, String occupationName, int demand, String employer, String startDateString, String endDateString, int hiredCount, String occupationTypeName , int occupationTypeId) {
         // 检测是否有任何一个文本字段为空
         if (occupationId.isEmpty() || occupationName.isEmpty() || employer.isEmpty() || startDateString.isEmpty() || endDateString.isEmpty() || occupationTypeName.isEmpty()) {
             JOptionPane.showMessageDialog(Admin3, "请填写所有必要信息", "错误", JOptionPane.ERROR_MESSAGE);
@@ -3663,6 +3758,7 @@ public class UI {
             JOptionPane.showMessageDialog(Admin3, "需求数量和已聘用数量必须为非负数", "错误", JOptionPane.ERROR_MESSAGE);
             return;
         }
+
         Connection connection = null;
         PreparedStatement statement = null;
         String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
@@ -3674,7 +3770,7 @@ public class UI {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
             // 创建 PreparedStatement 对象
-            String query = "INSERT INTO 职业信息表 (职业编号, 职业名称, 需求数量, 用人单位, 发布日期, 截止日期, 已聘用数量, 职业类型名称) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO 职业信息表 (职业编号, 职业名称, 需求数量, 用人单位, 发布日期, 截止日期, 已聘用数量, 职业类型名称,职业类型号) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(query);
 
             // 设置参数
@@ -3686,6 +3782,7 @@ public class UI {
             statement.setDate(6, convertStringToDate(endDateString));
             statement.setInt(7, hiredCount);
             statement.setString(8, occupationTypeName);
+            statement.setInt(9,occupationTypeId);
 
             // 执行插入操作
             statement.executeUpdate();
@@ -3737,6 +3834,9 @@ public class UI {
                 case 7:
                     updateQuery = "UPDATE 职业信息表 SET 职业类型名称 = ? WHERE 职业编号 = ?";
                     break;
+                case 8:
+                    updateQuery = "UPDATE 职业信息表 SET 职业类型号 = ? WHERE 职业编号 = ?";
+                    break;
             }
 
             // 创建 PreparedStatement 对象
@@ -3747,6 +3847,7 @@ public class UI {
                 case 0:
                 case 2:
                 case 6:
+                case 8:
                     try {
                         int demand = Integer.parseInt((String) data);
                         statement.setInt(1, demand);
@@ -3785,7 +3886,7 @@ public class UI {
     }
 
     //管理员查询职业信息
-    public void searchJobInformation(String jobId, String jobName, String demandQuantity, String employer, String publishDate, String deadline, String employedQuantity, String jobType) {
+    public void searchJobInformation(String jobId, String jobName, String demandQuantity, String employer, String publishDate, String deadline, String employedQuantity, String jobType,String jobTypeId) {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -3822,6 +3923,9 @@ public class UI {
             }
             if (jobType != null && !jobType.isEmpty()) {
                 query += " AND 职业类型名称 LIKE ?";
+            }
+            if(jobTypeId !=null && !jobTypeId.isEmpty()){
+                query += " AND 职业类型号 = ?";
             }
 
             // 创建PreparedStatement对象
@@ -3861,6 +3965,10 @@ public class UI {
             }
             if (jobType != null && !jobType.isEmpty()) {
                 statement.setString(parameterIndex, "%" + jobType + "%");
+                parameterIndex++;
+            }
+            if (jobTypeId != null && !jobTypeId.isEmpty()) {
+                statement.setInt(parameterIndex, Integer.parseInt(jobTypeId));
             }
 
             // 执行查询语句
@@ -3987,10 +4095,10 @@ public class UI {
     }
 
     //管理员增加毕业生信息
-    public void addStudentInfo(String studentId, String name, String gender, String birthdate, int departmentId, int majorId, String contact, String employmentStatus, String occupation) {
+    public void addStudentInfo(String studentId, String name, String gender, String birthdate, String departmentId, String majorId, String contact, String employmentStatus, String occupation, String occupationId) {
         // 检测必填项是否为空
         if (studentId.isEmpty() || name.isEmpty() || gender.isEmpty() || birthdate.isEmpty() || contact.isEmpty() || employmentStatus.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "除职业外均需填写", "错误", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(AdminSearch2, "除职业和职业编号外均需填写", "错误", JOptionPane.ERROR_MESSAGE);
             return;
         }
         Connection connection = null;
@@ -4004,7 +4112,7 @@ public class UI {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
             // 创建插入语句
-            String query = "INSERT INTO 毕业生信息表 (学号, 姓名, 性别, 出生日期, 所在院系, 所学专业, 联系方式, 就业状态, 职业) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO 毕业生信息表 (学号, 姓名, 性别, 出生日期, 所在院系, 所学专业, 联系方式, 就业状态, 职业, 职业编号) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(query);
 
             // 设置插入参数
@@ -4012,14 +4120,16 @@ public class UI {
             statement.setString(2, name);
             statement.setString(3, gender);
             statement.setDate(4, convertStringToDate(birthdate));
-            statement.setInt(5, departmentId);
-            statement.setInt(6, majorId);
+            statement.setInt(5, Integer.parseInt(departmentId));
+            statement.setInt(6, Integer.parseInt(majorId));
             statement.setString(7, contact);
             statement.setString(8, employmentStatus);
             if (occupation.isEmpty()) {
                 statement.setNull(9, java.sql.Types.INTEGER);
+                statement.setNull(10, java.sql.Types.INTEGER);
             } else {
-                statement.setInt(9, Integer.parseInt(occupation));
+                statement.setString(9, occupation);
+                statement.setString(10,occupationId);
             }
 
             // 执行插入语句
@@ -4039,7 +4149,7 @@ public class UI {
     }
 
     // 管理员查询毕业生信息
-    private void searchStudentInfo(String studentId, String name, String gender, String birthdate, String department, String major, String contact, String employmentStatus, String occupation) {
+    private void searchStudentInfo(String studentId, String name, String gender, String birthdate, String department, String major, String contact, String employmentStatus, String occupation, String occupationId) {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -4082,6 +4192,9 @@ public class UI {
             if (!occupation.isEmpty()) {
                 query += " AND 职业 = ?";
             }
+            if (!occupationId.isEmpty()) {
+                query += " AND 职业编号 = ?";
+            }
             statement = connection.prepareStatement(query);
 
             // 设置查询参数
@@ -4121,6 +4234,10 @@ public class UI {
             }
             if (!occupation.isEmpty()) {
                 statement.setString(parameterIndex, occupation);
+                parameterIndex++;
+            }
+            if (!occupationId.isEmpty()) {
+                statement.setInt(parameterIndex, Integer.parseInt(occupationId));
             }
 
             // 执行查询语句
@@ -4141,7 +4258,8 @@ public class UI {
                         resultSet.getString("所学专业"),
                         resultSet.getString("联系方式"),
                         resultSet.getString("就业状态"),
-                        resultSet.getString("职业")
+                        resultSet.getString("职业"),
+                        resultSet.getObject("职业编号") != null ? resultSet.getInt("职业编号") : null,
                 };
                 tableModel.addRow(rowData);
             }
@@ -4191,6 +4309,9 @@ public class UI {
                     break;
                 case 8:
                     updateQuery = "UPDATE 毕业生信息表 SET 职业 = ? WHERE 学号 = ?";
+                    break;
+                case 9:
+                    updateQuery = "UPDATE 毕业生信息表 SET 职业编号 = ? WHERE 学号 = ?";
                     break;
             }
 
@@ -4837,5 +4958,29 @@ public class UI {
         }
     }
 
+    public static void setLabelBackground(JLabel label, Color backgroundColor) {
+        label.setOpaque(true); // 设置标签为不透明
+        label.setBackground(backgroundColor); // 设置标签的背景颜色
+        setlableBackgroundImage();
+    }
+
+    private static void setlableBackgroundImage(){
+        JFrame frame = new JFrame("Label Background Setter");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 200);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+
+        JLabel label1 = new JLabel("Label 1");
+        setLabelBackground(label1, Color.RED);
+        panel.add(label1);
+
+        JLabel label2 = new JLabel("Label 2");
+        setLabelBackground(label2, Color.BLUE);
+        panel.add(label2);
+        frame.add(panel);
+        frame.setVisible(true);
+    }
 }
 
