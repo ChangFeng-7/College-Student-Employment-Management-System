@@ -209,6 +209,7 @@ new FormModel {
 				"icon": new com.jformdesigner.model.SwingIcon( 1, "/Users/linzhengyang/Desktop/大二下/数据库作业文档/高校学生就业管理系统图标/delete.backward@2x.png" )
 				"horizontalTextPosition": 0
 				"verticalTextPosition": 3
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button50MousePressed", true ) )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": new java.awt.Dimension( 1185, 800 )
@@ -312,7 +313,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button28"
 				"text": "查询/增加院系"
-				"icon": new com.jformdesigner.model.SwingIcon( 1, "/Users/linzhengyang/Desktop/大二下/数据库作业文档/高校学生就业管理系统图标/magnifyingglass@2x.png" )
+				"icon": &SwingIcon0 new com.jformdesigner.model.SwingIcon( 1, "/Users/linzhengyang/Desktop/大二下/数据库作业文档/高校学生就业管理系统图标/magnifyingglass@2x.png" )
 				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button28MousePressed", true ) )
 			} )
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
@@ -332,8 +333,8 @@ new FormModel {
 			"location": new java.awt.Point( 1500, 845 )
 		} )
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {par l:::p {seq l {space :p:463:p, comp button38:::p::p, space :::x, comp button39:::p::p}, seq t {space :p:71:p, par l {comp scrollPane4:::p:1050:p, comp button25:::p:99:p}}}, space ::67:x}}"
-			"$verticalGroup": "par l {seq l {space :p:56:p, comp scrollPane4:::p:602:p, space s:::p, par t {comp button38::::87:x, comp button25::::87:x, comp button39::::87:x}, space :::p}}"
+			"$horizontalGroup": "par l {seq {space :p:71:p, par l:::p {comp scrollPane4:::p:1050:p, seq {comp button25:::p:99:p, space :p:142:p, comp button38:::p:194:p, space :::x, comp button53:::p:186:p, space :p:143:p, comp button39:::p::p}}, space ::67:x}}"
+			"$verticalGroup": "par l {seq l {space :p:56:p, comp scrollPane4:::p:602:p, space s:::p, par l {comp button25::t:::x, comp button39:::::x, comp button53::t:::x, seq t {space :0:0:x, comp button38:::p:87:p}}, space :::p}}"
 		} ) {
 			name: "Admin3"
 			"title": "招聘信息管理"
@@ -360,6 +361,12 @@ new FormModel {
 				"text": "删除招聘信息"
 				"icon": new com.jformdesigner.model.SwingIcon( 1, "/Users/linzhengyang/Desktop/大二下/数据库作业文档/高校学生就业管理系统图标/delete.backward@2x.png" )
 				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button39MousePressed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button53"
+				"text": "查询就业率"
+				"icon": #SwingIcon0
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button53MousePressed", true ) )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": new java.awt.Dimension( 1190, 800 )
@@ -848,7 +855,7 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label59"
-				"text": "职业"
+				"text": "职业编号"
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": new java.awt.Dimension( 785, 610 )
@@ -944,8 +951,8 @@ new FormModel {
 			"location": new java.awt.Point( 1505, 4135 )
 		} )
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {space :p:78:p, par l:::p {seq {comp button45:::p:98:p, space :::x, comp button46:::p::p, space :p:271:p, comp button47:::p::p}, comp scrollPane6:::p:1028:p}, space ::82:x}}"
-			"$verticalGroup": "par l {seq l {space :p:47:p, comp scrollPane6:::p:601:p, space s:::p, par t {comp button45::::84:x, comp button46::::84:x, comp button47::t::84:x}, space :p:19:p}}"
+			"$horizontalGroup": "par l {seq {space :p:78:p, par l:::p {seq {comp button45:::p:98:p, space :p:160:p, comp button46:::p::p, space :::x, comp button54:::p:161:p, space :p:100:p, comp button47:::p:146:p}, comp scrollPane6:::p:1028:p}, space ::82:x}}"
+			"$verticalGroup": "par l {seq l {space :p:47:p, comp scrollPane6:::p:601:p, space :::p, par t:::p {comp button47::l:::x, par b {comp button54::b:p:84:p, comp button46::b:p:89:p}, comp button45:::::x}, space ::26:x}}"
 		} ) {
 			name: "Admin4"
 			"title": "专业信息管理"
@@ -964,7 +971,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button46"
 				"text": "查询/增加专业信息"
-				"icon": new com.jformdesigner.model.SwingIcon( 1, "/Users/linzhengyang/Desktop/大二下/数据库作业文档/高校学生就业管理系统图标/magnifyingglass@2x.png" )
+				"icon": &SwingIcon1 new com.jformdesigner.model.SwingIcon( 1, "/Users/linzhengyang/Desktop/大二下/数据库作业文档/高校学生就业管理系统图标/magnifyingglass@2x.png" )
 				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button46MousePressed", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
@@ -972,6 +979,12 @@ new FormModel {
 				"text": "删除专业信息"
 				"icon": new com.jformdesigner.model.SwingIcon( 1, "/Users/linzhengyang/Desktop/大二下/数据库作业文档/高校学生就业管理系统图标/delete.backward@2x.png" )
 				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button47MousePressed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button54"
+				"text": "查询专业就业率"
+				"icon": #SwingIcon1
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "button54MousePressed", true ) )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": new java.awt.Dimension( 1190, 800 )

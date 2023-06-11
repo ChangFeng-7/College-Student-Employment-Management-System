@@ -11,14 +11,6 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-/*
- * Created by JFormDesigner on Tue May 23 19:25:37 CST 2023
- */
-
-
-/**
- * @author linzhengyang
- */
 public class UI {
     public UI() {
         initComponents();
@@ -433,6 +425,9 @@ public class UI {
     }
 
     private void button27MousePressed(MouseEvent e) {
+        if(textField10.getText()==""){
+            JOptionPane.showMessageDialog(EmployersNeed,"必须填写全部信息","注意",JOptionPane.INFORMATION_MESSAGE);
+        }
         insertJobData(textField8.getText(),textField9.getText(),Integer.parseInt(textField10.getText()),convertStringToDate(textField11.getText()),getCompanyByAccount(textField1.getText()));
     }
     private void textField11FocusGained(FocusEvent e) {
@@ -786,6 +781,34 @@ public class UI {
         textField25.setText("");
     }
 
+    private void button50MousePressed(MouseEvent e) {
+        int selectedRow = table1.getSelectedRow();
+        if (selectedRow == -1) {
+            // 没有选择任何行
+            JOptionPane.showMessageDialog(Employers, "请选择要删除的行", "提示", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        // 获取选中行的数据
+        int jobId = (int) table1.getValueAt(selectedRow, 0);
+        String jobTitle = (String) table1.getValueAt(selectedRow, 1);
+
+        // 确认删除操作
+        int option = JOptionPane.showConfirmDialog(Employers, "确定删除职业需求 " + jobTitle + " 吗？", "确认删除", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            // 执行删除操作
+            deleteJobRecord(jobId);
+        }
+    }
+
+    private void button53MousePressed(MouseEvent e) {
+        showEmploymentStats();
+    }
+
+    private void button54MousePressed(MouseEvent e) {
+        showEmploymentRatesByMajor();
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         // Generated using JFormDesigner Evaluation license - 林正阳
@@ -847,6 +870,7 @@ public class UI {
         table4 = new JTable();
         button38 = new JButton();
         button39 = new JButton();
+        button53 = new JButton();
         Student1 = new JFrame();
         button18 = new JButton();
         label43 = new JLabel();
@@ -980,6 +1004,7 @@ public class UI {
         table6 = new JTable();
         button46 = new JButton();
         button47 = new JButton();
+        button54 = new JButton();
         AdminSearch4 = new JFrame();
         label54 = new JLabel();
         textField46 = new JTextField();
@@ -1388,6 +1413,12 @@ public class UI {
             button50.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/delete.backward@2x.png"));
             button50.setHorizontalTextPosition(SwingConstants.CENTER);
             button50.setVerticalTextPosition(SwingConstants.BOTTOM);
+            button50.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button50MousePressed(e);
+                }
+            });
 
             GroupLayout EmployersContentPaneLayout = new GroupLayout(EmployersContentPane);
             EmployersContentPane.setLayout(EmployersContentPaneLayout);
@@ -1721,22 +1752,32 @@ public class UI {
                 }
             });
 
+            //---- button53 ----
+            button53.setText("\u67e5\u8be2\u5c31\u4e1a\u7387");
+            button53.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/magnifyingglass@2x.png"));
+            button53.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button53MousePressed(e);
+                }
+            });
+
             GroupLayout Admin3ContentPaneLayout = new GroupLayout(Admin3ContentPane);
             Admin3ContentPane.setLayout(Admin3ContentPaneLayout);
             Admin3ContentPaneLayout.setHorizontalGroup(
                 Admin3ContentPaneLayout.createParallelGroup()
                     .addGroup(Admin3ContentPaneLayout.createSequentialGroup()
+                        .addGap(71, 71, 71)
                         .addGroup(Admin3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                            .addComponent(scrollPane4, GroupLayout.PREFERRED_SIZE, 1050, GroupLayout.PREFERRED_SIZE)
                             .addGroup(Admin3ContentPaneLayout.createSequentialGroup()
-                                .addGap(463, 463, 463)
-                                .addComponent(button38)
+                                .addComponent(button25, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
+                                .addGap(142, 142, 142)
+                                .addComponent(button38, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(button39))
-                            .addGroup(GroupLayout.Alignment.TRAILING, Admin3ContentPaneLayout.createSequentialGroup()
-                                .addGap(71, 71, 71)
-                                .addGroup(Admin3ContentPaneLayout.createParallelGroup()
-                                    .addComponent(scrollPane4, GroupLayout.PREFERRED_SIZE, 1050, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(button25, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(button53, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)
+                                .addGap(143, 143, 143)
+                                .addComponent(button39)))
                         .addContainerGap(67, Short.MAX_VALUE))
             );
             Admin3ContentPaneLayout.setVerticalGroup(
@@ -1745,10 +1786,13 @@ public class UI {
                         .addGap(56, 56, 56)
                         .addComponent(scrollPane4, GroupLayout.PREFERRED_SIZE, 602, GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(Admin3ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                            .addComponent(button38, GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
-                            .addComponent(button25, GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
-                            .addComponent(button39, GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE))
+                        .addGroup(Admin3ContentPaneLayout.createParallelGroup()
+                            .addComponent(button25, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(button39, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(button53, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(GroupLayout.Alignment.TRAILING, Admin3ContentPaneLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(button38, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())
             );
             Admin3.pack();
@@ -2629,7 +2673,7 @@ public class UI {
             });
 
             //---- label59 ----
-            label59.setText("\u804c\u4e1a");
+            label59.setText("\u804c\u4e1a\u7f16\u53f7");
 
             GroupLayout AdminSearch2ContentPaneLayout = new GroupLayout(AdminSearch2ContentPane);
             AdminSearch2ContentPane.setLayout(AdminSearch2ContentPaneLayout);
@@ -2938,6 +2982,16 @@ public class UI {
                 }
             });
 
+            //---- button54 ----
+            button54.setText("\u67e5\u8be2\u4e13\u4e1a\u5c31\u4e1a\u7387");
+            button54.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/magnifyingglass@2x.png"));
+            button54.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    button54MousePressed(e);
+                }
+            });
+
             GroupLayout Admin4ContentPaneLayout = new GroupLayout(Admin4ContentPane);
             Admin4ContentPane.setLayout(Admin4ContentPaneLayout);
             Admin4ContentPaneLayout.setHorizontalGroup(
@@ -2947,10 +3001,12 @@ public class UI {
                         .addGroup(Admin4ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                             .addGroup(Admin4ContentPaneLayout.createSequentialGroup()
                                 .addComponent(button45, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(160, 160, 160)
                                 .addComponent(button46)
-                                .addGap(271, 271, 271)
-                                .addComponent(button47))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(button54, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)
+                                .addGap(100, 100, 100)
+                                .addComponent(button47, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE))
                             .addComponent(scrollPane6, GroupLayout.PREFERRED_SIZE, 1028, GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(82, Short.MAX_VALUE))
             );
@@ -2959,12 +3015,14 @@ public class UI {
                     .addGroup(Admin4ContentPaneLayout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addComponent(scrollPane6, GroupLayout.PREFERRED_SIZE, 601, GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(Admin4ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                            .addComponent(button45, GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
-                            .addComponent(button46, GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
-                            .addComponent(button47, GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
-                        .addGap(19, 19, 19))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(Admin4ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(button47, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(Admin4ContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(button54, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(button46, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(button45, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(26, Short.MAX_VALUE))
             );
             Admin4.pack();
             Admin4.setLocationRelativeTo(Admin4.getOwner());
@@ -3114,6 +3172,7 @@ public class UI {
     private JTable table4;
     private JButton button38;
     private JButton button39;
+    private JButton button53;
     private JFrame Student1;
     private JButton button18;
     private JLabel label43;
@@ -3247,6 +3306,7 @@ public class UI {
     private JTable table6;
     private JButton button46;
     private JButton button47;
+    private JButton button54;
     private JFrame AdminSearch4;
     private JLabel label54;
     private JTextField textField46;
@@ -3262,6 +3322,120 @@ public class UI {
         ui.initComponents();
         ui.Login.setVisible(true);
     }
+    //调用存储过程查询各个专业的就业率
+    public void showEmploymentRatesByMajor() {
+        try {
+            // 创建数据库连接
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/高校学生就业管理系统", "root", "Lzy-200387");
+
+            // 调用存储过程
+            CallableStatement statement = connection.prepareCall("CALL sp_get_employment_rates_by_major()");
+
+            // 执行存储过程
+            statement.execute();
+
+            // 获取结果集
+            ResultSet resultSet = statement.getResultSet();
+
+            // 创建JDialog并设置布局
+            JDialog dialog = new JDialog();
+            dialog.setLayout(new BorderLayout());
+
+            // 创建表格模型和表格
+            DefaultTableModel model = new DefaultTableModel();
+            JTable table = new JTable(model);
+
+            // 添加表格列
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            for (int i = 1; i <= columnCount; i++) {
+                String columnName = metaData.getColumnLabel(i);
+                model.addColumn(columnName);
+            }
+
+            // 添加表格行
+            while (resultSet.next()) {
+                Object[] rowData = new Object[columnCount];
+                for (int i = 1; i <= columnCount; i++) {
+                    rowData[i - 1] = resultSet.getObject(i);
+                }
+                model.addRow(rowData);
+            }
+
+            // 将表格添加到滚动面板中
+            JScrollPane scrollPane = new JScrollPane(table);
+            dialog.add(scrollPane, BorderLayout.CENTER);
+
+            // 设置对话框属性并显示
+            dialog.setTitle("Employment Rates by Major");
+            dialog.setSize(800, 400);
+            dialog.setModal(true);
+            dialog.setVisible(true);
+
+            // 关闭连接和语句
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //调用存储过程查询全体学生就业率
+    public void showEmploymentStats() {
+        // 创建数据库连接
+        String url = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String username = "root";
+        String password = "Lzy-200387";
+
+        try (Connection conn = DriverManager.getConnection(url, username, password)) {
+            // 创建存储过程调用
+            String procedureQuery = "{CALL sp_get_employment_stats()}";
+            try (CallableStatement procedureStmt = conn.prepareCall(procedureQuery)) {
+                // 执行存储过程调用并获取结果集
+                ResultSet resultSet = procedureStmt.executeQuery();
+
+                // 解析结果集
+                if (resultSet.next()) {
+                    int total = resultSet.getInt("毕业生总数");
+                    int unemployed = resultSet.getInt("待业人数");
+                    int employed = resultSet.getInt("就业人数");
+                    float employmentRate = resultSet.getFloat("就业率");
+
+                    // 创建并显示结果对话框
+                    showDialog(total, unemployed, employed, employmentRate);
+                }
+
+                // 关闭结果集
+                resultSet.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private static void showDialog(int total, int unemployed, int employed, float employmentRate) {
+        JDialog dialog = new JDialog((JFrame) null, "就业统计", true);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setSize(300, 200);
+        dialog.setLocationRelativeTo(null); // 设置对话框居中显示
+
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+
+        JLabel totalLabel = new JLabel("毕业生总数：" + total);
+        JLabel unemployedLabel = new JLabel("待业人数：" + unemployed);
+        JLabel employedLabel = new JLabel("就业人数：" + employed);
+        JLabel employmentRateLabel = new JLabel("就业率：" + employmentRate);
+
+        panel.add(totalLabel);
+        panel.add(unemployedLabel);
+        panel.add(employedLabel);
+        panel.add(employmentRateLabel);
+
+        dialog.add(panel);
+
+        dialog.setVisible(true);
+    }
+
     //管理员删除专业信息的方法
     private void deleteMajorRecord(int majorId) {
         Connection connection = null;
@@ -4645,6 +4819,37 @@ public class UI {
         }
     }
 
+    //用人单位删除职业需求记录
+    private void deleteJobRecord(int jobId) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
+        String USERNAME = "root";
+        String PASSWORD = "Lzy-200387";
+
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 执行删除操作
+            String deleteQuery = "DELETE FROM 职业信息表 WHERE 职业编号 = ?";
+            statement = connection.prepareStatement(deleteQuery);
+            statement.setInt(1, jobId);
+            statement.executeUpdate();
+
+            // 提示删除成功
+            JOptionPane.showMessageDialog(Employers, "删除成功", "提示", JOptionPane.INFORMATION_MESSAGE);
+
+            // 刷新表格或执行其他操作
+            // ...
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭连接和资源
+            closeConnection(connection, statement, null);
+        }
+    }
+
     //用人单位进行查询需求的方法
     public static void fillTableData(DefaultTableModel tableModel, String jobName, String jobTypeName, String company) {
         Connection connection = null;
@@ -4706,6 +4911,9 @@ public class UI {
 
     //用人单位进行发布需求的方法
     public void insertJobData(String jobName, String jobTypeName, int demandQuantity, Date deadline, String currentCompany) {
+        if(jobName.isEmpty() || jobTypeName.isEmpty() || currentCompany.isEmpty() || deadline == null){
+            JOptionPane.showMessageDialog(EmployersNeed,"必须填写全部信息","注意",JOptionPane.INFORMATION_MESSAGE);
+        }
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -4724,7 +4932,7 @@ public class UI {
             int jobCount = resultSet.getInt(1);
 
             // 自动生成职业编号
-            int jobNumber = jobCount + 1;
+            int jobNumber = jobCount + 6;
 
             // 创建插入数据的 PreparedStatement 对象
             String insertQuery = "INSERT INTO 职业信息表 (职业编号, 职业名称, 职业类型名称, 需求数量, 用人单位,发布日期,截止日期,已聘用数量 ) VALUES (?, ?, ?, ?, ?, ?,?,?)";
