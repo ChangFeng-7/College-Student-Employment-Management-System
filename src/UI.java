@@ -1,3 +1,4 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
@@ -7,6 +8,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -646,6 +651,7 @@ public class UI {
         Student.setVisible(false);
         Student1.setVisible(true);
         displayCurrentGraduateStudentInfo(textField1.getText(),textField41,textField35,textField36,textField43,textField37,textField38,textField39,textField40,textField42);
+        displayCurrentUserPhoto(getCurrentUserStudentId(textField1.getText()));
         textField41.setEditable(false);
         textField35.setEditable(false);
         textField36.setEditable(false);
@@ -1856,7 +1862,7 @@ public class UI {
             });
 
             //---- label60 ----
-            label60.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/\u5927\u4e8c\u4e0b/\u6570\u636e\u5e93\u4f5c\u4e1a\u6587\u6863/\u9ad8\u6821\u5b66\u751f\u5c31\u4e1a\u7ba1\u7406\u7cfb\u7edf\u56fe\u6807/\u4eba\u7269\u56fe\u7247.jpeg"));
+            label60.setIcon(null);
 
             GroupLayout Student1ContentPaneLayout = new GroupLayout(Student1ContentPane);
             Student1ContentPane.setLayout(Student1ContentPaneLayout);
@@ -3322,6 +3328,56 @@ public class UI {
         ui.initComponents();
         ui.Login.setVisible(true);
     }
+
+    //显示学生照片的方法
+    private void displayCurrentUserPhoto(int studentId) {
+        try {
+            // 创建数据库连接
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/高校学生就业管理系统", "root", "Lzy-200387");
+
+            // 查询照片
+            String query = "SELECT 图片 FROM 毕业生照片表 WHERE 学号 = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, studentId);
+            ResultSet resultSet = statement.executeQuery();
+
+            // 显示照片
+            if (resultSet.next()) {
+                InputStream photoData = resultSet.getBinaryStream("图片");
+                if (photoData != null) {
+                    // 读取照片数据并显示在 JLabel 上
+                    BufferedImage image = ImageIO.read(photoData);
+                    ImageIcon icon = new ImageIcon(image);
+                    label60.setIcon(icon);
+                } else {
+                    // 使用默认照片
+                    label60.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/大二下/数据库作业文档/高校学生就业管理系统图标/人物图片.jpeg"));
+                }
+            } else {
+                // 使用默认照片
+                label60.setIcon(new ImageIcon("/Users/linzhengyang/Desktop/大二下/数据库作业文档/高校学生就业管理系统图标/人物图片.jpeg"));
+            }
+
+            // 关闭连接和资源
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private byte[] hexStringToByteArray(String hexString) {
+        int length = hexString.length();
+        byte[] byteArray = new byte[length / 2];
+        for (int i = 0; i < length; i += 2) {
+            byteArray[i / 2] = (byte) ((Character.digit(hexString.charAt(i), 16) << 4)
+                    + Character.digit(hexString.charAt(i + 1), 16));
+        }
+        return byteArray;
+    }
+
+
+
     //调用存储过程查询各个专业的就业率
     public void showEmploymentRatesByMajor() {
         try {

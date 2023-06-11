@@ -454,7 +454,7 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label60"
-				"icon": new com.jformdesigner.model.SwingIcon( 1, "/Users/linzhengyang/Desktop/大二下/数据库作业文档/高校学生就业管理系统图标/人物图片.jpeg" )
+				"icon": sfield com.jformdesigner.model.FormObject NULL_VALUE
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": new java.awt.Dimension( 1225, 800 )
@@ -1034,3 +1034,4 @@ new FormModel {
 		} )
 	}
 }
+
