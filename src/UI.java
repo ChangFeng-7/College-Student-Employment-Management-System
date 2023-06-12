@@ -3423,7 +3423,7 @@ public class UI {
             dialog.add(scrollPane, BorderLayout.CENTER);
 
             // 设置对话框属性并显示
-            dialog.setTitle("Employment Rates by Major");
+            dialog.setTitle("各专业就业率");
             dialog.setSize(800, 400);
             dialog.setModal(true);
             dialog.setVisible(true);
@@ -4018,6 +4018,8 @@ public class UI {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            // 显示错误消息框
+            JOptionPane.showMessageDialog(AdminSearch3, "不合法的信息！", "插入信息错误", JOptionPane.ERROR_MESSAGE);
         } finally {
             // 关闭连接和资源
             closeConnection(connection, statement, null);
