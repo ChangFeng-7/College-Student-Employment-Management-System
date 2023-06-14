@@ -9,13 +9,15 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 public class UI {
     public UI() {
         initComponents();
@@ -432,7 +434,10 @@ public class UI {
     private void button27MousePressed(MouseEvent e) {
         if(textField10.getText()==""){
             JOptionPane.showMessageDialog(EmployersNeed,"必须填写全部信息","注意",JOptionPane.INFORMATION_MESSAGE);
+            return;
         }
+        checkNumberInput(textField10.getText());
+        checkDateInput(textField11.getText());
         insertJobData(textField8.getText(),textField9.getText(),Integer.parseInt(textField10.getText()),convertStringToDate(textField11.getText()),getCompanyByAccount(textField1.getText()));
     }
     private void textField11FocusGained(FocusEvent e) {
@@ -626,6 +631,9 @@ public class UI {
     }
 
     private void button41MousePressed(MouseEvent e) {
+        checkNumberInput(textField31.getText());
+        checkNumberInput(textField33.getText());
+        checkNumberInput(textField49.getText());
         insertOccupation(textField26.getText(),textField27.getText(),Integer.parseInt(textField31.getText()),textField28.getText(),textField29.getText(),textField32.getText(),Integer.parseInt(textField33.getText()),textField30.getText(),Integer.parseInt(textField49.getText()));
     }
 
@@ -3142,7 +3150,7 @@ public class UI {
     private JButton button7;
     private JButton button9;
     private JButton button44;
-    private JFrame Employers;
+    private static JFrame Employers;
     private JButton button8;
     private JScrollPane scrollPane1;
     private JTable table1;
@@ -3166,7 +3174,7 @@ public class UI {
     private JDialog dialog1;
     private JLabel label7;
     private JButton button13;
-    private JFrame Admin1;
+    private static JFrame Admin1;
     private JButton button17;
     private JButton button28;
     private JScrollPane scrollPane2;
@@ -3532,6 +3540,12 @@ public class UI {
         String idText = idTextField.getText().trim();
         String nameText = nameTextField.getText().trim();
         String departmentText = departmentTextField.getText().trim();
+        if(!checkNumberInput(idText)){
+            return;
+        }
+        if(!checkNumberInput(departmentText)){
+            return;
+        }
 
         // 检查三个 JTextField 是否都有输入的数据
         if (idText.isEmpty() || nameText.isEmpty() || departmentText.isEmpty()) {
@@ -3670,6 +3684,7 @@ public class UI {
                     columnToUpdate = "专业名称";
                     break;
                 case 2:
+                    if(!checkNumberInput((String)newValue)){return;}
                     columnToUpdate = "所属院系";
                     break;
                 default:
@@ -3837,7 +3852,9 @@ public class UI {
         String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
         String USERNAME = "root";
         String PASSWORD = "Lzy-200387";
-
+        if(!checkNumberInput(newContactInfo)){
+            return;
+        }
         try {
             // 建立数据库连接
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -3982,13 +3999,13 @@ public class UI {
             JOptionPane.showMessageDialog(Admin3, "请填写所有必要信息", "错误", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         // 检测需求数量和已聘用数量是否为非负数
         if (demand < 0 || hiredCount < 0) {
             JOptionPane.showMessageDialog(Admin3, "需求数量和已聘用数量必须为非负数", "错误", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        checkDateInput(startDateString);
+        checkDateInput(endDateString);
         Connection connection = null;
         PreparedStatement statement = null;
         String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
@@ -4018,8 +4035,6 @@ public class UI {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            // 显示错误消息框
-            JOptionPane.showMessageDialog(AdminSearch3, "不合法的信息！", "插入信息错误", JOptionPane.ERROR_MESSAGE);
         } finally {
             // 关闭连接和资源
             closeConnection(connection, statement, null);
@@ -4081,6 +4096,7 @@ public class UI {
                 case 6:
                 case 8:
                     try {
+                        checkNumberInput((String)data);
                         int demand = Integer.parseInt((String) data);
                         statement.setInt(1, demand);
                     } catch (NumberFormatException e) {
@@ -4111,6 +4127,10 @@ public class UI {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            // 显示错误消息框
+            SwingUtilities.invokeLater(() -> {
+                JOptionPane.showMessageDialog(Admin3,"输入了不合法的信息！", "错误", JOptionPane.ERROR_MESSAGE);
+            });
         } finally {
             // 关闭连接和资源
             closeConnection(connection, statement, resultSet);
@@ -4333,6 +4353,13 @@ public class UI {
             JOptionPane.showMessageDialog(AdminSearch2, "除职业和职业编号外均需填写", "错误", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        if(!checkGenderInput(gender)){
+            // 显示错误消息框
+            SwingUtilities.invokeLater(() -> {
+                JOptionPane.showMessageDialog(AdminSearch2, "输入了不合法的性别！", "错误", JOptionPane.ERROR_MESSAGE);
+            });
+            return;
+        }
         Connection connection = null;
         PreparedStatement statement = null;
         String URL = "jdbc:mysql://localhost:3306/高校学生就业管理系统";
@@ -4374,6 +4401,10 @@ public class UI {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            // 显示错误消息框
+            SwingUtilities.invokeLater(() -> {
+                JOptionPane.showMessageDialog(AdminSearch2,"输入了不合法的信息！", "错误", JOptionPane.ERROR_MESSAGE);
+            });
         } finally {
             // 关闭连接和资源
             closeConnection(connection, statement, null);
@@ -4497,6 +4528,10 @@ public class UI {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            // 显示错误消息框
+            SwingUtilities.invokeLater(() -> {
+                JOptionPane.showMessageDialog(AdminSearch2,"输入了不合法的信息！", "错误", JOptionPane.ERROR_MESSAGE);
+            });
         } finally {
             // 关闭连接和资源
             closeConnection(connection, statement, resultSet);
@@ -4522,6 +4557,13 @@ public class UI {
                     updateQuery = "UPDATE 毕业生信息表 SET 姓名 = ? WHERE 学号 = ?";
                     break;
                 case 2:
+                    if(!checkGenderInput((String) newValue)){
+                        // 显示错误消息框
+                        SwingUtilities.invokeLater(() -> {
+                            JOptionPane.showMessageDialog(Admin2, "输入了不合法的性别！", "错误", JOptionPane.ERROR_MESSAGE);
+                        });
+                        return;
+                    }
                     updateQuery = "UPDATE 毕业生信息表 SET 性别 = ? WHERE 学号 = ?";
                     break;
                 case 3:
@@ -4736,6 +4778,10 @@ public class UI {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            // 显示错误消息框
+            SwingUtilities.invokeLater(() -> {
+                JOptionPane.showMessageDialog(AdminSearch,"输入了不合法的信息！", "错误", JOptionPane.ERROR_MESSAGE);
+            });
         } finally {
             // 关闭连接和资源
             closeConnection(connection, statement, null);
@@ -4871,6 +4917,10 @@ public class UI {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            // 显示错误消息框
+            SwingUtilities.invokeLater(() -> {
+                JOptionPane.showMessageDialog(Admin1,"输入了不合法的信息！", "错误", JOptionPane.ERROR_MESSAGE);
+            });
         } finally {
             // 关闭连接和资源
             closeConnection(connection, statement, null);
@@ -4990,7 +5040,7 @@ public class UI {
             int jobCount = resultSet.getInt(1);
 
             // 自动生成职业编号
-            int jobNumber = jobCount + 6;
+            int jobNumber = jobCount + 8;
 
             // 创建插入数据的 PreparedStatement 对象
             String insertQuery = "INSERT INTO 职业信息表 (职业编号, 职业名称, 职业类型名称, 需求数量, 用人单位,发布日期,截止日期,已聘用数量 ) VALUES (?, ?, ?, ?, ?, ?,?,?)";
@@ -5012,6 +5062,10 @@ public class UI {
             System.out.println("职业信息已成功插入数据库，职业编号为：" + jobNumber);
         } catch (SQLException e) {
             e.printStackTrace();
+            // 显示错误消息框
+            SwingUtilities.invokeLater(() -> {
+                JOptionPane.showMessageDialog(EmployersNeed,"输入了不合法的信息！", "错误", JOptionPane.ERROR_MESSAGE);
+            });
         } finally {
             // 关闭连接和资源
             closeConnection(connection, statement, resultSet);
@@ -5119,14 +5173,23 @@ public class UI {
                 case 2:
                     return;
                 case 3:
+                    if(!checkNumberInput((String)newValue)){
+                        return;
+                    }
                     columnToUpdate = "需求数量";
                     break;
                 case 4:
                     return;
                 case 5:
+                    if(!checkDateInput((String)newValue)){
+                        return;
+                    }
                     columnToUpdate = "发布日期";
                     break;
                 case 6:
+                    if(!checkDateInput((String)newValue)){
+                        return;
+                    }
                     columnToUpdate = "截止日期";
                     break;
                 default:
@@ -5148,6 +5211,10 @@ public class UI {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            // 显示错误消息框
+            SwingUtilities.invokeLater(() -> {
+                JOptionPane.showMessageDialog(Employers,"输入了不合法的信息！", "错误", JOptionPane.ERROR_MESSAGE);
+            });
         } finally {
             // 关闭连接和资源
             if (statement != null) {
@@ -5247,6 +5314,41 @@ public class UI {
         panel.add(label2);
         frame.add(panel);
         frame.setVisible(true);
+    }
+
+    //检测textfield输入是否为数字
+    public static boolean checkNumberInput(String input) {
+        // 使用正则表达式检测输入是否为数字
+        if (!input.matches("\\d+")) {
+            // 显示错误消息框
+            SwingUtilities.invokeLater(() -> {
+                JOptionPane.showMessageDialog(null, "应当输入数字！", "错误", JOptionPane.ERROR_MESSAGE);
+            });
+            return false;
+        }
+        return true;
+    }
+    //检测textfield输入是否为yyyy-MM-dd
+    public static boolean checkDateInput(String input) {
+        // 尝试解析输入的日期
+        try {
+            LocalDate.parse(input);
+        } catch (DateTimeParseException e) {
+            // 显示错误消息框
+            SwingUtilities.invokeLater(() -> {
+                JOptionPane.showMessageDialog(null, "输入了不合法的日期格式！", "错误", JOptionPane.ERROR_MESSAGE);
+            });
+            return false;
+        }
+        return true;
+    }
+    //检测textfield输入是否为男或女
+    public static boolean checkGenderInput(String input) {
+        // 检测输入是否为男或女
+        if (!input.equals("男") && !input.equals("女")) {
+            return false;
+        }
+        return true;
     }
 }
 
